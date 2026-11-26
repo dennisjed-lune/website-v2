@@ -182,7 +182,7 @@ FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
-    <p class="lead">Lune turns the card transactions you already process into new revenue. Know where your customers spend, and let merchants pay to reach them.</p>
+    <p class="lead">Lune names every card payment. Merchants pay to reach your customers.</p>
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
 FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category."
 
@@ -209,10 +209,10 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 
 # The solution in one picture: four separate products on one data set. Each card links to its chapter.
 STEPS = [
-    ("enrich", "01", "Name", "Enrich", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
-    ("analytics", "02", "See", "Analytics", "In LuneHub, your teams see each transaction and where customers spend.", "For your card and data teams"),
-    ("in-app", "03", "Show", "PFM", "Expenses and Cashflow show your customers where their money goes, in your app.", "For your customers"),
-    ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
+    ("enrich", "01", "Name", "Enrich", "Names every card payment.", "The foundation for each product"),
+    ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
+    ("in-app", "03", "Show", "PFM", "Expenses and Cashflow screens for your app.", "For your customers"),
+    ("pulse", "04", "Earn", "Pulse", "Merchant-funded cashback on your card.", "For your card revenue"),
 ]
 
 
@@ -239,31 +239,31 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
     ln = "".join(f'<a class="more" href="{h}">{t} →</a>' for h, t in links)
     return f"""<section class="sec chapter {cls}" id="{sid}"><div class="wrap chapter__grid">
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
-<p class="lead">{lead}</p><div class="kv">{rows}</div><div class="chapter__links">{ln}</div></div>
+<p class="lead">{lead}</p><div class="chapter__links">{ln}</div></div>
 {fig}</div></section>"""
 
 
 CHAPTERS = "\n".join([
     chapter(0, "Each card description gets a merchant name.",
-            "Your bank sends card descriptions that customers cannot read. Enrich returns the merchant, logo and category in real time.",
+            "A raw card description in. A merchant, logo and category out.",
             [("Merchant and logo", "The name your customer knows"), ("Category", "19 categories with subcategories"), ("Real time", "As each payment happens")],
             "<b>Enrich</b> is the foundation. It includes LuneHub, the portal for your teams.",
-            [("enrich.html", "See how Enrich works")], ENRICH_DEMO, "sec--white"),
+            [("enrich.html", "Enrich")], ENRICH_DEMO, "sec--white"),
     chapter(1, "Your teams see where your customers spend.",
-            "LuneHub lists each enriched transaction. Analytics shows spend by brand, category and customer.",
+            "Spend by brand, category and customer, in LuneHub.",
             [("Transactions", "Each payment with its merchant"), ("Brand explorer", "Spend and customers for each brand"), ("Category explorer", "All 19 Lune categories")],
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
-            [("analytics.html", "See all Analytics screens")], ANALYTICS_DEMO, "chapter--flip"),
+            [("analytics.html", "Analytics")], ANALYTICS_DEMO, "chapter--flip"),
     chapter(2, "Your customers see where their money goes.",
-            "Expenses and Cashflow add ready screens to your iOS and Android app. Each payment shows a real merchant name and logo.",
+            "Ready Expenses and Cashflow screens for iOS and Android.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
-            [("expenses.html", "See Expenses"), ("cashflow.html", "See Cashflow")], phones_demo("both"), "sec--white"),
+            [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
     chapter(3, "Customers earn with your card. Merchants pay for the rewards.",
-            "Pulse runs a rewards programme under your bank's name. Merchants fund each offer. Customers earn only with your card, so they have a reason to pay with it.",
+            "Merchants fund the cashback. Your bank approves every offer.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
-            [("pulse.html", "See how Pulse works")], PULSE_DEMO, "chapter--flip"),
+            [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--flip"),
 ])
 
 PROOF = '''
@@ -277,35 +277,33 @@ PROOF = '''
 
 PROBLEM = '''
 <div class="points">
-<div><h3>Customers do not recognise their payments</h3><p>Card statements show codes, not shop names. The customer cannot see where the money went.</p></div>
-<div><h3>Your teams cannot see where customers spend</h3><p>Without merchant data, card and product teams cannot find the merchants that matter most.</p></div>
-<div><h3>Your bank pays for every reward</h3><p>Each point and each cashback offer comes from your bank's budget. Merchants pay nothing.</p></div>
+<div><h3>Customers cannot read their statements</h3></div>
+<div><h3>Your teams cannot see where they spend</h3></div>
+<div><h3>Your bank pays for every reward</h3></div>
 </div>'''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
-<p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
-<div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
-<div class="chapter__links"><a class="more" href="ai.html">See the AI assistant →</a></div></div>
+<p class="lead">Inside Expenses and Cashflow, with matching Pulse offers.</p>
+<div class="chapter__links"><a class="more" href="ai.html">AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 
 HOME = f"""{HEROES}
 
-{sec(head("The problem", 'Card data can grow your revenue. Today, most of it is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal")}
+{sec(head("", 'Most card data is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal")}
 
-{sec(head("The solution", 'Four separate products, from card data to <span class="serif">card revenue.</span>', "Each product does one job. Enrich is the foundation, and the other three use its enriched transactions.") + MAP, id_="how")}
+{sec(head("", 'Four products. <span class="serif">One data set.</span>') + MAP, id_="how")}
 
-<div class="story">{RAIL}
+<div class="story">
 {CHAPTERS}
 </div>
 
 {AI}
 
-{sec(head("One payment, four products", 'One card payment becomes a <span class="serif">merchant-funded reward.</span>', "One transaction, seen in each of the four Lune products.") + FLOW, "sec--ink")}
 
 {sec(stats() + PROOF + BADGES, "sec--white", "proof")}
 
-{cta("See what your card transactions can earn.", "Contact sales for a live demo. We show Lune on sample data, then on a sample of your own transactions.")}
+{cta("See what your card transactions can earn.", "A live demo on a sample of your own transactions.")}
 """
 
 # ------------------------------------------------------------------ ENRICH
