@@ -287,7 +287,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .rail a.is-on b { color: var(--lune-teal-700); }
 .rail a.is-on span { display: inline; color: var(--lune-teal-700); }
 @media (max-width: 760px) { .rail a { padding: 0 12px; } .rail a.is-on span { display: none; } }
-.chapter { scroll-margin-top: 40px; padding-top: clamp(104px, 10vw, 150px); padding-bottom: clamp(56px, 6vw, 96px); }
+.chapter { scroll-margin-top: calc(64px - clamp(104px, 10vw, 150px)); padding-top: clamp(104px, 10vw, 150px); padding-bottom: clamp(56px, 6vw, 96px); }
 .chapter__grid { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.25fr); gap: clamp(28px, 5vw, 88px); align-items: center; }
 .chapter--flip .chapter__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.82fr); }
 .chapter--flip .chapter__copy { order: 2; }
@@ -895,3 +895,9 @@ h3 { text-wrap: balance; }
   .logos__row img { width: auto; height: clamp(26px, 2.7vw, 38px); max-width: 150px; flex: none; }
   .logos__mask:hover .logos__row { animation-play-state: paused; }
 }
+
+/* ---- Anchor links land with the section content just under the header (or the step rail) ---- */
+.sec[id]:not(.chapter) { scroll-margin-top: calc(14px - clamp(72px, 9vw, 136px)); }
+
+/* ---- One sample-data note for each page, in the footer ---- */
+.site-foot__note { margin: 28px 0 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--soft); }

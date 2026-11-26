@@ -8,7 +8,7 @@ import html
 from mocks import BRANDS, ENRICH_TX, LOGO
 
 e = html.escape
-CAP = "Illustration of the product with sample data."
+CAP = ""   # one sample-data note sits in the page footer
 
 
 def dv(cls, steps, inner, label, hook=""):
@@ -22,7 +22,7 @@ def demo(name, *opts, cls=""):
     for i, (label, body, cap) in enumerate(opts, 1):
         hidden = "" if i == 1 else " hidden"
         out += (f'<div class="demo__v" data-v="{i}"{hidden}><div class="shot__frame"><span class="shot__bar">{label}</span>{body}</div>'
-                f'<figcaption>{cap}</figcaption></div>')
+                + (f'<figcaption>{cap}</figcaption>' if cap else '') + '</div>')
     return f'<figure class="shot demo {cls}" data-demo="{name}" data-parallax="0.05">{out}</figure>'
 
 
@@ -201,7 +201,7 @@ def phone_drawn(screen, title, text):
 
 
 SHOT_CAP = "Screens from the Lune SDK with sample data."
-DRAWN_CAP = "Illustration of the SDK screens with sample data."
+DRAWN_CAP = ""
 PILL = "Lune SDK · iOS and Android"
 
 
@@ -211,7 +211,7 @@ CHAT = f"""<div class="app chat">{TIME}
 <p class="chat__me fx at1">How much did I spend on shopping this month?</p>
 <div class="chat__bot fx at2"><p>You spent <b>AED 1,840</b> on shopping this month. Your top merchants are Level Shoes and IKEA.</p>
 <div class="chat__row"><img src="{LOGO}levelshoes.png" alt=""><span><b>Level Shoes</b><i>Shopping › Clothing</i></span><em>AED 1,032.00</em></div>
-<div class="chat__row"><img src="{LOGO}ikea.png" alt=""><span><b>IKEA</b><i>Shopping › Furniture</i></span><em>AED 445.00</em></div></div>
+<div class="chat__row"><img src="{LOGO}ikea.png" alt=""><span><b>IKEA</b><i>Shopping › Furniture</i></span><em>AED 645.00</em></div></div>
 <div class="chat__bot chat__offer fx at3"><span class="chat__tag">Offer for you</span>
 <div class="chat__row"><img src="{LOGO}levelshoes.png" alt=""><span><b>10% cashback</b><i>At Level Shoes, with your card</i></span></div>
 <span class="chat__btn"><i>Activate offer</i><i>Offer activated</i><span class="tap tap--btn"></span></span></div>
@@ -221,7 +221,7 @@ CHAT = f"""<div class="app chat">{TIME}
 </div>"""
 CHAT_POPS = [pop("l2", 2, "spark", "Answer from your data", "Real merchant names"), pop("r3", 3, "store", "Pulse offer", "Matches shopping spend")]
 AI_DEMO = demo("ai", ("Assistant in the Lune SDK", stage("Assistant", unit("Assistant", "A question, an answer and an offer", CHAT, CHAT_POPS), "700,1500,3000,2600,4400",
-                      "A customer asks about shopping spend. The assistant answers and shows a cashback offer from the top merchant"), "Illustration of the assistant with sample data."), cls="demo--phones")
+                      "A customer asks about shopping spend. The assistant answers and shows a cashback offer from the top merchant"), ""), cls="demo--phones")
 
 
 def crow(logo, name, sub, amt=""):
@@ -236,9 +236,9 @@ def snip(q, answer):
 # Four still question-and-answer examples for the AI page. Amounts agree with the Expenses screens.
 SNIPS = "".join([
     snip("How much did I spend on shopping this month?",
-         '<div class="chat__bot"><p>You spent <b>AED 1,840</b> on shopping this month.</p>' + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 445.00") + "</div>"),
+         '<div class="chat__bot"><p>You spent <b>AED 1,840</b> on shopping this month.</p>' + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 645.00") + "</div>"),
     snip("Where do I spend the most?",
-         '<div class="chat__bot"><p>Your top three merchants this month:</p>' + crow("carrefour.png", "Carrefour", "Groceries › Supermarket", "AED 1,240.00") + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 445.00") + "</div>"),
+         '<div class="chat__bot"><p>Your top three merchants this month:</p>' + crow("carrefour.png", "Carrefour", "Groceries › Supermarket", "AED 1,240.00") + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 645.00") + "</div>"),
     snip("Did I spend more than last month?",
          '<div class="chat__bot"><p>No. You spent <b>AED 6,808</b> so far this month. That is <b>AED 187 less</b> than last month.</p>'
          '<div class="chat__cmp"><span>This month<u style="--w:97%"></u><em>AED 6,808</em></span><span>Last month<u class="was" style="--w:100%"></u><em>AED 6,995</em></span></div></div>'),
@@ -281,7 +281,7 @@ PULSE_TIER = '''<div class="ui pt">
 <div class="pt__dots"><i></i><i></i><i></i><i></i><i></i></div><span class="ui__pill ok pt__done">Mission complete</span></div>
 <p class="ui__note">Customers earn more at each tier. Missions reward repeat spend.</p></div>'''
 
-APP_CAP = "Illustration of the customer app with sample data."
+APP_CAP = ""
 PULSE_DEMO = demo("pulse",
     ("Customer app · Cashback", dv("dv-cash", "700,1000,1000,1100,1300,3000", PULSE_CB, "A card payment at Level Shoes earns AED 103.20 cashback, funded by the merchant"), APP_CAP))
 TIER_DEMO = demo("pulse-tier",

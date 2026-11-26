@@ -72,6 +72,7 @@ def page(slug, title, desc, body):
     <div><b>Company</b><a href="customers.html">Customers</a><a href="contact.html">Contact sales</a></div>
     <div><b>Developers</b><a href="{DOCS_API}" target="_blank" rel="noopener">Enrichment API ↗</a><a href="{DOCS_SDK}" target="_blank" rel="noopener">Mobile SDK ↗</a><a href="{LUNEHUB}">Log in to LuneHub</a></div>
   </div>
+  <div class="wrap"><p class="site-foot__note">Product screens on this site show sample data.</p></div>
 </footer>
 <script src="site.js"></script>
 </body>
@@ -104,12 +105,12 @@ BTN_LIVE = f'<a class="btn btn--ghost" href="{SALES}" target="_blank" rel="noope
 def shot(img, bar, cap, alt):
     if img in MOCKS:   # a drawn exhibit of the screen (mocks.py), not a capture
         return f"""<figure class="shot"><div class="shot__frame"><span class="shot__bar">{e(bar)}</span>
-<div class="ui-wrap" role="img" aria-label="{e(alt)}">{MOCKS[img]}</div></div><figcaption>{cap}</figcaption></figure>"""
+<div class="ui-wrap" role="img" aria-label="{e(alt)}">{MOCKS[img]}</div></div><figcaption>{cap.strip()}</figcaption></figure>"""
     if img.endswith("cardholder-preview.jpg"):
         return f"""<figure class="shot"><div class="shot__frame"><span class="shot__bar">{e(bar)}</span>
-<div class="dev dev--shot shot__dev"><div class="dev__scr"><img src="img/app/cust-03-offer.png" alt="{e(alt)}" loading="lazy"></div></div></div><figcaption>{cap.replace(TEST, "Screen from the customer app with sample data.")}</figcaption></figure>"""
+<div class="dev dev--shot shot__dev"><div class="dev__scr"><img src="img/app/cust-03-offer.png" alt="{e(alt)}" loading="lazy"></div></div></div><figcaption>{cap.strip()}</figcaption></figure>"""
     return f"""<figure class="shot"><div class="shot__frame"><span class="shot__bar">{e(bar)}</span>
-<img src="img/product/{img}" alt="{e(alt)}" loading="lazy"></div><figcaption>{cap}</figcaption></figure>"""
+<img src="img/product/{img}" alt="{e(alt)}" loading="lazy"></div><figcaption>{cap.strip()}</figcaption></figure>"""
 
 
 def phone(img, title, text):
@@ -160,7 +161,7 @@ def logos():
     return f'<div class="wrap logos"><p class="eyebrow muted" style="color:var(--neutral-500)">Trusted by banks and fintechs across the Middle East</p><div class="logos__mask"><div class="logos__row">{row}<span class="logos__dup" aria-hidden="true">{dup}</span></div></div></div>'
 
 
-TEST = "Illustration of the product screen with sample data."
+TEST = ""   # one sample-data note sits in the page footer
 
 
 def next_step(href, text):
@@ -176,13 +177,13 @@ FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 <div class="flow__step"><span class="n">01 · Name</span><h3>Enrich names the payment</h3><span class="v mono">POS PUR 448812 LVL SHS DXB MALL 00AE</span><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
 <div class="flow__step"><span class="n">02 · See</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
 <div class="flow__step"><span class="n">03 · Show</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
-<div class="flow__step flow__step--end"><span class="n">04 · Earn</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">10% cashback. Level Shoes pays it. Your bank uses no rewards budget.</span></div>
-</div><p class="small">Example transaction.</p>"""
+<div class="flow__step flow__step--end"><span class="n">04 · Earn</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
+</div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
     <p class="lead">Lune turns the card transactions you already process into new revenue. Know where your customers spend, and let merchants pay to reach them.</p>
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
-FEED_NOTE = "Example feed. Lune turns each card description into a merchant, a logo and a category in under a millisecond."
+FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category in under a millisecond."
 
 # Three hero options. site.js shows one of them (draft option bar, or ?hero=a|b|c).
 HEROES = f"""<section class="hero heroA" data-hero="a"><div class="heroA__grid" aria-hidden="true"></div>{drift(8, 3)}
@@ -195,12 +196,12 @@ HEROES = f"""<section class="hero heroA" data-hero="a"><div class="heroA__grid" 
   <div class="hero__copy">
     {HERO_COPY}
   </div>
-  <div class="scene-col">{SCENE}<p class="small">Example payment. Lune names the merchant, then matches a cashback offer.</p></div>
+  <div class="scene-col">{SCENE}<p class="small">Lune names the merchant, then matches a cashback offer.</p></div>
 </div></section>
 <section class="hero heroC" data-hero="c" hidden><div class="wrap heroC__in">
     {HERO_COPY}
     {JOURNEY}
-    <p class="small">Example payment. One card payment moves through the four Lune steps.</p>
+    <p class="small">One card payment moves through the four Lune steps.</p>
 </div></section>
 """
 HEROES = HEROES.replace("</section>", "</section>" + logos() + "</div>").replace('<section class="hero hero', '<div class="first"><section class="hero hero').replace('<div class="first"><section class="hero heroB" data-hero="b" hidden>', '<div class="first" data-hero="b" hidden><section class="hero heroB">').replace('<div class="first"><section class="hero heroC" data-hero="c" hidden>', '<div class="first" data-hero="c" hidden><section class="hero heroC">').replace('<div class="first"><section class="hero heroA" data-hero="a">', '<div class="first" data-hero="a"><section class="hero heroA">')
@@ -212,7 +213,7 @@ STEPS = [
     ("enrich", "01", "Name", "Enrich", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
     ("analytics", "02", "See", "LuneHub and Analytics", "Your teams see each transaction and where customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "Expenses and Cashflow", "Your customers see where their money goes, in your app.", "For your customers"),
-    ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn when they pay with your card.", "For your card revenue"),
+    ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
 ]
 
 
@@ -259,7 +260,7 @@ CHAPTERS = "\n".join([
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "See Expenses"), ("cashflow.html", "See Cashflow")], phones_demo("both"), "sec--white"),
     chapter(3, "Customers earn with your card. Merchants pay for the rewards.",
-            "Pulse runs a rewards programme under your bank's name. Merchants fund each offer. Your bank approves each offer.",
+            "Pulse runs a rewards programme under your bank's name. Merchants fund each offer. Customers earn only with your card, so they have a reason to pay with it.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
             [("pulse.html", "See how Pulse works")], PULSE_DEMO, "chapter--flip"),
@@ -278,7 +279,7 @@ PROBLEM = '''
 <div class="points">
 <div><code class="points__raw">MAF HYPMKT MOE-0042 DXB ARE</code><h3>Customers do not recognise their payments</h3><p>A line such as “MAF HYPMKT MOE-0042” does not name the shop. The customer cannot see where the money went.</p></div>
 <div><code class="points__raw">ALSHAYA SBX 0921 DIFC GT AE</code><h3>Your teams cannot see where customers spend</h3><p>Without merchant data, card and product teams cannot find the merchants that matter most.</p></div>
-<div><code class="points__raw">NF* 8665797172 LOS GATOS 00012</code><h3>Your bank pays for every reward</h3><p>A rewards programme uses the bank's budget. Merchants pay to reach cardholders who match their target.</p></div>
+<div><code class="points__raw">CASHBACK CR AED 103.20 BANK FUNDED</code><h3>Your bank pays for every reward</h3><p>Each point and each cashback offer comes from your bank's budget. Merchants pay nothing.</p></div>
 </div>'''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
@@ -326,7 +327,7 @@ ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">mer
  BTN_TALK + BTN_LIVE + f'<a class="btn btn--ghost" href="{DOCS_API}" target="_blank" rel="noopener">Read the API docs ↗</a>', ENRICH_DEMO)}
 
 {sec(head("Sample transactions", "Enrich reads the card descriptions that customers cannot read.", "Seven card transactions from seven markets. Each result comes from one real-time API call.") + f'''
-<div class="rawtable">{rawrows}</div><p class="small">Sample transactions. Local names come from Lune's merchant database.</p>''')}
+<div class="rawtable">{rawrows}</div><p class="small">Local names come from Lune's merchant database.</p>''')}
 
 {sec(stats(), "sec--white")}
 
@@ -436,14 +437,14 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 {phone("exp-home.png", "This month", "Spending day by day, against last month.")}
 {phone("exp-all.png", "Every transaction", "Search by merchant, category or amount.")}
 {phone_drawn(EX_TX, "One payment", "Merchant, category, tags and feedback.")}
-</div><p class="small">Two screens from the Lune SDK and one illustration. Sample data.</p>''', "sec--white")}
+</div>''', "sec--white")}
 
 {sec(head("Trends", "Customers follow each category and each brand over time.", "Two trend pages show where the money goes. A customer opens a category or a brand to see its history.") + f'''
 <div class="phones" style="max-width:980px">
 {phone("exp-cats.png", "Category trends", "Top categories with spend and share of spend.")}
 {phone("exp-brands.png", "Brand trends", "Spend for each day and the top brands.")}
 {phone_drawn(EX_BRAND, "One brand", "Six months of spend with that brand.")}
-</div><p class="small">Two screens from the Lune SDK and one illustration. Sample data.</p>''')}
+</div>''')}
 
 {sec(head("What customers can do", "Customers see their spend and plan their month.") + f'''
 <div class="cols cols--4">
@@ -468,7 +469,7 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
 {phone_drawn(CF_HOME, "Total cashflow", "Money in against money out for one salary month.")}
 {phone_drawn(CF_IN, "Money in", "Sources by type: income, transfers in and government services.")}
 {phone_drawn(CF_TREND, "Trends", "Six months of money in and out, with a summary.")}
-</div><p class="small">Illustrations of the SDK screens with sample data.</p>''', "sec--white")}
+</div>''', "sec--white")}
 
 {sec(head("What customers can do", "Customers see where money comes from and where it goes.") + f'''
 <div class="cols">
@@ -655,8 +656,8 @@ CONTACT = f"""{hero("Contact sales", 'Talk to our sales team about <span class="
 AI_PAGE = f"""{hero("AI assistant", 'Customers ask about their money. <span class="serif">The assistant answers.</span>',
  "A conversational assistant runs inside Expenses and Cashflow in your app. It answers from the customer's enriched transactions and shows Pulse offers that match their spend.", BTN_TALK + BTN_SDK, AI_DEMO)}
 
-{sec(head("What customers ask", "Each question gets an answer from real payments.", "Four example questions with sample data.") + f'''
-<div class="snips">{SNIPS}</div><p class="small">Illustration of the assistant with sample data.</p>''', "sec--white")}
+{sec(head("What customers ask", "Each question gets an answer from real payments.", "Four example questions.") + f'''
+<div class="snips">{SNIPS}</div>''', "sec--white")}
 
 {sec(head("For your bank", "The assistant uses products your bank controls.") + f'''
 <div class="cols cols--4">
