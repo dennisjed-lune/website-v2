@@ -145,7 +145,6 @@ def cta(h2, p, second=BTN_LIVE):
 def stats():
     return """<div class="stats">
 <div><b>1.5 bn+</b><span>Transactions enriched each year</span></div>
-<div><b>0.5 ms</b><span>Enrich API response time</span></div>
 <div><b>99%</b><span>Categorisation coverage</span></div>
 <div><b>121+</b><span>Spend subcategories</span></div></div>"""
 
@@ -182,7 +181,7 @@ FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
     <p class="lead">Lune turns the card transactions you already process into new revenue. Know where your customers spend, and let merchants pay to reach them.</p>
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
-FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category in under a millisecond."
+FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category."
 
 # Three hero options. site.js shows one of them (draft option bar, or ?hero=a|b|c).
 HEROES = f"""<section class="hero heroA" data-hero="a"><div class="heroA__grid" aria-hidden="true"></div>{drift(8, 3)}
@@ -243,7 +242,7 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
 CHAPTERS = "\n".join([
     chapter(0, "Each card description gets a merchant name.",
             "Your bank sends card descriptions that customers cannot read. Enrich returns the merchant, logo and category in real time.",
-            [("Merchant and logo", "The name your customer knows"), ("Category", "19 categories with subcategories"), ("Real time", "0.5 ms response time")],
+            [("Merchant and logo", "The name your customer knows"), ("Category", "19 categories with subcategories"), ("Real time", "As each payment happens")],
             "<b>Enrich</b> is the foundation. It includes LuneHub, the portal for your teams.",
             [("enrich.html", "See how Enrich works")], ENRICH_DEMO, "sec--white"),
     chapter(1, "Your teams see where your customers spend.",
@@ -320,7 +319,7 @@ rawrows = "".join(f"""<div class="rawrow"><span class="rawrow__raw" data-ux-igno
 <span class="rawrow__out"><img src="img/logos/{lg}" alt=""><span><b>{e(m)}{f' · {loc}' if loc else ''}</b><span><em>{cat}</em>{' · ' + city if city else ''} · {amt}</span></span></span></div>""" for r, lg, m, loc, cat, city, amt in RAW)
 
 ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">merchant, logo and category.</span>',
- "Your core banking system sends a raw card description. Enrich returns the merchant, logo and category in under a millisecond.",
+ "Your core banking system sends a raw card description. Enrich returns the merchant, logo and category as the payment happens.",
  BTN_TALK + BTN_LIVE + f'<a class="btn btn--ghost" href="{DOCS_API}" target="_blank" rel="noopener">Read the API docs ↗</a>', ENRICH_DEMO)}
 
 {sec(head("Sample transactions", "Enrich reads the card descriptions that customers cannot read.", "Seven card transactions from seven markets. Each result comes from one real-time API call.") + f'''
@@ -669,7 +668,7 @@ AI_PAGE = f"""{hero("AI assistant", 'Customers ask about their money. <span clas
 
 PAGES = [
     ("index.html", "Lune | More card revenue from every transaction", "Lune turns the card transactions you already process into new revenue. Know where your customers spend, and let merchants pay to reach them.", HOME),
-    ("enrich.html", "Enrich | Real-time transaction enrichment API | Lune", "Enrich returns the merchant, logo and category for each card transaction in under a millisecond.", ENRICH),
+    ("enrich.html", "Enrich | Real-time transaction enrichment API | Lune", "Enrich returns the merchant, logo and category for each card transaction as it happens.", ENRICH),
     ("analytics.html", "Analytics | Spend by merchant and category | Lune", "Analytics shows spend by merchant, category and customer from your enriched transactions.", ANALYTICS),
     ("expenses.html", "Expenses | Spending screens for your app | Lune", "Expenses adds ready spending screens to your iOS and Android app.", EXPENSES),
     ("cashflow.html", "Cashflow | Money in against money out | Lune", "Cashflow adds ready screens to your iOS and Android app.", CASHFLOW),

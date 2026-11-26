@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Enrich | Real-time transaction enrichment API | Lune</title>
-<meta name="description" content="Enrich returns the merchant, logo and category for each card transaction in under a millisecond.">
+<meta name="description" content="Enrich returns the merchant, logo and category for each card transaction as it happens.">
 <link rel="stylesheet" href="ds/tokens/fonts.css">
 <link rel="stylesheet" href="ds/tokens/colors.css">
 <link rel="stylesheet" href="ds/tokens/typography.css">
@@ -27,10 +27,10 @@
 </header>
 <main id="main" tabindex="-1">
 <section class="hero"><div class="wrap hero__grid">
-  <div class="hero__copy"><h1 class="h1--page">Every card payment, named: <span class="serif">merchant, logo and category.</span></h1><p class="lead">Your core banking system sends a raw card description. Enrich returns the merchant, logo and category in under a millisecond.</p><div class="btns"><a class="btn btn--primary" href="contact.html">Talk to us</a><a class="btn btn--ghost" href="https://sales.lunedata.io" target="_blank" rel="noopener">Try enrichment live ↗</a><a class="btn btn--ghost" href="https://docs.lunedata.io/enrichment/enrichment-api" target="_blank" rel="noopener">Read the API docs ↗</a></div></div>
+  <div class="hero__copy"><h1 class="h1--page">Every card payment, named: <span class="serif">merchant, logo and category.</span></h1><p class="lead">Your core banking system sends a raw card description. Enrich returns the merchant, logo and category as the payment happens.</p><div class="btns"><a class="btn btn--primary" href="contact.html">Talk to us</a><a class="btn btn--ghost" href="https://sales.lunedata.io" target="_blank" rel="noopener">Try enrichment live ↗</a><a class="btn btn--ghost" href="https://docs.lunedata.io/enrichment/enrichment-api" target="_blank" rel="noopener">Read the API docs ↗</a></div></div>
   <figure class="shot demo " data-demo="enrich" data-parallax="0.05"><div class="demo__v" data-v="1"><div class="shot__frame"><div class="ui-wrap"><div class="dv dv-decode" data-steps="900,1000,800,700,2600" data-hook="tx" role="img" aria-label="One card description becomes a merchant, a logo and a category"><div class="ui dc">
 <div class="dc__in"><span class="dc__lab">From your bank</span><code data-f="raw" data-type>POS PUR 448812 LVL SHS DXB MALL 00AE</code><i class="dc__scan"></i></div>
-<div class="dc__via"><i></i><span>Enrich API · 0.5 ms</span></div>
+<div class="dc__via"><i></i><span>Enrich</span></div>
 <div class="dc__out">
 <div class="dc__f dc__f--1 ui__key"><span class="dc__lab">Merchant and logo</span><span class="ui__brand"><img data-f="logo" src="img/logos/levelshoes.png" alt=""><b data-f="merchant">Level Shoes</b></span></div>
 <div class="dc__f dc__f--2"><span class="dc__lab">Category</span><b data-f="cat">Shopping › Clothing</b></div>
@@ -53,7 +53,6 @@
 <section class="sec sec--white"><div class="wrap stack">
 <div class="stats">
 <div><b>1.5 bn+</b><span>Transactions enriched each year</span></div>
-<div><b>0.5 ms</b><span>Enrich API response time</span></div>
 <div><b>99%</b><span>Categorisation coverage</span></div>
 <div><b>121+</b><span>Spend subcategories</span></div></div>
 </div></section>

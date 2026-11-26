@@ -29,7 +29,7 @@ def demo(name, *opts, cls=""):
 # ------------------------------------------------------------------ ENRICH
 DECODE = f'''<div class="ui dc">
 <div class="dc__in"><span class="dc__lab">From your bank</span><code data-f="raw" data-type>POS PUR 448812 LVL SHS DXB MALL 00AE</code><i class="dc__scan"></i></div>
-<div class="dc__via"><i></i><span>Enrich API · 0.5 ms</span></div>
+<div class="dc__via"><i></i><span>Enrich</span></div>
 <div class="dc__out">
 <div class="dc__f dc__f--1 ui__key"><span class="dc__lab">Merchant and logo</span><span class="ui__brand"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><b data-f="merchant">Level Shoes</b></span></div>
 <div class="dc__f dc__f--2"><span class="dc__lab">Category</span><b data-f="cat">Shopping › Clothing</b></div>
