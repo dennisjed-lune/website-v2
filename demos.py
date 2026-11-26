@@ -320,11 +320,11 @@ SCENE = f'''<div class="scene dv" data-steps="700,1000,800,800,800,2600" data-ho
 <div class="scene__tilt">
 <div class="bankcard bankcard--c"></div><div class="bankcard bankcard--b"></div>
 <div class="bankcard"><span class="bankcard__brand"><i></i>Your bank</span><span class="bankcard__chip"></span><span class="bankcard__no">Gold credit</span><span class="bankcard__tap"></span></div>
-<div class="fl fl--raw"><i class="fl__n">1</i><span class="dc__lab">From your bank</span><code data-f="raw">POS PUR 448812 LVL SHS DXB MALL 00AE</code></div>
-<div class="fl fl--who"><i class="fl__n">2</i><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div>
+<div class="fl fl--raw"><span class="dc__lab">From your bank</span><code data-f="raw">POS PUR 448812 LVL SHS DXB MALL 00AE</code></div>
+<div class="fl fl--who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div>
 <div class="fl fl--amt"><span class="dc__lab">Amount</span><b data-f="amt">AED 1,032.00</b></div>
 <div class="fl fl--bars"><span class="dc__lab">Spend by category</span><u style="--w:100%"></u><u style="--w:74%"></u><u style="--w:52%"></u><u style="--w:31%"></u></div>
-<div class="fl fl--offer"><i class="fl__n">3</i><span class="tx__offer" data-f="offer">10% cashback</span></div>
+<div class="fl fl--offer"><span class="tx__offer" data-f="offer">10% cashback</span></div>
 </div></div>'''
 
 JOURNEY = f'''<div class="journey dv" data-steps="900,1300,1300,1300,1300,2800" data-hook="tx" data-only="offer" aria-hidden="true">

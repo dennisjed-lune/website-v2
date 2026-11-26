@@ -10,9 +10,15 @@
   const menuBtn = document.querySelector('.menu-btn');
   const nav = document.querySelector('.site-nav');
   if (menuBtn && nav) {
-    menuBtn.addEventListener('click', () => {
-      const open = nav.classList.toggle('is-open');
+    const setOpen = open => {
+      nav.classList.toggle('is-open', open);
       menuBtn.setAttribute('aria-expanded', String(open));
+      if (open) { const first = nav.querySelector('a'); if (first) first.focus(); }
+    };
+    menuBtn.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
+    nav.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false); menuBtn.focus(); }
     });
   }
 
@@ -186,14 +192,17 @@
     const run = () => {
       queued = false;
       const vh = innerHeight, wide = innerWidth >= 760;
+      if (!wide) { pxEls.forEach(el => { el.style.translate = ''; }); return; }
+      // Read every position first, then write, so the browser lays out the page once per frame.
+      const moves = [];
       pxEls.forEach(el => {
-        if (!wide) { el.style.translate = ''; return; }
-        if (el.dataset.parallaxTop) { if (scrollY < vh * 1.5) el.style.translate = `0 ${(scrollY * +el.dataset.parallaxTop).toFixed(1)}px`; return; }
+        if (el.closest('[hidden]')) return;
+        if (el.dataset.parallaxTop) { if (scrollY < vh * 1.5) moves.push([el, scrollY * +el.dataset.parallaxTop]); return; }
         const r = el.parentElement.getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) return;
-        const d = r.top + r.height / 2 - vh / 2;
-        el.style.translate = `0 ${Math.max(-140, Math.min(140, -d * +el.dataset.parallax)).toFixed(1)}px`;
+        moves.push([el, Math.max(-140, Math.min(140, -(r.top + r.height / 2 - vh / 2) * +el.dataset.parallax))]);
       });
+      moves.forEach(([el, y]) => { el.style.translate = `0 ${y.toFixed(1)}px`; });
     };
     const ask = () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
     addEventListener('scroll', ask, { passive: true });
@@ -218,46 +227,45 @@
   if (railLinks.length && hasIO) {
     const io = new IntersectionObserver(es => es.forEach(en => {
       if (!en.isIntersecting) return;
-      railLinks.forEach(a => { const on = a.hash === '#' + en.target.id; a.classList.toggle('is-on', on); on ? a.setAttribute('aria-current', 'step') : a.removeAttribute('aria-current'); if (on) { const row = a.parentElement; row.scrollLeft = a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2; } });
+      railLinks.forEach(a => { const on = a.hash === '#' + en.target.id; a.classList.toggle('is-on', on); on ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'); if (on) { const row = a.parentElement; row.scrollLeft = a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2; } });
     }), { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('.chapter').forEach(c => io.observe(c));
   }
 
-  // ---- Draft options: select the hero and the animation set. Review only. Also ?hero=a|b|c and ?anim=1|2 ----
+  // ---- Hero selector for review. build.py sets data-review on <html>; set REVIEW = False there before launch. Also ?hero=a|b|c ----
   const heroes = [...document.querySelectorAll('[data-hero]')];
-  const demos = [...document.querySelectorAll('.demo')].filter(d => d.querySelector('.demo__v[data-v="2"]'));
-  if (heroes.length || demos.length) {
+  if (heroes.length) {
+    const review = document.documentElement.hasAttribute('data-review');
     const params = new URLSearchParams(location.search);
-    const state = { hero: params.get('hero') || store.get('lune2-hero') || 'b', anim: params.get('anim') || store.get('lune-anim') || '1' };
-    const bar = document.createElement('div');
-    bar.className = 'draftbar';
-    bar.setAttribute('role', 'group');
-    bar.setAttribute('aria-label', 'Draft options');
-    const group = (key, label, opts) => {
-      const lab = document.createElement('span'); lab.textContent = label;
+    const pick = params.get('hero') || (review && store.get('lune2-hero')) || 'b';
+    const show = v => heroes.forEach(h => { h.hidden = h.dataset.hero !== v; });
+    show(pick);
+    if (review) {
+      const bar = document.createElement('div');
+      bar.className = 'draftbar';
+      bar.setAttribute('role', 'group');
+      bar.setAttribute('aria-label', 'Hero option, for review');
+      const names = { a: 'Decode', b: '3D card', c: 'Journey' };
+      const lab = document.createElement('span'); lab.textContent = 'Hero';
       const box = document.createElement('div');
-      const names = { a: 'Decode', b: '3D card', c: 'Journey', 1: 'Option 1', 2: 'Option 2' };
-      opts.forEach(([v, t]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.key = key; b.dataset.val = v; b.textContent = t; b.title = names[v]; b.setAttribute('aria-label', label + ': ' + names[v]); box.append(b); });
+      Object.keys(names).forEach(v => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.dataset.val = v; b.textContent = v.toUpperCase(); b.title = names[v];
+        b.setAttribute('aria-label', 'Hero ' + names[v]); b.setAttribute('aria-pressed', String(v === pick));
+        box.append(b);
+      });
       bar.append(lab, box);
-    };
-    const wide = innerWidth >= 1100;
-    if (heroes.length) group('hero', 'Hero', wide ? [['a', 'A'], ['b', 'B'], ['c', 'C']] : [['a', 'Decode'], ['b', '3D card'], ['c', 'Journey']]);
-    if (demos.length) group('anim', 'App animation', wide ? [['1', '1'], ['2', '2']] : [['1', 'Option 1'], ['2', 'Option 2']]);
-    const apply = () => {
-      heroes.forEach(h => { h.hidden = h.dataset.hero !== state.hero; });
-      demos.forEach(d => d.querySelectorAll('.demo__v').forEach(v => { v.hidden = v.dataset.v !== state.anim; }));
-      bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(state[b.dataset.key] === b.dataset.val)));
-      requestAnimationFrame(sync);
-    };
-    bar.addEventListener('click', e => {
-      const b = e.target.closest('button');
-      if (!b) return;
-      state[b.dataset.key] = b.dataset.val;
-      store.set('lune2-' + b.dataset.key, b.dataset.val);
-      apply();
-    });
-    document.body.append(bar);
-    apply();
+      bar.addEventListener('click', e => {
+        const b = e.target.closest('button');
+        if (!b) return;
+        store.set('lune2-hero', b.dataset.val);
+        show(b.dataset.val);
+        box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+        requestAnimationFrame(sync);
+      });
+      document.body.append(bar);
+    }
+    requestAnimationFrame(sync);
   }
 
   // ---- Contact form: checks the fields, then opens an email draft ----

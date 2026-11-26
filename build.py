@@ -15,6 +15,7 @@ DOCS_API = "https://docs.lunedata.io/enrichment/enrichment-api"
 DOCS_SDK = "https://docs.lunedata.io/pfm-sdk/"
 LUNEHUB = "https://lunehub.lunedata.io/auth/login"
 LIVE = "https://www.lunedata.io"
+REVIEW = True   # shows the hero selector for review. Set to False before the site goes live.
 
 # The navigation follows the product story: Enrich first, Pulse last.
 NAV = [("enrich.html", "Enrich"), ("analytics.html", "Analytics"), ("expenses.html", "Expenses"),
@@ -34,12 +35,13 @@ def page(slug, title, desc, body):
     cur = ' aria-current="page"'
     nav = "".join(f'<a href="{h}"{cur if h == slug else ""}>{t}</a>' for h, t in NAV)
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en"{" data-review" if REVIEW else ""}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
+<link rel="preload" href="ds/fonts/PlusJakartaSans-Latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="ds/tokens/fonts.css">
 <link rel="stylesheet" href="ds/tokens/colors.css">
 <link rel="stylesheet" href="ds/tokens/typography.css">
@@ -67,7 +69,7 @@ def page(slug, title, desc, body):
   <div class="wrap site-foot__grid">
     <div><a class="brand" href="index.html"><img src="img/lune-logo.svg" alt="Lune" width="94" height="24"></a><span class="muted" style="min-height:36px">© 2026 Lune Technologies</span>
       <a href="lune-privacy/">Privacy policy</a><a href="terms/">Terms</a><a href="cookie/">Cookie policy</a></div>
-    <div><b>Enrichment</b><a href="enrich.html">Enrich</a><a href="analytics.html">Analytics</a><a href="expenses.html">Expenses</a><a href="cashflow.html">Cashflow</a><a href="ai.html">AI assistant</a></div>
+    <div><b>Products</b><a href="enrich.html">Enrich</a><a href="analytics.html">Analytics</a><a href="expenses.html">Expenses</a><a href="cashflow.html">Cashflow</a><a href="ai.html">AI assistant</a><a href="pulse.html">Pulse</a></div>
     <div><b>Pulse</b><a href="pulse.html#how">How Pulse works</a><a href="pulse.html#bank">For banks</a><a href="pulse.html#customer">For cardholders</a><a href="pulse.html#results">Results</a></div>
     <div><b>Company</b><a href="customers.html">Customers</a><a href="blog/">Blog</a><a href="contact.html">Contact sales</a></div>
     <div><b>Developers</b><a href="{DOCS_API}" target="_blank" rel="noopener">Enrichment API ↗</a><a href="{DOCS_SDK}" target="_blank" rel="noopener">Mobile SDK ↗</a><a href="{LUNEHUB}">Log in to LuneHub</a></div>
@@ -99,7 +101,7 @@ def hero(eyebrow, h1, lead, btns, side=""):
 
 
 BTN_TALK = '<a class="btn btn--primary" href="contact.html">Talk to us</a>'
-BTN_LIVE = f'<a class="btn btn--ghost" href="{SALES}" target="_blank" rel="noopener">Try enrichment live ↗</a>'
+BTN_LIVE = f'<a class="btn btn--ghost" href="{SALES}" target="_blank" rel="noopener">Try Enrich live ↗</a>'
 
 
 def shot(img, bar, cap, alt):
@@ -174,7 +176,7 @@ NEXT = {"enrich": next_step("analytics.html", "Analytics"), "analytics": next_st
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 <div class="flow__step"><span class="n">01 · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
 <div class="flow__step"><span class="n">02 · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
-<div class="flow__step"><span class="n">03 · Expenses</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step"><span class="n">03 · Expenses and Cashflow</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
 <div class="flow__step flow__step--end"><span class="n">04 · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
 </div>"""
 
@@ -213,17 +215,19 @@ STEPS = [
 ]
 
 
+PACK = {'enrich': 'Includes LuneHub', 'analytics': 'With Enrich or on its own', 'in-app': 'Two SDK modules', 'pulse': 'A separate product with its own SDK'}
+
+
 def map_step(i, st):
     sid, n, verb, prod, text, who = st
     end = " map__step--end" if i == 3 else ""
-    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{prod}</b><span class="tag">{verb}</span><p>{text}</p><span class="for">{who}</span></a>'
+    pack = PACK[sid]
+    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{prod}</b><span class="tag">{verb}</span><p>{text}</p><span class="for">{who}</span><span class="map__pack">{pack}</span></a>'
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
        + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four products</span></div>'
-       + '<div class="band" role="group" aria-label="How you buy it"><span><b>Enrich</b><i>Includes LuneHub</i></span>'
-       + "<span><b>Analytics</b><i>With Enrich or as a separate product</i></span><span><b>Expenses and Cashflow</b><i>Two SDK modules</i></span>"
-       + "<span><b>Pulse</b><i>A separate product with its own SDK</i></span></div>")
+       )
 
 RAIL = ('<nav class="rail" aria-label="Lune products"><div class="wrap rail__row">'
         + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[3]}<span>{st[2]}</span></a>' for st in STEPS) + "</div></nav>")
@@ -249,7 +253,7 @@ CHAPTERS = "\n".join([
             "LuneHub lists each enriched transaction. Analytics shows spend by brand, category and customer.",
             [("Transactions", "Each payment with its merchant"), ("Brand explorer", "Spend and customers for each brand"), ("Category explorer", "All 19 Lune categories")],
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
-            [("analytics.html", "See all Analytics screens")], LUNEHUB_DEMO, "chapter--flip"),
+            [("analytics.html", "See all Analytics screens")], ANALYTICS_DEMO, "chapter--flip"),
     chapter(2, "Your customers see where their money goes.",
             "Expenses and Cashflow add ready screens to your iOS and Android app. Each payment shows a real merchant name and logo.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
@@ -273,7 +277,7 @@ PROOF = '''
 
 PROBLEM = '''
 <div class="points">
-<div><h3>Customers do not recognise their payments</h3><p>A line such as “MAF HYPMKT MOE-0042” does not name the shop. The customer cannot see where the money went.</p></div>
+<div><h3>Customers do not recognise their payments</h3><p>Card statements show codes, not shop names. The customer cannot see where the money went.</p></div>
 <div><h3>Your teams cannot see where customers spend</h3><p>Without merchant data, card and product teams cannot find the merchants that matter most.</p></div>
 <div><h3>Your bank pays for every reward</h3><p>Each point and each cashback offer comes from your bank's budget. Merchants pay nothing.</p></div>
 </div>'''
@@ -282,7 +286,7 @@ AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid"
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
 <p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
 <div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
-<p class="buy">The <b>assistant</b> connects two products. It answers in <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
+<p class="buy">The <b>assistant</b> works inside <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
 <div class="chapter__links"><a class="more" href="ai.html">See the AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 
@@ -645,7 +649,7 @@ CONTACT = f"""{hero("Contact sales", 'Talk to our sales team about <span class="
 <div class="card card--muted"><h2 class="h3">What happens next</h2>{facts([("1.", "Our sales team replies to your request."), ("2.", "We agree a time for a live demo."), ("3.", "We show the products you selected on sample data.")])}</div>
 <div class="card card--muted"><h2 class="h3">Your data</h2><p>The first demo uses sample data only. Lune is ISO 27001 certified and has a SOC 2 Type II report.</p></div>
 <div class="card card--muted"><h2 class="h3">Contact details</h2><p><a href="mailto:hello@lunedata.io">hello@lunedata.io</a></p><p>156 Gate Avenue, DIFC<br>Dubai, United Arab Emirates</p>
-<a class="more" href="{SALES}" target="_blank" rel="noopener">Try enrichment live ↗</a></div>
+<a class="more" href="{SALES}" target="_blank" rel="noopener">Try Enrich live ↗</a></div>
 </div></div>''')}
 """
 

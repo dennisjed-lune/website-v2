@@ -3,13 +3,13 @@
 :root {
   --bg: #F3F5F2; --paper: #fff; --line: rgba(0,46,42,0.14); --mut: var(--neutral-600); --soft: var(--neutral-500);
   --r: 14px; --r-lg: 24px; --pad: clamp(20px, 4vw, 56px);
-  --ease: cubic-bezier(.2,.7,.2,1); --spring: cubic-bezier(.2,1.4,.3,1);
+  --ease: cubic-bezier(.2,.7,.2,1); --spring: cubic-bezier(.22,1,.36,1);
 }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 body { margin: 0; background: var(--bg); color: var(--lune-teal); font-family: var(--font-sans); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 a { color: var(--lune-teal-700); }
-a:hover { color: var(--lune-emerald); }
+a:hover { color: var(--lune-teal-700); text-decoration: underline; text-underline-offset: 3px; }
 @keyframes mq { to { transform: translateX(-50%); } }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
@@ -33,7 +33,7 @@ a:hover { color: var(--lune-emerald); }
 .sec--bg > .wrap { position: relative; }
 .sec__bg { position: absolute; inset: 0; pointer-events: none; }
 .sec--teal .sec__bg { -webkit-mask-image: linear-gradient(90deg, transparent 55%, #000 75%); mask-image: linear-gradient(90deg, transparent 55%, #000 75%); bottom: 45%; }
-.drift { position: absolute; font-family: var(--font-mono); font-size: clamp(12px, 1.1vw, 15px); white-space: nowrap; color: #fff; opacity: calc(var(--o, .5) * .2); will-change: translate; }
+.drift { position: absolute; font-family: var(--font-mono); font-size: clamp(12px, 1.1vw, 15px); white-space: nowrap; color: #fff; opacity: calc(var(--o, .5) * .2); }
 .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 5vw, 72px); }
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0 clamp(20px, 3vw, 40px); }
 .cols--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 24px; }
@@ -76,7 +76,7 @@ h4 { font-size: 15px; }
 .btn--sm { min-height: 44px; padding-left: 20px; font-size: 15px; }
 .btn--sm::after { width: 30px; height: 30px; background-size: 15px; }
 .more { color: var(--lune-teal-700); font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; border-bottom: 0; }
-.more:hover { color: var(--lune-emerald); }
+.more:hover { color: var(--lune-teal-700); text-decoration: underline; text-underline-offset: 3px; }
 .sec--teal .more, .sec--ink .more { color: var(--lune-mint); }
 a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:active, .map__step:active { opacity: 0.65; }
 
@@ -508,7 +508,7 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 .rv.in { opacity: 1; transform: none; filter: none; }
 .shot.rv, .map.rv, .flow.rv { transform: scale(.965); filter: blur(6px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); }
 .shot.rv.in, .map.rv.in, .flow.rv.in { transform: none; filter: none; }
-[data-parallax], [data-parallax-top] { will-change: translate; }
+
 
 /* Demo steps */
 .dv { position: relative; }
@@ -849,7 +849,7 @@ main:focus { outline: none; }
 /* ---- Polish pass ---- */
 h3, .buy, .card p, .points p, .kv span { text-wrap: pretty; }
 h3 { text-wrap: balance; }
-:focus-visible { outline: 2px solid var(--lune-emerald); outline-offset: 3px; border-radius: 6px; }
+:focus-visible { outline: 2px solid var(--lune-teal-700); outline-offset: 3px; border-radius: 6px; }
 .sec--ink :focus-visible, .sec--teal :focus-visible, .cta :focus-visible, .rail :focus-visible, .draftbar :focus-visible { outline-color: var(--lune-mint); }
 ::selection { background: var(--lune-mint); color: var(--lune-teal); }
 .stage .unit:has(.chat) .pop--l2 { top: 30%; }
@@ -939,3 +939,17 @@ h3 { text-wrap: balance; }
 /* ---- Lune wordmark from Lune UI (assets/lune-logo.svg) ---- */
 .brand img { display: block; height: 28px; width: auto; }
 .site-foot .brand img { height: 24px; }
+
+/* ---- Audit fixes 26 Nov ---- */
+/* Pop-out cards on the paired phones stay inside the demo frame. */
+.stage--pair .pop--r1, .stage--pair .pop--r2, .stage--pair .pop--r3 { left: auto; right: -14%; }
+/* Packaging line in each product card of the map. */
+.map__pack { margin-top: auto; padding-top: 14px; font-size: 13.5px; font-weight: 600; color: var(--lune-teal-700); }
+.map__step--end .map__pack { color: var(--lune-mint); }
+/* Review bar below 1100px: small, bottom left, clear of the content column centre. */
+@media (max-width: 1099px) {
+  .draftbar { left: 10px; translate: none; gap: 8px; padding: 4px 4px 4px 12px; }
+  .draftbar button { min-width: 36px; min-height: 36px; padding: 0 10px; }
+}
+/* Links inside blog posts and legal pages are underlined, not shown by colour only. */
+.post__body a { text-decoration: underline; text-underline-offset: 3px; }
