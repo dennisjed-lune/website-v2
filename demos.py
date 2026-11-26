@@ -332,8 +332,8 @@ SCENE = f'''<div class="scene dv" data-steps="700,1000,800,800,800,2600" data-ho
 JOURNEY = f'''<div class="journey dv" data-steps="900,1300,1300,1300,1300,2800" data-hook="tx" data-only="offer" aria-hidden="true">
 <div class="journey__line"><i></i></div>
 <div class="jn jn--0"><span class="jn__k">Card payment</span><code data-f="raw">POS PUR 448812 LVL SHS DXB MALL 00AE</code><span data-f="amt">AED 1,032.00</span></div>
-<div class="jn jn--1"><span class="jn__k"><b>01</b>Name</span><div class="jn__who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div></div>
-<div class="jn jn--2"><span class="jn__k"><b>02</b>See</span><div class="jn__bars"><u style="--w:100%"></u><u style="--w:72%"></u><u style="--w:46%"></u></div><span class="jn__s">Spend by brand, in LuneHub</span></div>
-<div class="jn jn--3"><span class="jn__k"><b>03</b>Show</span><div class="jn__who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="amt">AED 1,032.00</span></div></div><span class="jn__s">A clear name in your app</span></div>
-<div class="jn jn--4"><span class="jn__k"><b>04</b>Earn</span><b class="jn__big" data-f="offer">10% cashback</b><span class="jn__s">Funded by the merchant</span></div>
+<div class="jn jn--1"><span class="jn__k">Enrich</span><div class="jn__who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div></div>
+<div class="jn jn--2"><span class="jn__k">Analytics</span><div class="jn__bars"><u style="--w:100%"></u><u style="--w:72%"></u><u style="--w:46%"></u></div><span class="jn__s">Spend by brand, in LuneHub</span></div>
+<div class="jn jn--3"><span class="jn__k">PFM</span><div class="jn__who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="amt">AED 1,032.00</span></div></div><span class="jn__s">A clear name in your app</span></div>
+<div class="jn jn--4"><span class="jn__k">Pulse</span><b class="jn__big" data-f="offer">10% cashback</b><span class="jn__s">Funded by the merchant</span></div>
 </div>'''
