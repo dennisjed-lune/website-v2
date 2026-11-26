@@ -935,3 +935,7 @@ h3 { text-wrap: balance; }
 .post--legal .post__body h2 { font-size: 22px; }
 .post__body table { border-collapse: collapse; width: 100%; max-width: none; font-size: 15px; margin: 1.4em 0; display: block; overflow-x: auto; }
 .post__body th, .post__body td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+
+/* ---- Lune wordmark from Lune UI (assets/lune-logo.svg) ---- */
+.brand img { display: block; height: 28px; width: auto; }
+.site-foot .brand img { height: 24px; }
