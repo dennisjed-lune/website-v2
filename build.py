@@ -393,9 +393,17 @@ CATEGORY_MORE = f'''
 ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class="serif">by merchant and category.</span>',
  "Analytics shows spend by merchant, category and customer from your enriched transactions. Your teams get answers without a data request.", BTN_TALK, ANALYTICS_DEMO)}
 
+{sec(feature("Overview", "See your card base and enriched volume at a glance.", "The Overview is the first screen in LuneHub. It shows how many cardholders transact and how many transactions Lune enriched.",
+ [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
+ shot("lunehub-overview.jpg", "LuneHub · Overview", "", "LuneHub overview with cardholders with transactions, enriched transactions against the plan, and transactions by date")), "sec--white")}
+
+{sec(feature("Transactions", "Every enriched card transaction, in one list.", "Each row shows the raw card description next to the brand, logo and category that Lune returned.",
+ [("Search", "by raw description or transaction ID."), ("Filter", "the list to the transactions you need."), ("Report", "a wrong brand or category from the row.")],
+ shot("lunehub-transactions-list.jpg", "LuneHub · Transactions", "", "LuneHub transactions list with raw description, brand, category, date, amount and currency")))}
+
 {sec(feature("Spend dashboard", "One view of customers, transactions and spend.", "Select a date range, a currency and a country. The dashboard shows the totals and the split.",
  [("Total customers", "and total transactions."), ("Total spend", "and spend per customer."), ("Spend by category and brand", "in one chart.")],
- shot("lunehub-analytics-dashboard.jpg", "LuneHub · Analytics · Dashboard", "The Analytics dashboard in LuneHub. " + TEST, "LuneHub analytics dashboard with total customers, transactions, spend and spend per customer")), "sec--white")}
+ shot("lunehub-dashboard.jpg", "LuneHub · Analytics · Dashboard", "", "LuneHub analytics dashboard with total customers, transactions, spend and spend per customer")), "sec--white")}
 
 {sec(feature("Brand explorer", "Find the merchants where your customers spend most.", "The Brand explorer lists each enriched merchant with six columns. Your team filters and sorts the list to find the brands that matter.",
  [("Brand and category", "for each enriched merchant."), ("Total spend and transactions", "for the period you select."), ("Customers", "who paid that brand with your cards."), ("Spend per customer", "to compare brands of different size.")],
@@ -407,14 +415,6 @@ ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class=
 
 {sec('''<div class="split"><div class="head"><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
 <div class="feature__copy"><p class="lead">The Brand explorer shows the merchants where your customers spend most. Through Pulse, those merchants fund cashback for your customers.</p>''' + facts([("One portal.", "Analytics and Pulse share one LuneHub sign-in."), ("One data set.", "Pulse audiences come from the same enriched transactions."), ("Your data only.", "Each bank sees its own customers and transactions.")]) + '''<a class="more" href="pulse.html">See Pulse →</a></div></div>''', "sec--teal")}
-
-{sec(head("Also in LuneHub", "Your teams answer spend questions in one place.") + f'''
-<div class="cols">
-{card("", "Spend over time", "Daily, weekly or monthly trends, with the leaders and the split by category.")}
-{card("", "Enriched transactions", "Search and filter each transaction with its merchant, logo and category.")}
-{card("", "Usage and access", "Track enrichment usage against your plan. Manage API keys and invite your team.")}
-</div>''')}
-
 {NEXT["analytics"]}
 
 {cta("See your own spend data in LuneHub.", "We show Analytics with sample data, or with a sample of your own enriched transactions.")}
