@@ -86,14 +86,13 @@ def sec(inner, cls="", id_="", pre=""):
 
 def head(eyebrow, h2, lead=""):
     p = f'<p class="lead">{lead}</p>' if lead else ""
-    e = ""
-    return f'<div class="head">{e}<h2>{h2}</h2>{p}</div>'
+    return f'<div class="head"><p class="eyebrow">{eyebrow}</p><h2>{h2}</h2>{p}</div>'
 
 
 def hero(eyebrow, h1, lead, btns, side=""):
     grid = "hero__grid" if side else ""
     return f"""<section class="hero"><div class="wrap {grid}">
-  <div class="hero__copy"><h1 class="h1--page">{h1}</h1><p class="lead">{lead}</p><div class="btns">{btns}</div></div>
+  <div class="hero__copy"><p class="eyebrow">{eyebrow}</p><h1 class="h1--page">{h1}</h1><p class="lead">{lead}</p><div class="btns">{btns}</div></div>
   {side}
 </div></section>"""
 
@@ -132,7 +131,7 @@ def facts(items):
 
 def feature(eyebrow, h3, body, items, fig, wide=True, link=None):
     ln = f'<a class="more" href="{link[0]}">{link[1]} →</a>' if link else ""
-    return f"""<div class="feature {'feature--wide' if wide else ''}"><div class="feature__copy"><h2 style="font-size:clamp(26px,2.6vw,38px)">{h3}</h2>
+    return f"""<div class="feature {'feature--wide' if wide else ''}"><div class="feature__copy"><p class="eyebrow">{eyebrow}</p><h2 style="font-size:clamp(26px,2.6vw,38px)">{h3}</h2>
 <p class="lead">{body}</p>{facts(items)}{ln}</div>{fig}</div>"""
 
 
@@ -157,7 +156,8 @@ BADGES = '<div class="badges"><span>Certified and audited for regulated banks</s
 def logos():
     hid = ' aria-hidden="true"'
     row = "".join(f'<img src="img/clients/{f}" alt="{e(a)}">' for f, a in CLIENTS)
-    return f'<div class="wrap logos"><p class="eyebrow muted" style="color:var(--neutral-500)">Trusted by banks and fintechs across the Middle East</p><div class="logos__mask"><div class="logos__row">{row}</div></div></div>'
+    dup = "".join(f'<img src="img/clients/{f}" alt="">' for f, a in CLIENTS)   # second copy for the continuous slide
+    return f'<div class="wrap logos"><p class="eyebrow muted" style="color:var(--neutral-500)">Trusted by banks and fintechs across the Middle East</p><div class="logos__mask"><div class="logos__row">{row}<span class="logos__dup" aria-hidden="true">{dup}</span></div></div></div>'
 
 
 TEST = "Illustration of the product screen with sample data."
@@ -223,7 +223,10 @@ def map_step(i, st):
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
-       + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four steps</span></div>')
+       + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four steps</span></div>'
+       + '<div class="band"><span class="eyebrow">How you buy it</span><span><b>Enrich</b><i>Includes LuneHub</i></span>'
+       + "<span><b>Analytics</b><i>With Enrich or as a separate product</i></span><span><b>Expenses and Cashflow</b><i>Two SDK modules</i></span>"
+       + "<span><b>Pulse</b><i>A separate product with its own SDK</i></span></div>")
 
 RAIL = ('<nav class="rail" aria-label="Product story"><div class="wrap rail__row">'
         + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[2]}<span>{st[3]}</span></a>' for st in STEPS) + "</div></nav>")
@@ -273,13 +276,13 @@ PROOF = '''
 
 PROBLEM = '''
 <div class="points">
-<div><h3>Customers do not recognise their payments</h3><p>A line such as “MAF HYPMKT MOE-0042” does not name the shop. The customer cannot see where the money went.</p></div>
-<div><h3>Your teams cannot see where customers spend</h3><p>Without merchant data, card and product teams cannot find the merchants that matter most.</p></div>
-<div><h3>Your bank pays for every reward</h3><p>A rewards programme uses the bank's budget. Merchants pay to reach cardholders who match their target.</p></div>
+<div><code class="points__raw">MAF HYPMKT MOE-0042 DXB ARE</code><h3>Customers do not recognise their payments</h3><p>A line such as “MAF HYPMKT MOE-0042” does not name the shop. The customer cannot see where the money went.</p></div>
+<div><code class="points__raw">ALSHAYA SBX 0921 DIFC GT AE</code><h3>Your teams cannot see where customers spend</h3><p>Without merchant data, card and product teams cannot find the merchants that matter most.</p></div>
+<div><code class="points__raw">NF* 8665797172 LOS GATOS 00012</code><h3>Your bank pays for every reward</h3><p>A rewards programme uses the bank's budget. Merchants pay to reach cardholders who match their target.</p></div>
 </div>'''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
-<div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
+<div class="feature__copy chapter__copy"><p class="eyebrow">AI assistant</p><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
 <p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
 <div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
 <p class="buy">The <b>assistant</b> connects two steps. It answers in <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
@@ -288,9 +291,9 @@ AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid"
 
 HOME = f"""{HEROES}
 
-{sec(head("", 'Card data can grow your revenue. Today, most of it is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal sec--bg", pre=drift(6))}
+{sec(head("The problem", 'Card data can grow your revenue. Today, most of it is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal sec--bg", pre=drift(6))}
 
-{sec(head("", 'Four steps from card data to <span class="serif">card revenue.</span>', "Enrich is the foundation. Each product after it uses the same enriched transactions.") + MAP, id_="how")}
+{sec(head("The solution", 'Four steps from card data to <span class="serif">card revenue.</span>', "Enrich is the foundation. Each product after it uses the same enriched transactions.") + MAP, id_="how")}
 
 <div class="story">{RAIL}
 {CHAPTERS}
@@ -402,7 +405,7 @@ ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class=
  [("Total spend and transactions", "for each category."), ("Customers", "who spend in each category."), ("The number of subcategories", "below each category.")],
  shot("lunehub-analytics-categories.jpg", "LuneHub · Analytics · Categories", "The Category explorer in LuneHub, with the first eight of 19 categories. " + TEST, "LuneHub category explorer with spend, transactions, customers and subcategories")) + CATEGORY_MORE, "sec--white")}
 
-{sec('''<div class="split"><div class="head"><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
+{sec('''<div class="split"><div class="head"><p class="eyebrow">From insight to revenue</p><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
 <div class="feature__copy"><p class="lead">The Brand explorer shows the merchants where your customers spend most. Through Pulse, those merchants fund cashback for your customers.</p>''' + facts([("One portal.", "Analytics and Pulse share one LuneHub sign-in."), ("One data set.", "Pulse audiences come from the same enriched transactions."), ("Your data only.", "Each bank sees its own customers and transactions.")]) + '''<a class="more" href="pulse.html">See Pulse →</a></div></div>''', "sec--teal")}
 
 {sec(head("Also in LuneHub", "Your teams answer spend questions in one place.") + f'''
@@ -603,7 +606,7 @@ STUDIES = [
 def study(s):
     sid, logo, name, kind, title, dl, ch, dv, out, quote = s
     d = "".join(f"<div><dt>{k}</dt><dd>{v}</dd></div>" for k, v in dl)
-    q = f'<p style="font-family:var(--font-display);font-style:italic;font-weight:600;font-size:22px;line-height:1.3;color:var(--lune-teal)">{quote}</p>' if quote else ""
+    q = f'<p style="font-weight:600;letter-spacing:-0.01em;font-size:22px;line-height:1.3;color:var(--lune-teal)">{quote}</p>' if quote else ""
     return f"""<article class="card study" id="{sid}"><img class="logo" src="img/clients/{logo}" alt="{e(name)}"><span class="tag">{kind}</span><h3 class="h2" style="font-size:clamp(24px,2.4vw,34px)">{title}</h3>
 <dl>{d}</dl><div class="cols"><div><h4 style="margin:0 0 6px">The challenge</h4><p>{ch}</p></div><div><h4 style="margin:0 0 6px">What Lune delivered</h4><p>{dv}</p></div>
 <div><h4 style="margin:0 0 6px">The outcome</h4>{facts([(o, "") for o in out])}</div></div>{q}</article>"""
