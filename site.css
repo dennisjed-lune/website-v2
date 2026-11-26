@@ -258,7 +258,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .points p { margin: 0; color: var(--mut); line-height: 1.6; }
 
 /* ---- The solution map: four steps on one data set ---- */
-.map { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); border: 1px solid var(--line); border-radius: var(--r-lg) var(--r-lg) 0 0; background: var(--paper); overflow: hidden; }
+.map { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper); overflow: hidden; }
 .map__step { position: relative; text-decoration: none; color: var(--lune-teal); padding: clamp(22px, 2.4vw, 34px); display: grid; gap: 12px; align-content: start; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; transition: background .25s; }
 .map__step:hover { background: var(--neutral-25); color: var(--lune-teal); text-decoration: none; }
 .map__step .n { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--lune-teal-700); display: flex; justify-content: space-between; }
@@ -963,3 +963,8 @@ h3 { text-wrap: balance; }
 .site-nav a { border-radius: 8px; }
 .draftbar { border-radius: 12px; }
 .draftbar div, .draftbar button { border-radius: 8px; }
+
+/* ---- Product map: one-line names, text and buying lines on the same rows in every card ---- */
+.map__step { display: flex; flex-direction: column; gap: 12px; }
+.map__verb { white-space: nowrap; }
+.map__pack { margin-top: auto; }

@@ -176,7 +176,7 @@ NEXT = {"enrich": next_step("analytics.html", "Analytics"), "analytics": next_st
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 <div class="flow__step"><span class="n">01 · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
 <div class="flow__step"><span class="n">02 · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
-<div class="flow__step"><span class="n">03 · Expenses and Cashflow</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step"><span class="n">03 · PFM</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
 <div class="flow__step flow__step--end"><span class="n">04 · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
 </div>"""
 
@@ -210,7 +210,7 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 STEPS = [
     ("enrich", "01", "Name", "Enrich", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "In LuneHub, your teams see each transaction and where customers spend.", "For your card and data teams"),
-    ("in-app", "03", "Show", "Expenses and Cashflow", "Your customers see where their money goes, in your app.", "For your customers"),
+    ("in-app", "03", "Show", "PFM", "Expenses and Cashflow show your customers where their money goes, in your app.", "For your customers"),
     ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
 ]
 
@@ -226,7 +226,6 @@ def map_step(i, st):
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
-       + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four products</span></div>'
        )
 
 RAIL = ('<nav class="rail" aria-label="Lune products"><div class="wrap rail__row">'
