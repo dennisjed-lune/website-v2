@@ -6,7 +6,7 @@ The build prints each sentence that breaks the length or punctuation rule.
 """
 import html, re, sys
 from mocks import MOCKS
-from demos import AI_DEMO, CF_HOME, CF_IN, CF_TREND, EX_BRAND, EX_TX, phone_drawn, TIER_DEMO, LUNEHUB_DEMO, ANALYTICS_DEMO, DECODER, ENRICH_DEMO, JOURNEY, PULSE_DEMO, SCENE, drift, phones_demo
+from demos import AI_DEMO, SNIPS, CF_HOME, CF_IN, CF_TREND, EX_BRAND, EX_TX, phone_drawn, TIER_DEMO, LUNEHUB_DEMO, ANALYTICS_DEMO, DECODER, ENRICH_DEMO, JOURNEY, PULSE_DEMO, SCENE, drift, phones_demo
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -173,10 +173,10 @@ NEXT = {"enrich": next_step("analytics.html", "See: LuneHub and Analytics"), "an
 
 # ------------------------------------------------------------------ HOME
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
-<div class="flow__step"><span class="n">01</span><h3>Card description from your bank</h3><span class="v mono">POS PUR 448812 LVL SHS DXB MALL 00AE</span><span class="v">AED 1,032.00</span></div>
-<div class="flow__step"><span class="n">02</span><h3>Enriched by Lune</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
-<div class="flow__step"><span class="n">03</span><h3>Matched to an activated offer</h3><span class="v"><b style="color:#fff">10% cashback</b><br>Funded by Level Shoes</span></div>
-<div class="flow__step flow__step--end"><span class="n">04</span><h3>Cashback recorded</h3><span class="big">AED 103.20</span><span class="v">The merchant pays the cashback. Your bank uses no rewards budget.</span></div>
+<div class="flow__step"><span class="n">01 · Name</span><h3>Enrich names the payment</h3><span class="v mono">POS PUR 448812 LVL SHS DXB MALL 00AE</span><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
+<div class="flow__step"><span class="n">02 · See</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
+<div class="flow__step"><span class="n">03 · Show</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step flow__step--end"><span class="n">04 · Earn</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">10% cashback. Level Shoes pays it. Your bank uses no rewards budget.</span></div>
 </div><p class="small">Example transaction.</p>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
@@ -195,8 +195,8 @@ HEROES = f"""<section class="hero heroA" data-hero="a"><div class="heroA__grid" 
   <div class="hero__copy">
     {HERO_COPY}
   </div>
-  {SCENE}
-</div><div class="wrap"><p class="small">Example payment. Lune adds the merchant, logo and category to each card payment.</p></div></section>
+  <div class="scene-col">{SCENE}<p class="small">Example payment. Lune names the merchant, then matches a cashback offer.</p></div>
+</div></section>
 <section class="hero heroC" data-hero="c" hidden><div class="wrap heroC__in">
     {HERO_COPY}
     {JOURNEY}
@@ -298,7 +298,7 @@ HOME = f"""{HEROES}
 
 {AI}
 
-{sec(head("One payment, four steps", 'One card payment becomes a <span class="serif">merchant-funded reward.</span>', "The same transaction moves from a card description to recorded cashback.") + FLOW, "sec--ink")}
+{sec(head("One payment, four steps", 'One card payment becomes a <span class="serif">merchant-funded reward.</span>', "The same transaction moves through the four steps.") + FLOW, "sec--ink")}
 
 {sec(stats() + PROOF + BADGES, "sec--white", "proof")}
 
@@ -652,27 +652,16 @@ CONTACT = f"""{hero("Contact sales", 'Talk to our sales team about <span class="
 AI_PAGE = f"""{hero("AI assistant", 'Customers ask about their money. <span class="serif">The assistant answers.</span>',
  "A conversational assistant runs inside Expenses and Cashflow in your app. It answers from the customer's enriched transactions and shows Pulse offers that match their spend.", BTN_TALK + BTN_SDK, AI_DEMO)}
 
-{sec(head("How it works", "A question, an answer, then an offer.", "The assistant uses the same enriched transactions as each Lune product.") + f'''
-<div class="cols cols--3">
-{card("01", "The customer asks", "The customer types a question in plain language. No menus and no filters.")}
-{card("02", "The assistant answers", "The answer uses the customer's own payments, with real merchant names and categories.")}
-{card("03", "The assistant shows an offer", "The assistant shows a Pulse offer from a merchant where the customer already spends.")}
-</div>''', "sec--white")}
+{sec(head("What customers ask", "Each question gets an answer from real payments.", "Four example questions with sample data.") + f'''
+<div class="snips">{SNIPS}</div><p class="small">Illustration of the assistant with sample data.</p>''', "sec--white")}
 
-{sec(head("What customers ask", "Questions about spend get a clear answer.", "Example questions. The assistant answers each one from enriched transactions.") + f'''
+{sec(head("For your bank", "The assistant uses products your bank controls.") + f'''
 <div class="cols cols--4">
-{card("", "“How much did I spend on shopping?”", "Spend for one category in a period.")}
-{card("", "“Where do I spend the most?”", "The top merchants, by name.")}
-{card("", "“Did I spend more than last month?”", "One month against another month.")}
-{card("", "“Are there offers for me?”", "Pulse offers that match the customer's spend.")}
+{card("", "In your app", "The assistant runs in the Lune SDK, inside Expenses and Cashflow. It uses your colours.")}
+{card("", "The customer's own data", "Each answer comes from that customer's enriched transactions.")}
+{card("", "Offers you approve", "The assistant shows Pulse offers. Your bank approves each offer.")}
+{card("", "Merchant-funded rewards", "The merchant funds each reward. Your bank uses no rewards budget.")}
 </div>''')}
-
-{sec(head("For your bank", "The assistant connects spend insight to card revenue.") + f'''
-<div class="cols cols--3">
-{card("", "In your app", "The assistant runs in the Expenses and Cashflow screens of the Lune SDK, for iOS and Android.")}
-{card("", "On enriched data", "Enrich gives each payment a merchant and a category. The assistant answers from that data.")}
-{card("", "With Pulse offers", "An offer appears next to the answer. The merchant funds the reward, and the customer earns with your card.")}
-</div>''', "sec--white")}
 
 {cta("See the AI assistant in a sample bank app.", "Contact sales for a live demo of the assistant on sample data.", BTN_SDK)}
 """

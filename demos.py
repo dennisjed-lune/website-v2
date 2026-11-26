@@ -216,12 +216,36 @@ CHAT = f"""<div class="app chat">{TIME}
 <div class="chat__row"><img src="{LOGO}levelshoes.png" alt=""><span><b>10% cashback</b><i>At Level Shoes, with your card</i></span></div>
 <span class="chat__btn"><i>Activate offer</i><i>Offer activated</i><span class="tap tap--btn"></span></span></div>
 <p class="chat__bot chat__done fx at4">Done. Pay with your card at Level Shoes to earn the cashback.</p>
-<div class="chat__chips"><i>Top merchants</i><i>Subscriptions</i><i>This month against last month</i></div>
+<div class="chat__chips"><i>Top merchants</i><i>Compare months</i><i>Offers for me</i></div>
 <div class="chat__input"><span>Ask about your spending</span><u></u></div>
 </div>"""
 CHAT_POPS = [pop("l2", 2, "spark", "Answer from your data", "Real merchant names"), pop("r3", 3, "store", "Pulse offer", "Matches shopping spend")]
 AI_DEMO = demo("ai", ("Assistant in the Lune SDK", stage("Assistant", unit("Assistant", "A question, an answer and an offer", CHAT, CHAT_POPS), "700,1500,3000,2600,4400",
                       "A customer asks about shopping spend. The assistant answers and shows a cashback offer from the top merchant"), "Illustration of the assistant with sample data."), cls="demo--phones")
+
+
+def crow(logo, name, sub, amt=""):
+    em = f"<em>{amt}</em>" if amt else ""
+    return f'<div class="chat__row"><img src="{LOGO}{logo}" alt=""><span><b>{name}</b><i>{sub}</i></span>{em}</div>'
+
+
+def snip(q, answer):
+    return f'<div class="snip"><div class="snip__scr chat" role="img" aria-label="{e(q)}"><p class="chat__me">{q}</p>{answer}</div></div>'
+
+
+# Four still question-and-answer examples for the AI page. Amounts agree with the Expenses screens.
+SNIPS = "".join([
+    snip("How much did I spend on shopping this month?",
+         '<div class="chat__bot"><p>You spent <b>AED 1,840</b> on shopping this month.</p>' + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 445.00") + "</div>"),
+    snip("Where do I spend the most?",
+         '<div class="chat__bot"><p>Your top three merchants this month:</p>' + crow("carrefour.png", "Carrefour", "Groceries › Supermarket", "AED 1,240.00") + crow("levelshoes.png", "Level Shoes", "Shopping › Clothing", "AED 1,032.00") + crow("ikea.png", "IKEA", "Shopping › Furniture", "AED 445.00") + "</div>"),
+    snip("Did I spend more than last month?",
+         '<div class="chat__bot"><p>No. You spent <b>AED 6,808</b> so far this month. That is <b>AED 187 less</b> than last month.</p>'
+         '<div class="chat__cmp"><span>This month<u style="--w:97%"></u><em>AED 6,808</em></span><span>Last month<u class="was" style="--w:100%"></u><em>AED 6,995</em></span></div></div>'),
+    snip("Are there offers for me?",
+         '<div class="chat__bot"><p>Yes. You spent <b>AED 1,032</b> at Level Shoes this month.</p></div>'
+         '<div class="chat__bot chat__offer"><span class="chat__tag">Offer for you</span>' + crow("levelshoes.png", "10% cashback", "At Level Shoes, with your card") + '<span class="chat__btn"><i>Activate offer</i></span></div>'),
+])
 
 
 def phones_demo(kind):
@@ -296,11 +320,11 @@ SCENE = f'''<div class="scene dv" data-steps="700,1000,800,800,800,2600" data-ho
 <div class="scene__tilt">
 <div class="bankcard bankcard--c"></div><div class="bankcard bankcard--b"></div>
 <div class="bankcard"><span class="bankcard__brand"><i></i>Your bank</span><span class="bankcard__chip"></span><span class="bankcard__no">Gold credit</span><span class="bankcard__tap"></span></div>
-<div class="fl fl--raw"><span class="dc__lab">From your bank</span><code data-f="raw">POS PUR 448812 LVL SHS DXB MALL 00AE</code></div>
-<div class="fl fl--who"><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div>
+<div class="fl fl--raw"><i class="fl__n">1</i><span class="dc__lab">From your bank</span><code data-f="raw">POS PUR 448812 LVL SHS DXB MALL 00AE</code></div>
+<div class="fl fl--who"><i class="fl__n">2</i><img data-f="logo" src="{LOGO}levelshoes.png" alt=""><div><b data-f="merchant">Level Shoes</b><span data-f="cat">Shopping › Clothing</span></div></div>
 <div class="fl fl--amt"><span class="dc__lab">Amount</span><b data-f="amt">AED 1,032.00</b></div>
 <div class="fl fl--bars"><span class="dc__lab">Spend by category</span><u style="--w:100%"></u><u style="--w:74%"></u><u style="--w:52%"></u><u style="--w:31%"></u></div>
-<div class="fl fl--offer"><span class="tx__offer" data-f="offer">10% cashback</span></div>
+<div class="fl fl--offer"><i class="fl__n">3</i><span class="tx__offer" data-f="offer">10% cashback</span></div>
 </div></div>'''
 
 JOURNEY = f'''<div class="journey dv" data-steps="900,1300,1300,1300,1300,2800" data-hook="tx" data-only="offer" aria-hidden="true">
