@@ -968,3 +968,14 @@ h3 { text-wrap: balance; }
 .map__step { display: flex; flex-direction: column; gap: 12px; }
 .map__verb { white-space: nowrap; }
 .map__pack { margin-top: auto; }
+
+/* ---- Polish 26 Nov ---- */
+/* Case cards: light, with the client logo, so they read as proof and not as empty tiles. */
+.case { align-content: space-between; min-height: 170px; }
+.case img { height: 32px; width: auto; max-width: 150px; object-fit: contain; object-position: left center; }
+/* Certification tags read as plain facts, not as code. */
+.badges span { font-family: inherit; letter-spacing: 0; font-size: 13.5px; text-transform: none; }
+/* Cashflow "Smart insight" card on the home page covers the summary text, so it stays off there. */
+.stage--pair .unit + .unit .pop--r3 { display: none; }
+/* Hero B at phone width: the merchant chip sits below the raw line, not on it. */
+@media (max-width: 760px) { .fl--who { top: 31%; } }

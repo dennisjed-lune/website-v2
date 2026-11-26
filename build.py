@@ -41,6 +41,7 @@ def page(slug, title, desc, body):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="ds/fonts/PlusJakartaSans-Latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="ds/tokens/fonts.css">
 <link rel="stylesheet" href="ds/tokens/colors.css">
@@ -270,8 +271,8 @@ PROOF = '''
 <figure class="quote"><blockquote>“We integrated Lune Enrich in a couple of months, with the team being responsive and helping every step of the way.”</blockquote>
 <figcaption><img src="img/clients/d360.avif" alt="D360 Bank"><span><b>Masharty</b><i>Associate Director, D360 Bank</i></span></figcaption></figure>
 <div style="display:grid;gap:20px">
-<a class="case case--dark" href="customers.html#adib"><b>ADIB shows customers where their money goes. →</b></a>
-<a class="case" href="customers.html#nbf"><b>NBF replaced manual data work with structured insight. →</b></a>
+<a class="case" href="customers.html#adib"><img src="img/clients/adib.avif" alt="ADIB" height="32"><b>ADIB shows customers where their money goes. →</b></a>
+<a class="case" href="customers.html#nbf"><img src="img/clients/nbf.avif" alt="National Bank of Fujairah" height="32"><b>NBF replaced manual data work with structured insight. →</b></a>
 </div></div>'''
 
 PROBLEM = '''
