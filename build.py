@@ -164,19 +164,19 @@ TEST = ""   # one sample-data note sits in the page footer
 
 
 def next_step(href, text):
-    return f'<section class="sec"><div class="wrap"><div class="next"><span>The next Lune product</span><a href="{href}">{text} →</a></div></div></section>'
+    return f'<section class="sec"><div class="wrap"><div class="next"><span>The next step in the Lune story</span><a href="{href}">{text} →</a></div></div></section>'
 
 
-NEXT = {"enrich": next_step("analytics.html", "Analytics"), "analytics": next_step("expenses.html", "Expenses"),
-        "expenses": next_step("cashflow.html", "Cashflow"), "cashflow": next_step("pulse.html", "Pulse"),
-        "pulse": next_step("enrich.html", "Enrich").replace("The next Lune product", "Back to the first Lune product")}
+NEXT = {"enrich": next_step("analytics.html", "See: LuneHub and Analytics"), "analytics": next_step("expenses.html", "Show: Expenses"),
+        "expenses": next_step("cashflow.html", "Show: Cashflow"), "cashflow": next_step("pulse.html", "Earn: Pulse"),
+        "pulse": next_step("enrich.html", "Start of the story: Enrich").replace("The next step in the Lune story", "Pulse is the last step in the Lune story")}
 
 # ------------------------------------------------------------------ HOME
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
-<div class="flow__step"><span class="n">01 · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
-<div class="flow__step"><span class="n">02 · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
-<div class="flow__step"><span class="n">03 · Expenses</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
-<div class="flow__step flow__step--end"><span class="n">04 · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
+<div class="flow__step"><span class="n">01 · Name</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
+<div class="flow__step"><span class="n">02 · See</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
+<div class="flow__step"><span class="n">03 · Show</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step flow__step--end"><span class="n">04 · Earn</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
@@ -207,27 +207,27 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 
 # The solution in one picture: four steps, one data set. Each step links to its chapter.
 STEPS = [
-    ("enrich", "01", "Enrich", "Transaction enrichment", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
-    ("analytics", "02", "Analytics", "In LuneHub", "Your teams see each transaction and where customers spend.", "For your card and data teams"),
-    ("in-app", "03", "Expenses and Cashflow", "Mobile SDK", "Your customers see where their money goes, in your app.", "For your customers"),
-    ("pulse", "04", "Pulse", "Merchant-funded rewards", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
+    ("enrich", "01", "Name", "Enrich", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
+    ("analytics", "02", "See", "LuneHub and Analytics", "Your teams see each transaction and where customers spend.", "For your card and data teams"),
+    ("in-app", "03", "Show", "Expenses and Cashflow", "Your customers see where their money goes, in your app.", "For your customers"),
+    ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
 ]
 
 
 def map_step(i, st):
     sid, n, verb, prod, text, who = st
     end = " map__step--end" if i == 3 else ""
-    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{verb}</b><p>{text}</p><span class="for">{who}</span></a>'
+    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{verb}</b><span class="tag">{prod}</span><p>{text}</p><span class="for">{who}</span></a>'
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
-       + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four products</span></div>'
+       + '<div class="map__base"><b>Enriched transactions</b><span>One data set under all four steps</span></div>'
        + '<div class="band" role="group" aria-label="How you buy it"><span><b>Enrich</b><i>Includes LuneHub</i></span>'
        + "<span><b>Analytics</b><i>With Enrich or as a separate product</i></span><span><b>Expenses and Cashflow</b><i>Two SDK modules</i></span>"
        + "<span><b>Pulse</b><i>A separate product with its own SDK</i></span></div>")
 
 RAIL = ('<nav class="rail" aria-label="Product story"><div class="wrap rail__row">'
-        + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[2]}</a>' for st in STEPS) + "</div></nav>")
+        + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[2]}<span>{st[3]}</span></a>' for st in STEPS) + "</div></nav>")
 
 
 def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
@@ -235,7 +235,7 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
     rows = "".join(f"<div><b>{k}</b><span>{v}</span></div>" for k, v in kv)
     ln = "".join(f'<a class="more" href="{h}">{t} →</a>' for h, t in links)
     return f"""<section class="sec chapter {cls}" id="{sid}"><div class="wrap chapter__grid">
-<div class="feature__copy chapter__copy"><p class="eyebrow"><span class="chapter__n">{n}</span>{verb}</p><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
+<div class="feature__copy chapter__copy"><p class="eyebrow"><span class="chapter__n">{n}</span>{verb} · {prod}</p><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
 <p class="lead">{lead}</p><div class="kv">{rows}</div><p class="buy">{buy}</p><div class="chapter__links">{ln}</div></div>
 {fig}</div></section>"""
 
@@ -283,7 +283,7 @@ AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid"
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
 <p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
 <div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
-<p class="buy">The <b>assistant</b> connects two products. It answers in <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
+<p class="buy">The <b>assistant</b> connects two steps. It answers in <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
 <div class="chapter__links"><a class="more" href="ai.html">See the AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 
@@ -291,7 +291,7 @@ HOME = f"""{HEROES}
 
 {sec(head("The problem", 'Card data can grow your revenue. Today, most of it is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal")}
 
-{sec(head("The solution", 'Four products take card data to <span class="serif">card revenue.</span>', "Enrich is the foundation. Each product after it uses the same enriched transactions.") + MAP, id_="how")}
+{sec(head("The solution", 'Four steps from card data to <span class="serif">card revenue.</span>', "Enrich is the foundation. Each product after it uses the same enriched transactions.") + MAP, id_="how")}
 
 <div class="story">{RAIL}
 {CHAPTERS}
@@ -299,7 +299,7 @@ HOME = f"""{HEROES}
 
 {AI}
 
-{sec(head("One payment, four steps", 'One card payment becomes a <span class="serif">merchant-funded reward.</span>', "The same transaction moves through the four products.") + FLOW, "sec--ink")}
+{sec(head("One payment, four steps", 'One card payment becomes a <span class="serif">merchant-funded reward.</span>', "The same transaction moves through the four steps.") + FLOW, "sec--ink")}
 
 {sec(stats() + PROOF + BADGES, "sec--white", "proof")}
 

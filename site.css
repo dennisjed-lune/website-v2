@@ -264,7 +264,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .map__step .n { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--lune-teal-700); display: flex; justify-content: space-between; }
 .map__step .n::after { content: ""; width: 18px; height: 18px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .25s var(--ease); }
 .map__step:hover .n::after { transform: translateX(4px); }
-.map__verb { font-size: clamp(30px, 3vw, 46px); letter-spacing: -0.035em; line-height: 1.05; font-weight: 600; text-wrap: balance; }
+.map__verb { font-size: clamp(40px, 4.6vw, 72px); letter-spacing: -0.04em; line-height: 1; font-weight: 600; }
 .map__step p { margin: 0; color: var(--neutral-600); line-height: 1.55; }
 .map__step--end { background: var(--lune-teal); color: #fff; }
 .map__step--end:hover { background: #0A4A40; color: #fff; }
