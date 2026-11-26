@@ -175,10 +175,10 @@ NEXT = {"enrich": next_step("analytics.html", "Analytics"), "analytics": next_st
 
 # ------------------------------------------------------------------ HOME
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
-<div class="flow__step"><span class="n">01 · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
-<div class="flow__step"><span class="n">02 · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
-<div class="flow__step"><span class="n">03 · PFM</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
-<div class="flow__step flow__step--end"><span class="n">04 · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
+<div class="flow__step"><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
+<div class="flow__step"><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
+<div class="flow__step"><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step flow__step--end"><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
@@ -223,14 +223,14 @@ def map_step(i, st):
     sid, n, verb, prod, text, who = st
     end = " map__step--end" if i == 3 else ""
     pack = PACK[sid]
-    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{prod}</b><span class="tag">{verb}</span><p>{text}</p><span class="for">{who}</span><span class="map__pack">{pack}</span></a>'
+    return f'<a class="map__step{end}" href="#{sid}"><span class="n"></span><b class="map__verb">{prod}</b><p>{text}</p></a>'
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
        )
 
 RAIL = ('<nav class="rail" aria-label="Lune products"><div class="wrap rail__row">'
-        + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[3]}<span>{st[2]}</span></a>' for st in STEPS) + "</div></nav>")
+        + "".join(f'<a href="#{st[0]}">{st[3]}</a>' for st in STEPS) + "</div></nav>")
 
 
 def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
@@ -238,8 +238,8 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
     rows = "".join(f"<div><b>{k}</b><span>{v}</span></div>" for k, v in kv)
     ln = "".join(f'<a class="more" href="{h}">{t} →</a>' for h, t in links)
     return f"""<section class="sec chapter {cls}" id="{sid}"><div class="wrap chapter__grid">
-<div class="feature__copy chapter__copy"><p class="eyebrow"><span class="chapter__n">{n}</span>{prod} · {verb}</p><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
-<p class="lead">{lead}</p><div class="kv">{rows}</div><p class="buy">{buy}</p><div class="chapter__links">{ln}</div></div>
+<div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
+<p class="lead">{lead}</p><div class="kv">{rows}</div><div class="chapter__links">{ln}</div></div>
 {fig}</div></section>"""
 
 
@@ -286,7 +286,6 @@ AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid"
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
 <p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
 <div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
-<p class="buy">The <b>assistant</b> works inside <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
 <div class="chapter__links"><a class="more" href="ai.html">See the AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 

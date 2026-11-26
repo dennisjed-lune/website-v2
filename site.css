@@ -979,3 +979,7 @@ h3 { text-wrap: balance; }
 .stage--pair .unit + .unit .pop--r3 { display: none; }
 /* Hero B at phone width: the merchant chip sits below the raw line, not on it. */
 @media (max-width: 760px) { .fl--who { top: 31%; } }
+
+/* ---- No labels or numbering on the home page (Dennis, 26 Nov) ---- */
+.demo .ui__note { display: none; }
+.chapter { padding-top: clamp(88px, 8vw, 128px); }
