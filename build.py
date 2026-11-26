@@ -340,7 +340,7 @@ ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">mer
 
 {sec(feature("In LuneHub", "Your team sees each enriched transaction.", "LuneHub is the Lune portal for bank teams. It lists each transaction with its raw description and its enriched result.",
  [("Search", "by raw description or transaction ID."), ("Compare", "the raw description with the brand and category."), ("Flag", "a result that looks wrong.")],
- shot("lunehub-transactions.jpg", "LuneHub · Transactions", "The Transactions page in LuneHub. " + TEST, "LuneHub transactions list with raw description, brand, category, date and amount")), "sec--white")}
+ shot("lunehub-transactions-list.jpg", "LuneHub · Transactions", "", "LuneHub transactions list with raw description, brand, category, date and amount")), "sec--white")}
 
 {sec(head("Built for banks", "Certified, audited and hosted in the UAE and Saudi Arabia.") + f'''
 <div class="cols cols--4">
@@ -396,10 +396,6 @@ ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class=
 {sec(feature("Overview", "See your card base and enriched volume at a glance.", "The Overview is the first screen in LuneHub. It shows how many cardholders transact and how many transactions Lune enriched.",
  [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
  shot("lunehub-overview.jpg", "LuneHub · Overview", "", "LuneHub overview with cardholders with transactions, enriched transactions against the plan, and transactions by date")), "sec--white")}
-
-{sec(feature("Transactions", "Every enriched card transaction, in one list.", "Each row shows the raw card description next to the brand, logo and category that Lune returned.",
- [("Search", "by raw description or transaction ID."), ("Filter", "the list to the transactions you need."), ("Report", "a wrong brand or category from the row.")],
- shot("lunehub-transactions-list.jpg", "LuneHub · Transactions", "", "LuneHub transactions list with raw description, brand, category, date, amount and currency")))}
 
 {sec(feature("Spend dashboard", "One view of customers, transactions and spend.", "Select a date range, a currency and a country. The dashboard shows the totals and the split.",
  [("Total customers", "and total transactions."), ("Total spend", "and spend per customer."), ("Spend by category and brand", "in one chart.")],
