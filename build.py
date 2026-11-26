@@ -66,7 +66,7 @@ def page(slug, title, desc, body):
 <footer class="site-foot">
   <div class="wrap site-foot__grid">
     <div><a class="brand" href="index.html" style="font-size:20px"><i style="width:24px;height:24px;box-shadow:inset -6px 0 0 #10A37F"></i>Lune</a><span class="muted" style="min-height:36px">© 2026 Lune Technologies</span>
-      <a href="{LIVE}/lune-privacy">Privacy policy</a><a href="{LIVE}/terms">Terms</a></div>
+      <a href="lune-privacy/">Privacy policy</a><a href="terms/">Terms</a><a href="cookie/">Cookie policy</a></div>
     <div><b>Enrichment</b><a href="enrich.html">Enrich</a><a href="analytics.html">Analytics</a><a href="expenses.html">Expenses</a><a href="cashflow.html">Cashflow</a><a href="ai.html">AI assistant</a></div>
     <div><b>Pulse</b><a href="pulse.html#how">How Pulse works</a><a href="pulse.html#bank">For banks</a><a href="pulse.html#customer">For cardholders</a><a href="pulse.html#results">Results</a></div>
     <div><b>Company</b><a href="customers.html">Customers</a><a href="blog/">Blog</a><a href="contact.html">Contact sales</a></div>
@@ -781,6 +781,16 @@ def build_blog():
         (d / "index.html").write_text(blog_page("../../", "blog/", p["seo_title"], p["description"], body,
             head_tags(f"{LIVE}/blog/{p['slug']}", p["title"], p["description"], p["cover"], p)), encoding="utf-8")
         n += 1
+    # Legal pages from the old site, word for word, at their old addresses.
+    legal = [json.loads(f.read_text(encoding="utf-8")) for f in sorted((ROOT / "content" / "legal").glob("*.json"))]
+    for p in legal:
+        body = f"""<article class="post post--legal"><div class="wrap post__in">
+<h1 class="h1--page">{e(p["title"])}</h1>
+<div class="post__body">{post_body(p)}</div></div></article>"""
+        d = ROOT / p["slug"]
+        d.mkdir(exist_ok=True)
+        (d / "index.html").write_text(blog_page("../", p["slug"] + "/", p["seo_title"], p["description"], body,
+            head_tags(f"{LIVE}/{p['slug']}", p["title"], p["description"])), encoding="utf-8")
     # Old case-study addresses forward to the Customers page.
     for old, anchor in list(OLD_CASES.items()) + [("", "")]:
         d = ROOT / "case-studies" / old if old else ROOT / "case-studies"
@@ -791,7 +801,7 @@ def build_blog():
             f'<link rel="canonical" href="{LIVE}/customers.html"><meta http-equiv="refresh" content="0; url={to}"></head>'
             f'<body><p><a href="{to}">Lune case studies</a></p></body></html>\n', encoding="utf-8")
     # Sitemap and robots for search engines.
-    urls = [f"{LIVE}/" if s == "index.html" else f"{LIVE}/{s}" for s, *_ in PAGES] + [f"{LIVE}/blog"] + [f"{LIVE}/blog/{p['slug']}" for p in POSTS]
+    urls = [f"{LIVE}/" if s == "index.html" else f"{LIVE}/{s}" for s, *_ in PAGES] + [f"{LIVE}/blog"] + [f"{LIVE}/blog/{p['slug']}" for p in POSTS] + [f"{LIVE}/{p['slug']}" for p in legal]
     (ROOT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {LIVE}/sitemap.xml\n", encoding="utf-8")

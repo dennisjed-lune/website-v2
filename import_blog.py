@@ -120,7 +120,29 @@ def post(slug):
             "description": meta(s, "description"), "date": date, "cover": fetch_img(cover, slug + "-cover") if cover else "", "body": body}
 
 
+LEGAL = ["terms", "lune-privacy", "cookie", "msa", "msa-secan"]
+
+
+def legal(slug):
+    """A legal page from the old site. The text stays word for word."""
+    s = get(f"{BASE}/{slug}").decode("utf-8")
+    m = re.search(r'class="[^"]*w-richtext[^"]*">', s)
+    raw = s[m.end():s.index("</section>", m.end())]
+    raw = raw[:raw.rindex("</div>")]
+    c = Clean("legal-" + slug)
+    c.feed(raw)
+    body = re.sub(r"<(p|h\d|li|strong|em|b|i)>\s*(?:<br>)?\s*</\1>", "", "".join(c.out))
+    h1 = re.sub(r"<[^>]+>", "", re.search(r"<h1[^>]*>(.*?)</h1>", s, re.S).group(1)).strip()
+    return {"slug": slug, "title": html.unescape(h1), "seo_title": html.unescape(re.search(r"<title>(.*?)</title>", s, re.S).group(1)).strip(),
+            "description": meta(s, "description"), "body": body}
+
+
 if __name__ == "__main__":
+    (ROOT / "content" / "legal").mkdir(parents=True, exist_ok=True)
+    for slug in LEGAL:
+        p = legal(slug)
+        (ROOT / "content" / "legal" / f"{slug}.json").write_text(json.dumps(p, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"legal       {len(p['body']):6}  {slug}  ({p['title']})")
     OUT.mkdir(parents=True, exist_ok=True)
     IMG.mkdir(parents=True, exist_ok=True)
     index = get(BASE + "/sitemap.xml").decode("utf-8")
