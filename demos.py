@@ -61,7 +61,9 @@ ICON = {
     "target": svg('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>'),
     "in": svg('<path d="M17 7L7 17"/><path d="M7 9v8h8"/>'),
     "clock": svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-    "spark": svg('<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>'),
+    "chat": svg('<path d="M4 5h16v11H9l-5 4z"/>'),
+    "flag": svg('<path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/>'),
+    "bulb": svg('<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/>'),
 }
 
 
@@ -125,7 +127,7 @@ EXP_APP = f"""<div class="app">{TIME}
 <div class="sheet__tags"><i>Work</i><i>Family</i><i>Add a tag</i></div><span class="sheet__fb">Wrong merchant or category? Report it</span></div>
 </div>"""
 EXP_DRAWN_POPS = [pop("l2", 2, "target", "Groceries budget", "AED 1,640 of AED 2,250", ring=73), pop("r1", 3, "store", "Top brand", "Carrefour · AED 1,240"),
-                  pop("r3", 5, "spark", "Customer feedback", "Report a wrong merchant")]
+                  pop("r3", 5, "flag", "Customer feedback", "Report a wrong merchant")]
 
 # Cashflow, option 1: the home screen after the customer selects the salary day.
 CF_HOME = f"""<div class="app">{TIME}
@@ -140,7 +142,7 @@ CF_HOME = f"""<div class="app">{TIME}
 <div class="app__card fx at3">{bar_row("Card spend", "AED 4,800", 40, 3, "out")}{bar_row("Bills", "AED 3,900", 33, 3, "out")}{bar_row("Transfers out", "AED 3,200", 27, 3, "out")}</div>
 <div class="app__card cf__note fx at4"><span class="app__k">Cashflow summary</span><p>You kept AED 6,600 this month. That is 36% of money in.</p></div>
 </div>"""
-CF_HOME_POPS = [pop("l1", 2, "in", "Salary arrived", "25 Oct · AED 16,000"), pop("r3", 4, "spark", "You kept 36%", "of money in this month", ring=36)]
+CF_HOME_POPS = [pop("l1", 2, "in", "Salary arrived", "25 Oct · AED 16,000"), pop("r3", 4, "pie", "You kept 36%", "of money in this month", ring=36)]
 
 # Cashflow, option 2: six months of history, then one month and its summary.
 TREND = [("Jun", 70, 58), ("Jul", 74, 66), ("Aug", 68, 71), ("Sep", 80, 60), ("Oct", 77, 63), ("Nov", 92, 59)]
@@ -157,7 +159,7 @@ CF_TREND = f"""<div class="app">{TIME}
 <div class="app__card fx at3"><div class="app__bar"><span>October</span><em>+AED 4,900</em></div><div class="app__bar"><span>September</span><em>+AED 6,100</em></div><div class="app__bar"><span>August</span><em>AED 1,050 short</em></div><div class="app__bar"><span>July</span><em>+AED 2,750</em></div><div class="app__bar"><span>June</span><em>+AED 3,900</em></div></div>
 <span class="tap tap--bar"></span>
 </div>"""
-CF_TREND_POPS = [pop("l1", 1, "clock", "Six months of history", "Money in against money out"), pop("r3", 3, "spark", "Smart insight", "In plain language")]
+CF_TREND_POPS = [pop("l1", 1, "clock", "Six months of history", "Money in against money out"), pop("r3", 3, "bulb", "Smart insight", "In plain language")]
 
 # Still screens for the product pages. Each one fills the phone.
 CF_IN = f"""<div class="app">{TIME}
@@ -219,7 +221,7 @@ CHAT = f"""<div class="app chat">{TIME}
 <div class="chat__chips"><i>Top merchants</i><i>Compare months</i><i>Offers for me</i></div>
 <div class="chat__input"><span>Ask about your spending</span><u></u></div>
 </div>"""
-CHAT_POPS = [pop("l2", 2, "spark", "Answer from your data", "Real merchant names"), pop("r3", 3, "store", "Pulse offer", "Matches shopping spend")]
+CHAT_POPS = [pop("l2", 2, "chat", "Answer from your data", "Real merchant names"), pop("r3", 3, "store", "Pulse offer", "Matches shopping spend")]
 AI_DEMO = demo("ai", ("Assistant in the Lune SDK", stage("Assistant", unit("Assistant", "A question, an answer and an offer", CHAT, CHAT_POPS), "700,1500,3000,2600,4400",
                       "A customer asks about shopping spend. The assistant answers and shows a cashback offer from the top merchant"), ""), cls="demo--phones")
 

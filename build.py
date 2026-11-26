@@ -707,6 +707,17 @@ from datetime import date as _date
 
 POSTS = sorted((json.loads(f.read_text(encoding="utf-8")) for f in (ROOT / "content" / "blog").glob("*.json")),
                key=lambda p: (p["date"], p["title"]), reverse=True)
+
+
+def nodash(t):
+    """Imported text keeps its wording, but em and en dashes become plain punctuation."""
+    t = re.sub(r"(\d)\s*[\u2013\u2014]\s*(\d)", r"\1 to \2", t)
+    return re.sub(r"\s*[\u2013\u2014]\s*", ", ", t)
+
+
+for _p in POSTS:
+    for _k in ("title", "seo_title", "description"):
+        _p[_k] = nodash(_p[_k])
 OLD_CASES = {"abu-dhabi-islamic-bank": "adib", "d360-bank": "d360", "national-bank-of-fujairah": "nbf", "beyon-money": "beyon-money", "alaan-pay": "alaan"}
 
 
@@ -722,7 +733,9 @@ def nice_date(iso):
 
 
 def post_body(p):
-    b = p["body"].replace("‍", "")
+    b = p["body"].replace("\u200d", "")
+    b = re.sub(r"(\d)\s*[\u2013\u2014]\s*(\d)", r"\1 to \2", b)   # number ranges
+    b = re.sub(r"\s*[\u2013\u2014]\s*", ", ", b)                 # em and en dashes in sentences
     b = re.sub(r"<(p|li)>(?:\s|<br>)+", r"<\1>", b)            # line breaks at the start of a block
     b = re.sub(r"(?:\s|<br>)+</(p|li)>", r"</\1>", b)          # and at the end
     return re.sub(r"<(p|li|h\d)>\s*</\1>", "", b)
@@ -791,6 +804,27 @@ def build_blog():
         d.mkdir(exist_ok=True)
         (d / "index.html").write_text(blog_page("../", p["slug"] + "/", p["seo_title"], p["description"], body,
             head_tags(f"{LIVE}/{p['slug']}", p["title"], p["description"])), encoding="utf-8")
+    # Other old addresses forward to the closest page on the new site.
+    for old, to in [("products/enrich", "enrich.html"), ("products/pulse", "pulse.html"), ("products/engage", "index.html"),
+                    ("products/target", "index.html"), ("industries/retail-banks", "index.html"), ("industries/neo-banks-telco-wallets", "index.html"),
+                    ("industries/fintechs", "index.html"), ("about", "index.html"), ("careers", "contact.html"), ("contact", "contact.html")]:
+        d = ROOT / old
+        d.mkdir(parents=True, exist_ok=True)
+        up = "../" * (old.count("/") + 1)
+        (d / "index.html").write_text(f'<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><title>Lune</title>'
+            f'<link rel="canonical" href="{LIVE}/{to}"><meta http-equiv="refresh" content="0; url={up}{to}"></head>'
+            f'<body><p><a href="{up}{to}">Continue to Lune</a></p></body></html>\n', encoding="utf-8")
+    # 404 page. Hosts serve it at any depth, so a base tag keeps its links and styles working.
+    cards = "".join(map_step(i, st) for i, st in enumerate(STEPS))
+    for a, b in [("#enrich", "enrich.html"), ("#analytics", "analytics.html"), ("#in-app", "expenses.html"), ("#pulse", "pulse.html")]:
+        cards = cards.replace(f'href="{a}"', f'href="{b}"')
+    nf = ('<section class="hero"><div class="wrap"><div class="hero__copy"><h1 class="h1--page">This page does not exist.</h1>'
+          '<p class="lead">The address may be old or mistyped. These are the Lune products.</p>'
+          '<div class="btns"><a class="btn btn--primary" href="index.html">Go to the home page</a></div></div></div></section>'
+          + sec('<div class="map">' + cards + "</div>", "sec--white"))
+    doc = page("404.html", "Page not found | Lune", "This page does not exist.", nf)
+    base = "<script>document.write('<base href=\"' + (location.pathname.indexOf('/website-v2/') === 0 ? '/website-v2/' : '/') + '\">')</script>"
+    (ROOT / "404.html").write_text(doc.replace("<head>", "<head>\n" + base, 1), encoding="utf-8")
     # Old case-study addresses forward to the Customers page.
     for old, anchor in list(OLD_CASES.items()) + [("", "")]:
         d = ROOT / "case-studies" / old if old else ROOT / "case-studies"
