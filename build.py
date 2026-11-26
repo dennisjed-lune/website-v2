@@ -69,7 +69,7 @@ def page(slug, title, desc, body):
       <a href="{LIVE}/lune-privacy">Privacy policy</a><a href="{LIVE}/terms">Terms</a></div>
     <div><b>Enrichment</b><a href="enrich.html">Enrich</a><a href="analytics.html">Analytics</a><a href="expenses.html">Expenses</a><a href="cashflow.html">Cashflow</a><a href="ai.html">AI assistant</a></div>
     <div><b>Pulse</b><a href="pulse.html#how">How Pulse works</a><a href="pulse.html#bank">For banks</a><a href="pulse.html#customer">For cardholders</a><a href="pulse.html#results">Results</a></div>
-    <div><b>Company</b><a href="customers.html">Customers</a><a href="contact.html">Contact sales</a></div>
+    <div><b>Company</b><a href="customers.html">Customers</a><a href="blog/">Blog</a><a href="contact.html">Contact sales</a></div>
     <div><b>Developers</b><a href="{DOCS_API}" target="_blank" rel="noopener">Enrichment API ↗</a><a href="{DOCS_SDK}" target="_blank" rel="noopener">Mobile SDK ↗</a><a href="{LUNEHUB}">Log in to LuneHub</a></div>
   </div>
   <div class="wrap"><p class="site-foot__note">Product screens on this site show sample data.</p></div>
@@ -701,6 +701,106 @@ def ste_check(slug, body):
     return len(issues)
 
 
+# ------------------------------------------------------------------ BLOG (imported from the old site by import_blog.py)
+import json
+from datetime import date as _date
+
+POSTS = sorted((json.loads(f.read_text(encoding="utf-8")) for f in (ROOT / "content" / "blog").glob("*.json")),
+               key=lambda p: (p["date"], p["title"]), reverse=True)
+OLD_CASES = {"abu-dhabi-islamic-bank": "adib", "d360-bank": "d360", "national-bank-of-fujairah": "nbf", "beyon-money": "beyon-money", "alaan-pay": "alaan"}
+
+
+def rooted(doc, root):
+    """Move a page one or two folders down: prefix local links and replace the '@/' site-root mark."""
+    doc = re.sub(r'((?:href|src)=")(?!https?:|#|mailto:|tel:|/|@/|data:)([^"]+")', lambda m: m.group(1) + root + m.group(2), doc)
+    return doc.replace('"@/', '"' + root)
+
+
+def nice_date(iso):
+    d = _date.fromisoformat(iso)
+    return f"{d.day} {d.strftime('%B %Y')}"
+
+
+def post_body(p):
+    b = p["body"].replace("‍", "")
+    b = re.sub(r"<(p|li)>(?:\s|<br>)+", r"<\1>", b)            # line breaks at the start of a block
+    b = re.sub(r"(?:\s|<br>)+</(p|li)>", r"</\1>", b)          # and at the end
+    return re.sub(r"<(p|li|h\d)>\s*</\1>", "", b)
+
+
+def post_card(p):
+    img = f'<img src="@/img/blog/{p["cover"]}" alt="" loading="lazy">' if p["cover"] else ""
+    return (f'<a class="postcard" href="@/blog/{p["slug"]}/">{img}<span class="postcard__date">{nice_date(p["date"])}</span>'
+            f'<b>{e(p["title"])}</b><span>{e(p["description"])}</span></a>')
+
+
+def head_tags(url, title, desc, image="", article=None):
+    t = [f'<link rel="canonical" href="{url}">', f'<meta property="og:title" content="{e(title)}">',
+         f'<meta property="og:description" content="{e(desc)}">', f'<meta property="og:url" content="{url}">',
+         f'<meta property="og:type" content="{"article" if article else "website"}">']
+    if image:
+        t.append(f'<meta property="og:image" content="{LIVE}/img/blog/{image}">')
+    if article:
+        ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": article["title"], "description": article["description"],
+              "datePublished": article["date"], "mainEntityOfPage": url, "publisher": {"@type": "Organization", "name": "Lune"}}
+        if image:
+            ld["image"] = f"{LIVE}/img/blog/{image}"
+        t.append('<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + "</script>")
+    return "\n".join(t)
+
+
+def blog_page(root, slug_for_nav, title, desc, body, head):
+    doc = page(slug_for_nav, title, desc, body).replace("</head>", head + "\n</head>", 1)
+    return rooted(doc, root)
+
+
+def build_blog():
+    n = 0
+    index = f"""<section class="hero"><div class="wrap"><div class="hero__copy"><h1 class="h1--page">Lune blog</h1>
+<p class="lead">Articles on transaction enrichment, digital banking and Lune news.</p></div></div></section>
+<section class="sec sec--white"><div class="wrap"><div class="postgrid">{"".join(post_card(p) for p in POSTS)}</div></div></section>
+{cta("See what your card transactions can earn.", "Contact sales for a live demo. We show Lune on sample data, then on a sample of your own transactions.")}"""
+    (ROOT / "blog").mkdir(exist_ok=True)
+    (ROOT / "blog" / "index.html").write_text(blog_page("../", "blog/", "Lune Blog | Insights on Financial Data Enrichment & Fintech Trends",
+        "Stay updated with Lune's latest articles on financial data enrichment, fintech innovations, and industry best practices.", index,
+        head_tags(f"{LIVE}/blog", "Lune Blog", "Articles on financial data enrichment, fintech and digital banking.")), encoding="utf-8")
+    for k, p in enumerate(POSTS):
+        more = [q for q in POSTS if q["slug"] != p["slug"]][k % 5:][:3]
+        cover = f'<img class="post__cover" src="@/img/blog/{p["cover"]}" alt="">' if p["cover"] else ""
+        body = f"""<article class="post"><div class="wrap post__in">
+<a class="more post__back" href="@/blog/">← All articles</a>
+<h1 class="h1--page">{e(p["title"])}</h1><p class="lead">{e(p["description"])}</p>
+<p class="post__date">Published on <time datetime="{p["date"]}">{nice_date(p["date"])}</time></p>
+{cover}
+<div class="post__body">{post_body(p)}</div>
+</div></article>
+<section class="sec sec--white"><div class="wrap stack"><div class="head"><h2>More from the blog</h2></div><div class="postgrid">{"".join(post_card(q) for q in more)}</div></div></section>
+{cta("See what your card transactions can earn.", "Contact sales for a live demo. We show Lune on sample data, then on a sample of your own transactions.")}"""
+        d = ROOT / "blog" / p["slug"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(blog_page("../../", "blog/", p["seo_title"], p["description"], body,
+            head_tags(f"{LIVE}/blog/{p['slug']}", p["title"], p["description"], p["cover"], p)), encoding="utf-8")
+        n += 1
+    # Old case-study addresses forward to the Customers page.
+    for old, anchor in list(OLD_CASES.items()) + [("", "")]:
+        d = ROOT / "case-studies" / old if old else ROOT / "case-studies"
+        d.mkdir(parents=True, exist_ok=True)
+        up = "../../" if old else "../"
+        to = f"{up}customers.html" + (f"#{anchor}" if anchor else "")
+        (d / "index.html").write_text(f'<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><title>Lune case studies</title>'
+            f'<link rel="canonical" href="{LIVE}/customers.html"><meta http-equiv="refresh" content="0; url={to}"></head>'
+            f'<body><p><a href="{to}">Lune case studies</a></p></body></html>\n', encoding="utf-8")
+    # Sitemap and robots for search engines.
+    urls = [f"{LIVE}/" if s == "index.html" else f"{LIVE}/{s}" for s, *_ in PAGES] + [f"{LIVE}/blog"] + [f"{LIVE}/blog/{p['slug']}" for p in POSTS]
+    (ROOT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "".join(f"<url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {LIVE}/sitemap.xml\n", encoding="utf-8")
+    missing = [m for f in (ROOT / "blog").rglob("index.html") for m in re.findall(r'src="(?:\.\./)+(img/blog/[^"]+)"', f.read_text(encoding="utf-8")) if not (ROOT / m).exists()]
+    for m in sorted(set(missing)):
+        print(f"  MISSING blog image: {m}")
+    return n, len(set(missing))
+
+
 if __name__ == "__main__":
     bad = 0
     for slug, title, desc, body in PAGES:
@@ -709,5 +809,7 @@ if __name__ == "__main__":
         for src in set(re.findall(r'(?:src|href)="((?:img|ds)/[^"]+|[a-z-]+\.(?:html|css|js))(?:#[^"]*)?"', page(slug, title, desc, body))):
             if not (ROOT / src).exists():
                 print(f"  MISSING {slug}: {src}"); bad += 1
-    print(f"built {len(PAGES)} pages, {bad} issue(s)")
+    posts, gaps = build_blog()     # imported articles keep their original wording, so the STE check does not run on them
+    bad += gaps
+    print(f"built {len(PAGES)} pages and {posts} blog posts, {bad} issue(s)")
     sys.exit(1 if bad else 0)
