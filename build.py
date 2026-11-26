@@ -87,13 +87,13 @@ def sec(inner, cls="", id_="", pre=""):
 
 def head(eyebrow, h2, lead=""):
     p = f'<p class="lead">{lead}</p>' if lead else ""
-    return f'<div class="head"><p class="eyebrow">{eyebrow}</p><h2>{h2}</h2>{p}</div>'
+    return f'<div class="head"><h2>{h2}</h2>{p}</div>'   # no small label above the headline
 
 
 def hero(eyebrow, h1, lead, btns, side=""):
     grid = "hero__grid" if side else ""
     return f"""<section class="hero"><div class="wrap {grid}">
-  <div class="hero__copy"><p class="eyebrow">{eyebrow}</p><h1 class="h1--page">{h1}</h1><p class="lead">{lead}</p><div class="btns">{btns}</div></div>
+  <div class="hero__copy"><h1 class="h1--page">{h1}</h1><p class="lead">{lead}</p><div class="btns">{btns}</div></div>
   {side}
 </div></section>"""
 
@@ -132,7 +132,7 @@ def facts(items):
 
 def feature(eyebrow, h3, body, items, fig, wide=True, link=None):
     ln = f'<a class="more" href="{link[0]}">{link[1]} →</a>' if link else ""
-    return f"""<div class="feature {'feature--wide' if wide else ''}"><div class="feature__copy"><p class="eyebrow">{eyebrow}</p><h2 style="font-size:clamp(26px,2.6vw,38px)">{h3}</h2>
+    return f"""<div class="feature {'feature--wide' if wide else ''}"><div class="feature__copy"><h2 style="font-size:clamp(26px,2.6vw,38px)">{h3}</h2>
 <p class="lead">{body}</p>{facts(items)}{ln}</div>{fig}</div>"""
 
 
@@ -283,7 +283,7 @@ PROBLEM = '''
 </div>'''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
-<div class="feature__copy chapter__copy"><p class="eyebrow">AI assistant</p><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
+<div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
 <p class="lead">A conversational assistant runs inside Expenses and Cashflow. It answers from the customer's enriched transactions.</p>
 <div class="kv"><div><b>Plain questions</b><span>Customers ask in their own words</span></div><div><b>Real answers</b><span>Merchant names and categories from Enrich</span></div><div><b>Pulse offers</b><span>An offer that matches the customer's spend</span></div></div>
 <p class="buy">The <b>assistant</b> connects two steps. It answers in <b>Expenses</b> and <b>Cashflow</b>, and it shows <b>Pulse</b> offers.</p>
@@ -406,7 +406,7 @@ ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class=
  [("Total spend and transactions", "for each category."), ("Customers", "who spend in each category."), ("The number of subcategories", "below each category.")],
  shot("lunehub-analytics-categories.jpg", "LuneHub · Analytics · Categories", "The Category explorer in LuneHub, with the first eight of 19 categories. " + TEST, "LuneHub category explorer with spend, transactions, customers and subcategories")) + CATEGORY_MORE, "sec--white")}
 
-{sec('''<div class="split"><div class="head"><p class="eyebrow">From insight to revenue</p><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
+{sec('''<div class="split"><div class="head"><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
 <div class="feature__copy"><p class="lead">The Brand explorer shows the merchants where your customers spend most. Through Pulse, those merchants fund cashback for your customers.</p>''' + facts([("One portal.", "Analytics and Pulse share one LuneHub sign-in."), ("One data set.", "Pulse audiences come from the same enriched transactions."), ("Your data only.", "Each bank sees its own customers and transactions.")]) + '''<a class="more" href="pulse.html">See Pulse →</a></div></div>''', "sec--teal")}
 
 {sec(head("Also in LuneHub", "Your teams answer spend questions in one place.") + f'''
