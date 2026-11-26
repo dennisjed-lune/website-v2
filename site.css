@@ -983,3 +983,12 @@ h3 { text-wrap: balance; }
 /* ---- No labels or numbering on the home page (Dennis, 26 Nov) ---- */
 .demo .ui__note { display: none; }
 .chapter { padding-top: clamp(88px, 8vw, 128px); }
+
+/* ---- No step numbers anywhere (Dennis, 26 Nov) ---- */
+.party > div::before { content: none; }
+
+/* ---- Phone galleries use the full content width, with larger phones and the screen name only ---- */
+.phones { justify-items: center; }
+.phone { width: 100%; }
+.phone .dev { max-width: 300px; }
+.phone figcaption span { display: none; }

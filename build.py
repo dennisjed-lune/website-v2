@@ -130,7 +130,7 @@ def card(tag, h3, body, ticks=(), who="", link=None):
 
 
 def facts(items):
-    return '<ul class="facts">' + "".join(f"<li><b>{a}</b> {b}</li>" for a, b in items) + "</ul>"
+    return '<ul class="facts">' + "".join((f"<li><b>{a}</b> {b}</li>" if a else f"<li>{b}</li>") for a, b in items) + "</ul>"
 
 
 def feature(eyebrow, h3, body, items, fig, wide=True, link=None):
@@ -432,14 +432,14 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
  "Expenses adds ready spending screens to your iOS and Android app. Customers see spend by category and merchant, with real merchant names.", BTN_TALK + BTN_SDK, phones_demo("exp"))}
 
 {sec(head("Expenses screens", "Payments show real merchant names and categories.") + f'''
-<div class="phones" style="max-width:980px">
+<div class="phones">
 {phone("exp-home.png", "This month", "Spending day by day, against last month.")}
 {phone("exp-all.png", "Every transaction", "Search by merchant, category or amount.")}
 {phone_drawn(EX_TX, "One payment", "Merchant, category, tags and feedback.")}
 </div>''', "sec--white")}
 
 {sec(head("Trends", "Customers follow each category and each brand over time.", "Two trend pages show where the money goes. A customer opens a category or a brand to see its history.") + f'''
-<div class="phones" style="max-width:980px">
+<div class="phones">
 {phone("exp-cats.png", "Category trends", "Top categories with spend and share of spend.")}
 {phone("exp-brands.png", "Brand trends", "Spend for each day and the top brands.")}
 {phone_drawn(EX_BRAND, "One brand", "Six months of spend with that brand.")}
@@ -464,7 +464,7 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
  "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out and follow the trend.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
 
 {sec(head("Cashflow screens", "Customers compare money in with money out.") + f'''
-<div class="phones" style="max-width:980px">
+<div class="phones">
 {phone_drawn(CF_HOME, "Total cashflow", "Money in against money out for one salary month.")}
 {phone_drawn(CF_IN, "Money in", "Sources by type: income, transfers in and government services.")}
 {phone_drawn(CF_TREND, "Trends", "Six months of money in and out, with a summary.")}
@@ -645,7 +645,7 @@ CONTACT = f"""{hero("Contact sales", 'Talk to our sales team about <span class="
 <p id="form-done" hidden><b>Your email app opens with the request.</b> Send the email to complete the request.</p>
 </form>
 <div class="stack" style="gap:24px">
-<div class="card card--muted"><h2 class="h3">What happens next</h2>{facts([("1.", "Our sales team replies to your request."), ("2.", "We agree a time for a live demo."), ("3.", "We show the products you selected on sample data.")])}</div>
+<div class="card card--muted"><h2 class="h3">What happens next</h2>{facts([("", "Our sales team replies to your request."), ("", "We agree a time for a live demo."), ("", "We show the products you selected on sample data.")])}</div>
 <div class="card card--muted"><h2 class="h3">Your data</h2><p>The first demo uses sample data only. Lune is ISO 27001 certified and has a SOC 2 Type II report.</p></div>
 <div class="card card--muted"><h2 class="h3">Contact details</h2><p><a href="mailto:hello@lunedata.io">hello@lunedata.io</a></p><p>156 Gate Avenue, DIFC<br>Dubai, United Arab Emirates</p>
 <a class="more" href="{SALES}" target="_blank" rel="noopener">Try Enrich live ↗</a></div>
