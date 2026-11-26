@@ -21,7 +21,7 @@ def demo(name, *opts, cls=""):
     out = ""
     for i, (label, body, cap) in enumerate(opts, 1):
         hidden = "" if i == 1 else " hidden"
-        out += (f'<div class="demo__v" data-v="{i}"{hidden}><div class="shot__frame"><span class="shot__bar">{label}</span>{body}</div>'
+        out += (f'<div class="demo__v" data-v="{i}"{hidden}><div class="shot__frame">{body}</div>'
                 + (f'<figcaption>{cap}</figcaption>' if cap else '') + '</div>')
     return f'<figure class="shot demo {cls}" data-demo="{name}" data-parallax="0.05">{out}</figure>'
 
@@ -73,7 +73,7 @@ def pop(pos, at, icon, title, text, ring=None):
 def unit(name, cap, screen, pops, shot=False):
     kind = " dev--shot" if shot else ""
     return (f'<div class="unit"><div class="dev{kind}"><div class="dev__scr">{screen}</div></div>{"".join(pops)}'
-            f'<b>{name}</b><span class="unit__cap">{cap}</span></div>')
+            '</div>')   # no name or caption under the phone
 
 
 def stage(word, units, steps, label, pair=False):

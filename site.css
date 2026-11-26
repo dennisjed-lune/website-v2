@@ -244,7 +244,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .ticks li::before { content: ""; width: 6px; height: 6px; background: var(--lune-emerald); flex: none; transform: translateY(-2px); }
 .for { font-size: 13.5px; color: var(--soft); }
 .for b { color: inherit; font-weight: 600; }
-.band { border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(18px, 2vw, 26px) clamp(20px, 2.6vw, 32px); display: grid; grid-template-columns: auto repeat(4, minmax(0, 1fr)); gap: 10px 32px; align-items: baseline; font-size: 15px; color: var(--mut); }
+.band { border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(18px, 2vw, 26px) clamp(20px, 2.6vw, 32px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 32px; align-items: baseline; font-size: 15px; color: var(--mut); }
 .band b { font-weight: 700; color: var(--lune-teal); display: block; }
 .band i { display: block; font-style: normal; }
 @media (max-width: 980px) { .band { grid-template-columns: 1fr 1fr; } .band .eyebrow { grid-column: 1 / -1; } }
@@ -264,7 +264,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .map__step .n { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--lune-teal-700); display: flex; justify-content: space-between; }
 .map__step .n::after { content: ""; width: 18px; height: 18px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .25s var(--ease); }
 .map__step:hover .n::after { transform: translateX(4px); }
-.map__verb { font-size: clamp(40px, 4.6vw, 72px); letter-spacing: -0.04em; line-height: 1; font-weight: 600; }
+.map__verb { font-size: clamp(30px, 3vw, 46px); letter-spacing: -0.035em; line-height: 1.05; font-weight: 600; text-wrap: balance; }
 .map__step p { margin: 0; color: var(--neutral-600); line-height: 1.55; }
 .map__step--end { background: var(--lune-teal); color: #fff; }
 .map__step--end:hover { background: #0A4A40; color: #fff; }
