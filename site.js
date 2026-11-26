@@ -162,7 +162,7 @@
     // One control for the page. It stops and starts all looping animations.
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'motion-btn';
-    const label = () => { b.textContent = paused ? 'Play all animations' : 'Pause all animations'; b.setAttribute('aria-pressed', String(paused)); };
+    const label = () => { const t = paused ? 'Play all animations' : 'Pause all animations'; b.setAttribute('aria-label', t); b.title = t; b.setAttribute('aria-pressed', String(paused)); };
     b.addEventListener('click', () => { paused = !paused; document.documentElement.classList.toggle('paused', paused); label(); sync(); });
     if (dvs.some(d => !d.still)) { label(); (document.querySelector('main') || document.body).prepend(b); }
   }

@@ -8,7 +8,7 @@ import html
 from mocks import BRANDS, ENRICH_TX, LOGO
 
 e = html.escape
-CAP = "Animation of the product with sample data."
+CAP = "Illustration of the product with sample data."
 
 
 def dv(cls, steps, inner, label, hook=""):
@@ -215,12 +215,12 @@ CHAT = f"""<div class="app chat">{TIME}
 <div class="chat__bot chat__offer fx at3"><span class="chat__tag">Offer for you</span>
 <div class="chat__row"><img src="{LOGO}levelshoes.png" alt=""><span><b>10% cashback</b><i>At Level Shoes, with your card</i></span></div>
 <span class="chat__btn"><i>Activate offer</i><i>Offer activated</i><span class="tap tap--btn"></span></span></div>
-<p class="chat__bot chat__done fx at4">Offer activated. Pay with your card at Level Shoes to earn cashback.</p>
+<p class="chat__bot chat__done fx at4">Done. Pay with your card at Level Shoes to earn the cashback.</p>
 <div class="chat__chips"><i>Top merchants</i><i>Subscriptions</i><i>This month against last month</i></div>
 <div class="chat__input"><span>Ask about your spending</span><u></u></div>
 </div>"""
 CHAT_POPS = [pop("l2", 2, "spark", "Answer from your data", "Real merchant names"), pop("r3", 3, "store", "Pulse offer", "Matches shopping spend")]
-AI_DEMO = demo("ai", ("Assistant in the Lune SDK", stage("Assistant", unit("Assistant", "A question, an answer and an offer", CHAT, CHAT_POPS), "700,1500,2300,2600,3800",
+AI_DEMO = demo("ai", ("Assistant in the Lune SDK", stage("Assistant", unit("Assistant", "A question, an answer and an offer", CHAT, CHAT_POPS), "700,1500,3000,2600,4400",
                       "A customer asks about shopping spend. The assistant answers and shows a cashback offer from the top merchant"), "Illustration of the assistant with sample data."), cls="demo--phones")
 
 

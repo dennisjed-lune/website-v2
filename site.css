@@ -363,7 +363,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .stats b { font-variant-numeric: tabular-nums; font-size: clamp(44px, 5.4vw, 84px); font-weight: 600; letter-spacing: -0.04em; line-height: 0.95; }
 .stats span { color: var(--soft); font-size: 15px; }
 .quote { margin: 0; background: var(--neutral-50); border-radius: var(--r-lg); padding: clamp(28px, 3.4vw, 48px); display: grid; gap: 28px; align-content: space-between; }
-.quote blockquote { margin: 0; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.3; text-wrap: pretty; }
+.quote blockquote { margin: 0; font-style: normal; font-weight: 600; letter-spacing: -0.02em; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.3; text-wrap: pretty; }
 .quote figcaption { display: flex; align-items: center; gap: 16px; font-size: 14.5px; }
 .quote figcaption img { height: 40px; width: auto; max-width: 120px; object-fit: contain; }
 .quote figcaption span { display: grid; }
@@ -602,7 +602,10 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 .pt__done { grid-column: 1 / -1; justify-self: start; }
 
 /* Pause control for the looping animations */
-.motion-btn { font: inherit; font-size: 13.5px; font-weight: 600; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 999px; min-height: 44px; padding: 0 16px; cursor: pointer; position: fixed; right: 14px; bottom: 14px; z-index: 39; background: #fff; color: var(--lune-teal); border-color: rgba(0,46,42,0.18); box-shadow: 0 14px 30px -16px rgba(7,3,18,0.45); }
+.motion-btn { position: fixed; right: 14px; bottom: 14px; z-index: 39; width: 44px; height: 44px; padding: 0; border-radius: 50%; cursor: pointer; background: #fff; color: var(--lune-teal); border: 1px solid rgba(0,46,42,0.18); box-shadow: 0 14px 30px -16px rgba(7,3,18,0.45); display: grid; place-items: center; }
+.motion-btn::before { content: ""; width: 12px; height: 14px; border-left: 4px solid currentColor; border-right: 4px solid currentColor; box-sizing: border-box; }
+.motion-btn[aria-pressed="true"]::before { width: 0; height: 0; border: 8px solid transparent; border-left: 13px solid currentColor; border-right: 0; margin-left: 3px; }
+.motion-btn:hover { border-color: currentColor; }
 @media (max-width: 1099px) { .motion-btn { bottom: 70px; } }
 .motion-btn:hover { border-color: currentColor; }
 .shot figcaption, .hero .small { display: flex; min-height: 44px; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
@@ -833,6 +836,22 @@ main:focus { outline: none; }
 .dv.s4 .tap--btn { animation: tap .8s ease-out; }
 .chat__chips { margin-top: auto; display: flex; flex-wrap: wrap; gap: 1.8cqw; }
 .chat__chips i { font-style: normal; font-size: 3.6cqw; font-weight: 600; color: #3B434C; background: #fff; border: 1px solid #E1E4E8; border-radius: 99px; padding: 1.6cqw 3.2cqw; }
-.chat__input { display: flex; align-items: center; justify-content: space-between; gap: 2cqw; background: #fff; border: 1px solid #D5D9DE; border-radius: 99px; padding: 1.6cqw 1.6cqw 1.6cqw 4.4cqw; font-size: 4cqw; color: #7A838D; }
+.chat__input { display: flex; align-items: center; justify-content: space-between; gap: 2cqw; background: #fff; border: 1px solid #D5D9DE; border-radius: 99px; padding: 1.6cqw 1.6cqw 1.6cqw 4.4cqw; font-size: 4cqw; color: #636C76; }
 .chat__input u { width: 9cqw; height: 9cqw; border-radius: 50%; background: #14171A; position: relative; }
 .chat__input u::after { content: ""; position: absolute; left: 50%; top: 54%; width: 2.6cqw; height: 2.6cqw; border-left: 0.6cqw solid #fff; border-top: 0.6cqw solid #fff; translate: -50% -50%; rotate: 45deg; }
+
+/* ---- Polish pass ---- */
+h3, .buy, .card p, .points p, .kv span { text-wrap: pretty; }
+h3 { text-wrap: balance; }
+:focus-visible { outline: 2px solid var(--lune-emerald); outline-offset: 3px; border-radius: 6px; }
+.sec--ink :focus-visible, .sec--teal :focus-visible, .cta :focus-visible, .rail :focus-visible, .draftbar :focus-visible { outline-color: var(--lune-mint); }
+::selection { background: var(--lune-mint); color: var(--lune-teal); }
+.stage .unit:has(.chat) .pop--l2 { top: 30%; }
+@container (max-width: 540px) { .stage .unit:has(.chat) .pop--l2 { display: none; } }
+@media (max-width: 760px) {
+  .sec--bg .drift { display: none; }
+  .scene__rings i:nth-child(3) { display: none; }
+  .fl--raw { max-width: 58%; } .fl--raw code { font-size: 11px; }
+  .fl--who { top: 26%; }
+  .fl--amt { left: 9%; }
+}
