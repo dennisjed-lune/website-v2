@@ -166,16 +166,16 @@ def next_step(href, text):
     return f'<section class="sec"><div class="wrap"><div class="next"><span>The next Lune product</span><a href="{href}">{text} →</a></div></div></section>'
 
 
-NEXT = {"enrich": next_step("analytics.html", "See: LuneHub and Analytics"), "analytics": next_step("expenses.html", "Show: Expenses"),
-        "expenses": next_step("cashflow.html", "Show: Cashflow"), "cashflow": next_step("pulse.html", "Earn: Pulse"),
-        "pulse": next_step("enrich.html", "Name: Enrich").replace("The next Lune product", "Back to the first Lune product")}
+NEXT = {"enrich": next_step("analytics.html", "Analytics"), "analytics": next_step("expenses.html", "Expenses"),
+        "expenses": next_step("cashflow.html", "Cashflow"), "cashflow": next_step("pulse.html", "Pulse"),
+        "pulse": next_step("enrich.html", "Enrich").replace("The next Lune product", "Back to the first Lune product")}
 
 # ------------------------------------------------------------------ HOME
 FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
-<div class="flow__step"><span class="n">01 · Name · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
-<div class="flow__step"><span class="n">02 · See · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
-<div class="flow__step"><span class="n">03 · Show · Expenses</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
-<div class="flow__step flow__step--end"><span class="n">04 · Earn · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
+<div class="flow__step"><span class="n">01 · Enrich</span><h3>Enrich names the payment</h3><span class="v flow__who"><img src="img/logos/levelshoes.png" alt="" width="40" height="40"><span><b style="color:#fff">Level Shoes</b><br>Shopping › Clothing</span></span></div>
+<div class="flow__step"><span class="n">02 · Analytics</span><h3>Your teams see the spend</h3><span class="v"><b style="color:#fff">AED 1,032.00</b><br>At Level Shoes, in LuneHub and Analytics</span></div>
+<div class="flow__step"><span class="n">03 · Expenses</span><h3>Your customer sees the merchant</h3><span class="v"><b style="color:#fff">Level Shoes</b><br>With logo and category, in Expenses</span></div>
+<div class="flow__step flow__step--end"><span class="n">04 · Pulse</span><h3>The customer earns cashback</h3><span class="big">AED 103.20</span><span class="v">Level Shoes pays the 10% cashback. Your bank gets the card spend and uses no rewards budget.</span></div>
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
@@ -207,7 +207,7 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 # The solution in one picture: four separate products on one data set. Each card links to its chapter.
 STEPS = [
     ("enrich", "01", "Name", "Enrich", "Each card payment gets a merchant name, a logo and a category.", "The foundation for each product"),
-    ("analytics", "02", "See", "LuneHub and Analytics", "Your teams see each transaction and where customers spend.", "For your card and data teams"),
+    ("analytics", "02", "See", "Analytics", "In LuneHub, your teams see each transaction and where customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "Expenses and Cashflow", "Your customers see where their money goes, in your app.", "For your customers"),
     ("pulse", "04", "Earn", "Pulse", "Merchants fund the rewards. Customers earn only with your card, so they have a reason to pay with it.", "For your card revenue"),
 ]
@@ -216,7 +216,7 @@ STEPS = [
 def map_step(i, st):
     sid, n, verb, prod, text, who = st
     end = " map__step--end" if i == 3 else ""
-    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{verb}</b><span class="tag">{prod}</span><p>{text}</p><span class="for">{who}</span></a>'
+    return f'<a class="map__step{end}" href="#{sid}"><span class="n">{n}</span><b class="map__verb">{prod}</b><span class="tag">{verb}</span><p>{text}</p><span class="for">{who}</span></a>'
 
 
 MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEPS)) + "</div>"
@@ -226,7 +226,7 @@ MAP = ('<div class="map">' + "".join(map_step(i, st) for i, st in enumerate(STEP
        + "<span><b>Pulse</b><i>A separate product with its own SDK</i></span></div>")
 
 RAIL = ('<nav class="rail" aria-label="Lune products"><div class="wrap rail__row">'
-        + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[2]}<span>{st[3]}</span></a>' for st in STEPS) + "</div></nav>")
+        + "".join(f'<a href="#{st[0]}"><b>{st[1]}</b>{st[3]}<span>{st[2]}</span></a>' for st in STEPS) + "</div></nav>")
 
 
 def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
@@ -234,7 +234,7 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
     rows = "".join(f"<div><b>{k}</b><span>{v}</span></div>" for k, v in kv)
     ln = "".join(f'<a class="more" href="{h}">{t} →</a>' for h, t in links)
     return f"""<section class="sec chapter {cls}" id="{sid}"><div class="wrap chapter__grid">
-<div class="feature__copy chapter__copy"><p class="eyebrow"><span class="chapter__n">{n}</span>{verb} · {prod}</p><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
+<div class="feature__copy chapter__copy"><p class="eyebrow"><span class="chapter__n">{n}</span>{prod} · {verb}</p><h2 style="font-size:clamp(28px,3vw,44px)">{h2}</h2>
 <p class="lead">{lead}</p><div class="kv">{rows}</div><p class="buy">{buy}</p><div class="chapter__links">{ln}</div></div>
 {fig}</div></section>"""
 
