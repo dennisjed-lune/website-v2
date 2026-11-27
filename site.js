@@ -37,6 +37,20 @@
     drop.addEventListener('focusout', e => { if (!drop.contains(e.relatedTarget)) set(false); });
   }
 
+  // ---- Stats count up once, when the row is mostly in view. The markup holds the final value. ----
+  const stats = [...document.querySelectorAll('[data-stat]')];
+  if (stats.length && !reduce && 'IntersectionObserver' in window) {
+    const show = (el, v) => { const dec = +(el.dataset.dec || 0); el.textContent = v.toFixed(dec) + (el.dataset.suf || ''); };
+    stats.forEach(el => show(el, 0));
+    const run = el => {
+      const to = +el.dataset.stat, t0 = performance.now();
+      const frame = now => { const p = Math.min(1, (now - t0) / 1400); show(el, to * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(frame); };
+      requestAnimationFrame(frame);
+    };
+    const so = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { stats.filter(s => s.closest('.stats') === en.target).forEach(run); so.unobserve(en.target); } }), { threshold: 0.6 });
+    new Set(stats.map(s => s.closest('.stats'))).forEach(row => so.observe(row));
+  }
+
   // ---- Sample transactions ----
   // Raw lines use the short, cut and coded forms that card networks and acquirers send.
   const TX = [

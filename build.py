@@ -164,9 +164,9 @@ def cta(h2, p, second=BTN_LIVE):
 
 def stats():
     return """<div class="stats">
-<div><b>1.5 bn+</b><span>Transactions enriched each year</span></div>
-<div><b>99%</b><span>Categorisation coverage</span></div>
-<div><b>121+</b><span>Spend subcategories</span></div></div>"""
+<div><b data-stat="1.5" data-dec="1" data-suf=" bn+">1.5 bn+</b><span>Transactions enriched each year</span></div>
+<div><b data-stat="99" data-suf="%">99%</b><span>Categorisation coverage</span></div>
+<div><b data-stat="121" data-suf="+">121+</b><span>Spend subcategories</span></div></div>"""
 
 
 BADGES = '<div class="badges"><span>Certified and audited for regulated banks</span><span>ISO 27001</span><span>SOC 2 Type II</span><span>Dubai AI Seal</span><span>Hosted in UAE and KSA</span></div>'
