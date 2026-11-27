@@ -212,7 +212,7 @@ STEPS = [
     ("enrich", "01", "Name", "Enrich", "AI names every card payment.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "PFM", "AI-powered Expenses and Cashflow for your app.", "For your customers"),
-    ("pulse", "04", "Earn", "Pulse", "Merchant-funded cashback on your card.", "For your card revenue"),
+    ("pulse", "04", "Earn", "Pulse", "AI matches merchant-funded cashback to each customer.", "For your card revenue"),
 ]
 
 
@@ -260,7 +260,7 @@ CHAPTERS = "\n".join([
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
     chapter(3, "Customers earn with your card. Merchants pay for the rewards.",
-            "Merchants fund the cashback. Your bank approves every offer.",
+            "Merchants fund the cashback. AI picks the best offer for each customer. Your bank approves every offer.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
             [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--flip"),
@@ -482,7 +482,7 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
 PULSE_H1 = "Rewards under your bank's name. " + '<span class="serif">Merchants pay.</span>'
 BTN_HOW = '<a class="btn btn--ghost" href="#how">See how it works</a>'
 PULSE = f"""{hero("Pulse", PULSE_H1,
- "Pulse is a rewards programme for your customers: cashback or points, with tiers and missions. Merchants fund the offers. Your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
+ "Pulse is a rewards programme for your customers: cashback or points, with tiers and missions. Merchants fund the offers. An AI recommendation engine ranks them for each customer. Your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
 
 {sec(head("Why card managers use Pulse", "Customers earn with your card. Merchants pay for the rewards.") + f'''
 <div class="cols">
