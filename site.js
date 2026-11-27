@@ -94,6 +94,13 @@
   let feedCount = 1482113;
   const trailChip = t => { const s = document.createElement('span'); const im = new Image(); im.src = 'img/logos/' + t.logo; im.alt = ''; s.append(im, t.merchant); return s; };
 
+  // Pulse journey phone: on each loop restart the first screen fades in over the last one.
+  HOOKS.jr = (el, loop, step) => {
+    if (step !== 0 || loop === 0) return;
+    el.classList.add('reset');
+    setTimeout(() => el.classList.remove('reset'), 450);
+  };
+
   // One transaction: raw description, merchant, logo, category, amount, offer.
   HOOKS.tx = (el, loop, step) => {
     const list = el.dataset.only === 'offer' ? OFFERS : TX;

@@ -1087,3 +1087,30 @@ html:not(.js) .grow-y { height: var(--h, 100%) !important; }
 .chapter--peak .chapter__links { justify-content: center; }
 .chapter--peak .shot { width: min(100%, 880px); }
 .chapter--peak .shot__frame { background: #fff; border-color: rgba(0,46,42,0.1); }
+
+/* ---- Pulse customer journey: one phone steps through four screens, with the step names beside it ---- */
+.jr { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 320px); justify-content: center; align-items: center; gap: clamp(32px, 6vw, 96px); }
+.jr__phone .dev { animation: none; }
+.jr .dev__scr > img { opacity: 0; z-index: 1; transform: none; transition: opacity 0s linear; }
+.jr .dev__scr > img:nth-of-type(1) { opacity: 1; }
+/* The new screen fades in on top; the old one stays opaque under it, then hides at once. */
+@keyframes jr-in { from { translate: 4% 0; } to { translate: 0 0; } }
+@keyframes jr-fade { from { opacity: 0; } to { opacity: 1; } }
+.jr.s1 .dev__scr > img:nth-of-type(1) { opacity: 0; transition: opacity 0s linear .7s; }
+.jr.s1 .dev__scr > img:nth-of-type(2) { opacity: 1; z-index: 2; transition: opacity .3s var(--ease) .35s; animation: jr-in .3s var(--ease) .35s both; }
+.jr.s2 .dev__scr > img:nth-of-type(2) { opacity: 0; transition: opacity 0s linear .7s; }
+.jr.s2 .dev__scr > img:nth-of-type(3) { opacity: 1; z-index: 3; transition: opacity .3s var(--ease) .35s; }
+.jr.s3 .dev__scr > img:nth-of-type(3) { opacity: 0; transition: opacity 0s linear .45s; }
+.jr.s3 .dev__scr > img:nth-of-type(4) { opacity: 1; z-index: 4; transition: opacity .3s var(--ease) .1s; animation: jr-in .3s var(--ease) .1s both; }
+.jr.reset .dev__scr > img:nth-of-type(4) { opacity: 1; z-index: 4; transition: none; }
+.jr.reset .dev__scr > img:nth-of-type(1) { z-index: 5; animation: jr-fade .35s var(--ease) both; }
+.jr__status { position: absolute; inset: 0 0 auto 0; width: 100%; height: auto; z-index: 6; pointer-events: none; }
+.jr__tap { position: absolute; z-index: 7; width: 14%; aspect-ratio: 1; border-radius: 50%; background: rgba(16,163,127,0.35); border: 2px solid var(--lune-emerald); translate: -50% -50%; opacity: 0; pointer-events: none; z-index: 3; }
+.jr__tap--card { left: 62%; top: 78%; } .jr__tap--btn { left: 50%; top: 93%; }
+.jr.s1:not(.s2) .jr__tap--card { animation: tap .6s ease-out; }
+.jr.s2:not(.s3) .jr__tap--btn { animation: tap .6s ease-out; }
+.jr__steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.jr__steps li { padding: 14px 18px; border-radius: 12px; font-size: clamp(20px, 2vw, 28px); font-weight: 600; letter-spacing: -0.02em; color: var(--neutral-400, #9AA8A3); transition: color .3s var(--ease), background .3s var(--ease); }
+.jr:not(.s1) .jr__steps li:nth-child(1), .jr.s1:not(.s2) .jr__steps li:nth-child(2), .jr.s2:not(.s3) .jr__steps li:nth-child(3), .jr.s3 .jr__steps li:nth-child(4) { color: var(--lune-teal); background: #EAF7EF; }
+@media (max-width: 700px) { .jr { grid-template-columns: minmax(0, 260px); } .jr__steps { grid-template-columns: 1fr 1fr; } .jr__steps li { font-size: 17px; padding: 10px 12px; } }
+.jr .dev__scr > img.jr__status { opacity: 1; z-index: 6; transform: none; translate: none; animation: none; transition: none; inset: 0 0 auto 0; height: auto; object-fit: initial; }

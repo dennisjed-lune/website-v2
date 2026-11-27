@@ -485,6 +485,13 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
 """
 
 # ------------------------------------------------------------------ PULSE
+# The customer journey as one phone: offers, the offer, activated, rewards. A tap starts each change.
+JOURNEY_STEPS = [("Offers", "cust-02-home.png"), ("Read the offer", "cust-03-offer.png"), ("Activate and pay", "cust-04-activated.png"), ("Track rewards", "cust-05-rewards.png")]
+JOURNEY_PHONE = ('<div class="jr dv" data-steps="2200,2800,2800,3400" data-hook="jr" role="img" aria-label="The Pulse customer journey in the app: offers, one offer, the offer activated, then rewards">'
+                 '<div class="jr__phone"><div class="dev dev--shot"><div class="dev__scr">'
+                 + "".join(f'<img src="img/app/{f}" alt="" loading="lazy">' for _, f in JOURNEY_STEPS)
+                 + '<img class="jr__status" src="img/app/cust-status.png" alt=""><span class="jr__tap jr__tap--card"></span><span class="jr__tap jr__tap--btn"></span></div></div></div>'
+                 '<ol class="jr__steps" aria-hidden="true">' + "".join(f"<li>{t}</li>" for t, _ in JOURNEY_STEPS) + '</ol></div>')
 PULSE_H1 = "Rewards under your bank's name. " + '<span class="serif">Merchants pay.</span>'
 BTN_HOW = '<a class="btn btn--ghost" href="#how">See how it works</a>'
 PULSE = f"""{hero("Pulse", PULSE_H1,
@@ -518,15 +525,7 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 {shot("lunehub-campaign-details-review-pending-tab-cardholder-preview.jpg", "Customer app · Offer", "See the offer and its terms as your customers see them. " + TEST, "LuneHub cardholder preview of an offer on a phone")}
 </div>''', "sec--white", "bank")}
 
-{sec(head("04 · Customer journey", "Join once. Activate with one tap. Track rewards.", "In your app, in your bank's colours.") + f'''
-<div class="phones">
-{phone("cust-01-join.png", "Join", "The customer reads the terms and joins.")}
-{phone("cust-02-home.png", "Offers", "The offers for the customer's card.")}
-{phone("cust-03-offer.png", "Read the offer", "Minimum spend, maximum cashback and end date.")}
-{phone("cust-04-activated.png", "Activate and pay", "One tap. Then the customer pays by card.")}
-{phone("cust-05-rewards.png", "Track rewards", "Cashback this month, payable and pending.")}
-{phone("cust-06-tiers.png", "Tiers", "The customer earns more at each tier.")}
-</div>''', id_="customer")}
+{sec(head("", "Find an offer. Activate with one tap. Track rewards.") + JOURNEY_PHONE, id_="customer")}
 
 {sec(head("Offer types", "Card-linked, affiliate and promo-code offers in one programme.") + f'''
 <div class="cols">
