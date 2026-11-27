@@ -182,7 +182,7 @@ FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
-    <p class="lead">Lune names every card payment. Merchants pay to reach your customers.</p>
+    <p class="lead">Lune uses AI to name every card payment. Merchants pay to reach your customers.</p>
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
 FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category."
 
@@ -209,9 +209,9 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 
 # The solution in one picture: four separate products on one data set. Each card links to its chapter.
 STEPS = [
-    ("enrich", "01", "Name", "Enrich", "Names every card payment.", "The foundation for each product"),
+    ("enrich", "01", "Name", "Enrich", "AI names every card payment.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
-    ("in-app", "03", "Show", "PFM", "Expenses and Cashflow screens for your app.", "For your customers"),
+    ("in-app", "03", "Show", "PFM", "AI-powered Expenses and Cashflow for your app.", "For your customers"),
     ("pulse", "04", "Earn", "Pulse", "Merchant-funded cashback on your card.", "For your card revenue"),
 ]
 
@@ -245,7 +245,7 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
 
 CHAPTERS = "\n".join([
     chapter(0, "Each card description gets a merchant name.",
-            "A raw card description in. A merchant, logo and category out.",
+            "A raw card description in. An AI-assisted merchant, logo and category out.",
             [("Merchant and logo", "The name your customer knows"), ("Category", "19 categories with subcategories"), ("Real time", "As each payment happens")],
             "<b>Enrich</b> is the foundation. It includes LuneHub, the portal for your teams.",
             [("enrich.html", "Enrich")], ENRICH_DEMO, "sec--white"),
@@ -255,7 +255,7 @@ CHAPTERS = "\n".join([
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
             [("analytics.html", "Analytics")], ANALYTICS_DEMO, "chapter--flip"),
     chapter(2, "Your customers see where their money goes.",
-            "Ready Expenses and Cashflow screens for iOS and Android.",
+            "Expenses and Cashflow for iOS and Android, with an AI assistant.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
@@ -320,7 +320,7 @@ rawrows = "".join(f"""<div class="rawrow"><span class="rawrow__raw" data-ux-igno
 <span class="rawrow__out"><img src="img/logos/{lg}" alt=""><span><b>{e(m)}{f' · {loc}' if loc else ''}</b><span><em>{cat}</em>{' · ' + city if city else ''} · {amt}</span></span></span></div>""" for r, lg, m, loc, cat, city, amt in RAW)
 
 ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">merchant, logo and category.</span>',
- "Your core banking system sends a raw card description. Enrich returns the merchant, logo and category as the payment happens.",
+ "Your core banking system sends a raw card description. Enrich uses AI to return the merchant, logo and category as the payment happens.",
  BTN_TALK + BTN_LIVE + f'<a class="btn btn--ghost" href="{DOCS_API}" target="_blank" rel="noopener">Read the API docs ↗</a>', ENRICH_DEMO)}
 
 {sec(head("Sample transactions", "Enrich reads the card descriptions that customers cannot read.", "Seven card transactions from seven markets. Each result comes from one real-time API call.") + f'''
@@ -423,7 +423,7 @@ IN_APP = f'''<div class="cols">
 </div>'''
 
 EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their money goes.</span>',
- "Expenses adds ready spending screens to your iOS and Android app. Customers see spend by category and merchant, with real merchant names.", BTN_TALK + BTN_SDK, phones_demo("exp"))}
+ "Expenses adds ready spending screens to your iOS and Android app. Customers see spend by category and merchant, and ask an AI assistant about it.", BTN_TALK + BTN_SDK, phones_demo("exp"))}
 
 {sec(head("Expenses screens", "Payments show real merchant names and categories.") + f'''
 <div class="phones">
@@ -455,7 +455,7 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 """
 
 CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">against money out.</span>',
- "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out and follow the trend.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
+ "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out, and an AI assistant explains the month.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
 
 {sec(head("Cashflow screens", "Customers compare money in with money out.") + f'''
 <div class="phones">
