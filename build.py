@@ -260,13 +260,13 @@ CHAPTERS = "\n".join([
             [("Transactions", "Each payment with its merchant"), ("Brand explorer", "Spend and customers for each brand"), ("Category explorer", "All 19 Lune categories")],
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
             [("analytics.html", "Analytics")], ANALYTICS_DEMO, "chapter--flip"),
-    chapter(2, "Your customers see where their money goes.",
+    chapter(2, "Your customers understand their money.",
             "Expenses and Cashflow for iOS and Android.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
     chapter(3, "Customers earn with your card. Merchants pay for the rewards.",
-            "Merchants fund the cashback. AI picks the best offer for each customer. Your bank approves every offer.",
+            "AI picks the best offer for each customer. Your bank approves every offer.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
             [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--peak"),
@@ -290,7 +290,7 @@ PROBLEM = '''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
-<p class="lead">Answers from enriched transactions, with matching Pulse offers.</p>
+<p class="lead">From their own enriched transactions, with matching Pulse offers.</p>
 <div class="chapter__links"><a class="more" href="ai.html">AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 
@@ -326,7 +326,7 @@ rawrows = "".join(f"""<div class="rawrow"><span class="rawrow__raw" data-ux-igno
 <span class="rawrow__out"><img src="img/logos/{lg}" alt=""><span><b>{e(m)}{f' · {loc}' if loc else ''}</b><span><em>{cat}</em>{' · ' + city if city else ''} · {amt}</span></span></span></div>""" for r, lg, m, loc, cat, city, amt in RAW)
 
 ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">merchant, logo and category.</span>',
- "Your core banking system sends a raw card description. Enrich returns the merchant, logo and category as the payment happens. AI supports the matching.",
+ "Your core banking system sends a raw card description. Enrich returns the result as the payment happens. AI supports the matching.",
  BTN_TALK + BTN_LIVE + f'<a class="btn btn--ghost" href="{DOCS_API}" target="_blank" rel="noopener">Read the API docs ↗</a>', ENRICH_DEMO)}
 
 {sec(head("Sample transactions", "Enrich reads the card descriptions that customers cannot read.", "Seven card transactions from seven markets. Each result comes from one real-time API call.") + f'''
@@ -337,7 +337,7 @@ ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">mer
 {sec(head("What you get back", "One API call returns four fields for each transaction.") + f'''
 <div class="cols cols--4">
 {card("", "Merchant name", "The name your customer knows, in all languages, from local and global merchant databases.")}
-{card("", "Merchant logo", "A logo for each merchant, updated every day. Statements and apps show names that customers know.")}
+{card("", "Merchant logo", "A logo for each merchant, updated every day. Customers recognise the shop at a glance.")}
 {card("", "Category and subcategory", "19 consumer categories, each with subcategories. Examples are Groceries, Dining, Travel and Income.")}
 {card("", "Recurring transactions", "Lune finds transactions that repeat. Examples are payments such as subscriptions and income such as a salary.")}
 </div>''')}
@@ -395,7 +395,7 @@ CATEGORY_MORE = f'''
 
 
 ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class="serif">by merchant and category.</span>',
- "Spend by merchant, category and customer. No data request needed.", BTN_TALK, ANALYTICS_DEMO)}
+ "Your teams get the answer without a data request.", BTN_TALK, ANALYTICS_DEMO)}
 
 {sec(feature("Overview", "See your card base and enriched volume at a glance.", "The first screen in LuneHub.",
  [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
@@ -453,7 +453,7 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 {card("", "Feedback", "A customer can report a wrong merchant or category on a transaction.")}
 </div>''', "sec--white")}
 
-{sec(head("In your app", "Native screens for iOS and Android.") + IN_APP)}
+{sec(head("In your app", "Built into your app, in your look.") + IN_APP)}
 
 {NEXT["expenses"]}
 
@@ -463,7 +463,7 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">against money out.</span>',
  "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out, and an AI assistant explains the month.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
 
-{sec(head("Cashflow screens", "Customers compare money in with money out.") + f'''
+{sec(head("Cashflow screens", "Three screens: the month, money in and the trend.") + f'''
 <div class="phones">
 {phone_drawn(CF_HOME, "Total cashflow", "Money in against money out for one salary month.")}
 {phone_drawn(CF_IN, "Money in", "Sources by type: income, transfers in and government services.")}
@@ -477,7 +477,7 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
 {card("", "Cashflow history", "A timeline of inflow and outflow, month by month.")}
 </div>''')}
 
-{sec(head("In your app", "Native screens for iOS and Android.") + IN_APP, "sec--white")}
+{sec(head("In your app", "Built into your app, in your look.") + IN_APP, "sec--white")}
 
 {NEXT["cashflow"]}
 
@@ -495,7 +495,7 @@ JOURNEY_PHONE = ('<div class="jr dv" data-steps="2200,2800,2800,3400" data-hook=
 PULSE_H1 = "Rewards under your bank's name. " + '<span class="serif">Merchants pay.</span>'
 BTN_HOW = '<a class="btn btn--ghost" href="#how">See how it works</a>'
 PULSE = f"""{hero("Pulse", PULSE_H1,
- "Cashback or points, with tiers and missions. Merchants fund the offers, AI ranks them for each customer, and your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
+ "Cashback or points, with tiers and missions. AI ranks the offers for each customer, and your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
 
 {sec(head("How Pulse works", "Four parties. One offer.") + '''
 <div class="party">
@@ -509,12 +509,12 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
  [("Goal and budget.", "A goal, a total budget, the cashback rate, a cap and a minimum spend."), ("Two budget modes.", "Run until the budget is spent, or run for fixed dates."), ("Each brand and store.", "Several brands, with merchant IDs and terminal IDs.")],
  shot("merchant-create-campaign-step1.jpg", "Pulse merchant portal · Create campaign", "Step 1 of the campaign form in the merchant portal. " + TEST, "Merchant portal create campaign form with goal, budget, cashback percentage, cap and dates")), "sec--white", "merchant")}
 
-{sec(head("02 · Lune targets", 'Each offer reaches the customers who <span class="serif">match the goal.</span>', "Lune builds the audience from your enriched transactions.") + f'''
+{sec(head("02 · Lune targets", 'Each offer reaches <span class="serif">the right customers.</span>', "Lune builds the audience from your enriched transactions.") + f'''
 <div class="cols cols--4">
-{card("Goal: acquire customers", "New to the brand", "They spend in the category, not at this brand.")}
-{card("Goal: win back customers", "Stopped buying", "No purchase in the last 90 days.")}
-{card("Goal: increase frequency", "Buy now and then", "One purchase a month or less.")}
-{card("Goal: grow average spend", "Small baskets", "Low amount for each purchase.")}
+{card("Goal: acquire customers", "New customers", "They spend in the category, not at this brand.")}
+{card("Goal: win back customers", "Lapsed customers", "No purchase in the last 90 days.")}
+{card("Goal: increase frequency", "Occasional buyers", "One purchase a month or less.")}
+{card("Goal: grow average spend", "Small baskets", "A low amount for each purchase. A minimum spend moves them up.")}
 </div></div>''' , id_="targeting")}
 
 {sec(feature("03 · Bank approves", "No offer goes live without your approval.", "Offers arrive in the LuneHub Campaign Manager.",
@@ -645,7 +645,7 @@ AI_PAGE = f"""{hero("AI assistant", 'Customers ask about their money. <span clas
 {sec(head("What customers ask", "Each question gets an answer from real payments.", "Four example questions.") + f'''
 <div class="snips">{SNIPS}</div>''', "sec--white")}
 
-{sec(head("For your bank", "The assistant uses products your bank controls.") + f'''
+{sec(head("For your bank", "Your bank stays in control.") + f'''
 <div class="cols cols--4">
 {card("", "In your app", "The assistant runs in the Lune SDK, inside Expenses and Cashflow. It uses your colours.")}
 {card("", "The customer's own data", "Each answer comes from that customer's enriched transactions.")}
