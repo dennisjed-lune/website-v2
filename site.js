@@ -22,6 +22,21 @@
     });
   }
 
+  // ---- Products menu: opens on click, on hover with a mouse, closes on Escape or a click outside ----
+  const drop = document.querySelector('.nav-drop');
+  if (drop) {
+    const btn = drop.querySelector('.nav-drop__btn');
+    const set = open => { drop.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
+    const hover = () => matchMedia('(hover: hover) and (min-width: 1021px)').matches;
+    let opened = 0;   // a click right after the pointer opened the menu keeps it open
+    btn.addEventListener('click', () => set(Date.now() - opened < 400 ? true : !drop.classList.contains('is-open')));
+    drop.addEventListener('mouseenter', () => { if (hover() && !drop.classList.contains('is-open')) { opened = Date.now(); set(true); } });
+    drop.addEventListener('mouseleave', () => { if (hover()) set(false); });
+    document.addEventListener('click', e => { if (!drop.contains(e.target)) set(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && drop.classList.contains('is-open')) { set(false); btn.focus(); } });
+    drop.addEventListener('focusout', e => { if (!drop.contains(e.relatedTarget)) set(false); });
+  }
+
   // ---- Sample transactions ----
   // Raw lines use the short, cut and coded forms that card networks and acquirers send.
   const TX = [

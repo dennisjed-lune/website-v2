@@ -18,8 +18,12 @@ LIVE = "https://www.lunedata.io"
 REVIEW = True   # shows the hero selector for review. Set to False before the site goes live.
 
 # The navigation follows the product story: Enrich first, Pulse last.
-NAV = [("enrich.html", "Enrich"), ("analytics.html", "Analytics"), ("expenses.html", "Expenses"),
-       ("cashflow.html", "Cashflow"), ("pulse.html", "Pulse"), ("ai.html", "AI"), ("customers.html", "Customers")]
+# Products sit in one menu. PFM groups the three in-app modules.
+MENU_PRODUCTS = [("enrich.html", "Enrich"), ("analytics.html", "Analytics"),
+            ("PFM", [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow"), ("ai.html", "AI assistant")]),
+            ("pulse.html", "Pulse")]
+NAV = [("customers.html", "Customers"), ("blog/", "Blog")]
+DOCS = "https://docs.lunedata.io"
 
 CLIENTS = [("adib.avif", "ADIB"), ("cbd.svg", "Commercial Bank of Dubai"), ("ajman-bank.png", "Ajman Bank"),
            ("nbf.avif", "National Bank of Fujairah"), ("uab.jpg", "United Arab Bank"), ("nbb.avif", "National Bank of Bahrain"),
@@ -33,7 +37,20 @@ e = html.escape
 # ------------------------------------------------------------------ components
 def page(slug, title, desc, body):
     cur = ' aria-current="page"'
-    nav = "".join(f'<a href="{h}"{cur if h == slug else ""}>{t}</a>' for h, t in NAV)
+    def link(h, t, cls=""):
+        c = f' class="{cls}"' if cls else ""
+        return f'<a href="{h}"{c}{cur if h == slug else ""}>{t}</a>'
+    items, here = "", False
+    for h, t in MENU_PRODUCTS:
+        if isinstance(t, list):
+            here = here or any(x == slug for x, _ in t)
+            items += f'<span class="nav-drop__group">{h}</span>' + "".join(link(x, y, "nav-drop__sub") for x, y in t)
+        else:
+            here = here or h == slug
+            items += link(h, t)
+    drop = (f'<div class="nav-drop"><button class="nav-drop__btn{" is-here" if here else ""}" type="button" aria-expanded="false" aria-controls="nav-products">Products</button>'
+            f'<div class="nav-drop__panel" id="nav-products">{items}</div></div>')
+    nav = drop + "".join(link(h, t) for h, t in NAV) + f'<a href="{DOCS}" target="_blank" rel="noopener">Docs ↗</a>'
     return f"""<!DOCTYPE html>
 <html lang="en"{" data-review" if REVIEW else ""}>
 <head>
