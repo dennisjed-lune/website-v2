@@ -1070,3 +1070,20 @@ h3 { text-wrap: balance; }
 .scene.dv.s2 .bankcard__sheen { animation: sheen .9s var(--ease); }
 @keyframes sheen { to { translate: 330% 0; } }
 .scene.dv.s4:not(.no-offer) .bankcard:not(.bankcard--b):not(.bankcard--c) { transition: box-shadow .5s var(--ease); box-shadow: 0 44px 60px -30px rgba(2,26,23,0.6), inset 0 0 0 1px rgba(255,255,255,0.14), 0 0 0 3px rgba(153,242,172,0.85); }
+
+/* ---- Without JavaScript the demos show their final state, as with reduced motion ---- */
+html:not(.js) :is(.fx, .pop, .fl, .dc__f, .dc__f b, .dc__f .ui__brand, .pc__pay, .pc__link, .pc__win, .pc__win > :not(u), .pc__bal, .pc__bal b, .chat__bot, .chat__me) { opacity: 1 !important; transform: none !important; scale: 1 !important; }
+html:not(.js) :is(.grow, .fl--bars u) { width: var(--w) !important; }
+html:not(.js) .grow-y { height: var(--h, 100%) !important; }
+#form-done:focus { outline: none; }
+
+/* ---- Bolder: Pulse is the revenue product, so its chapter is the peak of the page.
+   One move: a light mint band, the headline at display size, and the cashback demo wide and centred. ---- */
+.chapter--peak { background: #EAF7EF; }
+.chapter--peak .chapter__grid { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: clamp(32px, 4vw, 56px); }
+.chapter--peak .chapter__copy { max-width: 820px; justify-items: center; }
+.chapter--peak .chapter__copy h2 { font-size: clamp(40px, 5.4vw, 76px) !important; line-height: 1.02; text-wrap: balance; }
+.chapter--peak .chapter__copy .lead { font-size: clamp(18px, 1.6vw, 22px); }
+.chapter--peak .chapter__links { justify-content: center; }
+.chapter--peak .shot { width: min(100%, 880px); }
+.chapter--peak .shot__frame { background: #fff; border-color: rgba(0,46,42,0.1); }

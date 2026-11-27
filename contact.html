@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-review>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,22 +36,22 @@
 <div class="split split--top">
 <form class="form card" id="contact-form" novalidate>
 <div class="form__row">
-<div class="field" data-field="first"><label for="f-first">First name</label><input id="f-first" name="first" enterkeyhint="next" autocomplete="given-name" required><span class="err">Enter your first name.</span></div>
-<div class="field" data-field="last"><label for="f-last">Last name</label><input id="f-last" name="last" enterkeyhint="next" autocomplete="family-name" required><span class="err">Enter your last name.</span></div>
+<div class="field" data-field="first"><label for="f-first">First name</label><input id="f-first" name="first" maxlength="80" aria-describedby="e-first" enterkeyhint="next" autocomplete="given-name" required><span class="err" id="e-first">Enter your first name.</span></div>
+<div class="field" data-field="last"><label for="f-last">Last name</label><input id="f-last" name="last" maxlength="80" aria-describedby="e-last" enterkeyhint="next" autocomplete="family-name" required><span class="err" id="e-last">Enter your last name.</span></div>
 </div>
 <div class="form__row">
-<div class="field" data-field="email"><label for="f-email">Work email</label><input id="f-email" name="email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" required><span class="err">Enter a work email, for example name@bank.com.</span></div>
-<div class="field" data-field="company"><label for="f-company">Company</label><input id="f-company" name="company" enterkeyhint="next" autocomplete="organization" required><span class="err">Enter your company name.</span></div>
+<div class="field" data-field="email"><label for="f-email">Work email</label><input id="f-email" name="email" maxlength="120" aria-describedby="e-email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" required><span class="err" id="e-email">Enter a work email, for example name@bank.com.</span></div>
+<div class="field" data-field="company"><label for="f-company">Company</label><input id="f-company" name="company" maxlength="80" aria-describedby="e-company" enterkeyhint="next" autocomplete="organization" required><span class="err" id="e-company">Enter your company name.</span></div>
 </div>
 <div class="form__row">
-<div class="field"><label for="f-title">Job title (optional)</label><input id="f-title" name="title" enterkeyhint="next" autocomplete="organization-title"></div>
+<div class="field"><label for="f-title">Job title (optional)</label><input id="f-title" name="title" maxlength="80" enterkeyhint="next" autocomplete="organization-title"></div>
 <div class="field"><label for="f-country">Country</label><select id="f-country" name="country" autocomplete="country-name"><option>United Arab Emirates</option><option>Saudi Arabia</option><option>Bahrain</option><option>Qatar</option><option>Kuwait</option><option>Oman</option><option>Egypt</option><option>Jordan</option><option>Other</option></select></div>
 </div>
-<fieldset class="field" data-field="product"><legend>What do you want to see?</legend><div class="checks"><label><input type="checkbox" name="product" value="Enrich">Enrich</label><label><input type="checkbox" name="product" value="Analytics">Analytics</label><label><input type="checkbox" name="product" value="Expenses">Expenses</label><label><input type="checkbox" name="product" value="Cashflow">Cashflow</label><label><input type="checkbox" name="product" value="Pulse">Pulse</label><label><input type="checkbox" name="product" value="Not sure yet">Not sure yet</label></div><span class="err">Select at least one product.</span></fieldset>
-<div class="field"><label for="f-notes">Other information for our sales team (optional)</label><textarea id="f-notes" name="notes"></textarea></div>
-<p class="small">We use your details only to reply to this request. See our <a href="https://www.lunedata.io/lune-privacy">privacy policy</a>.</p>
+<fieldset class="field" data-field="product" aria-describedby="e-product"><legend>What do you want to see?</legend><div class="checks"><label><input type="checkbox" name="product" value="Enrich">Enrich</label><label><input type="checkbox" name="product" value="Analytics">Analytics</label><label><input type="checkbox" name="product" value="Expenses">Expenses</label><label><input type="checkbox" name="product" value="Cashflow">Cashflow</label><label><input type="checkbox" name="product" value="Pulse">Pulse</label><label><input type="checkbox" name="product" value="AI assistant">AI assistant</label><label><input type="checkbox" name="product" value="Not sure yet">Not sure yet</label></div><span class="err" id="e-product">Select at least one product.</span></fieldset>
+<div class="field"><label for="f-notes">Other information for our sales team (optional)</label><textarea id="f-notes" name="notes" maxlength="2000"></textarea></div>
+<p class="small">We use your details only to reply to this request. See our <a href="lune-privacy/">privacy policy</a>.</p>
 <div><button class="btn btn--primary" type="submit">Send request</button></div>
-<p id="form-done" hidden><b>Your email app opens with the request.</b> Send the email to complete the request.</p>
+<p id="form-done" role="status" hidden><b>Your email app opens with the request.</b> Send the email to complete the request. If no email app opens, write to <a href="mailto:hello@lunedata.io">hello@lunedata.io</a>.</p>
 </form>
 <div class="stack" style="gap:24px">
 <div class="card card--muted"><h2 class="h3">What happens next</h2><ul class="facts"><li>Our sales team replies to your request.</li><li>We agree a time for a live demo.</li><li>We show the products you selected on sample data.</li></ul></div>

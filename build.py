@@ -15,7 +15,7 @@ DOCS_API = "https://docs.lunedata.io/enrichment/enrichment-api"
 DOCS_SDK = "https://docs.lunedata.io/pfm-sdk/"
 LUNEHUB = "https://lunehub.lunedata.io/auth/login"
 LIVE = "https://www.lunedata.io"
-REVIEW = True   # shows the hero selector for review. Set to False before the site goes live.
+REVIEW = False   # the hero selector is gone; hero B is the only hero
 
 # The navigation follows the product story: Enrich first, Pulse last.
 # Products sit in one menu. PFM groups the three in-app modules.
@@ -203,26 +203,14 @@ HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transac
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
 FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category."
 
-# Three hero options. site.js shows one of them (draft option bar, or ?hero=a|b|c).
-HEROES = f"""<section class="hero heroA" data-hero="a"><div class="heroA__grid" aria-hidden="true"></div>{drift(8, 3)}
-<div class="wrap heroA__in">
-    {HERO_COPY}
-    {DECODER}
-</div></section>
-<section class="hero heroB" data-hero="b" hidden><div class="wrap hero__grid">
+# The hero: a bank card with one payment flowing out of it (formerly option B).
+HEROES = f"""<div class="first"><section class="hero heroB"><div class="wrap hero__grid">
   <div class="hero__copy">
     {HERO_COPY}
   </div>
   <div class="scene-col">{SCENE}</div>
-</div></section>
-<section class="hero heroC" data-hero="c" hidden><div class="wrap heroC__in">
-    {HERO_COPY}
-    {JOURNEY}
-</div></section>
+</div></section>{logos()}</div>
 """
-HEROES = HEROES.replace("</section>", "</section>" + logos() + "</div>").replace('<section class="hero hero', '<div class="first"><section class="hero hero').replace('<div class="first"><section class="hero heroB" data-hero="b" hidden>', '<div class="first" data-hero="b" hidden><section class="hero heroB">').replace('<div class="first"><section class="hero heroC" data-hero="c" hidden>', '<div class="first" data-hero="c" hidden><section class="hero heroC">').replace('<div class="first"><section class="hero heroA" data-hero="a">', '<div class="first" data-hero="a"><section class="hero heroA">')
-# Hero B (3D card) is the default. The other two stay behind the review bar.
-HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first" data-hero="a" hidden>').replace('<div class="first" data-hero="b" hidden>', '<div class="first" data-hero="b">')
 
 # The solution in one picture: five separate products on one data set. Each card links to its chapter.
 STEPS = [
@@ -281,7 +269,7 @@ CHAPTERS = "\n".join([
             "Merchants fund the cashback. AI picks the best offer for each customer. Your bank approves every offer.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
-            [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--flip"),
+            [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--peak"),
 ])
 
 PROOF = '''
@@ -297,7 +285,7 @@ PROBLEM = '''
 <div class="points">
 <div><h3>Customers cannot read their statements</h3></div>
 <div><h3>Your teams cannot see where they spend</h3></div>
-<div><h3>Your bank pays for every reward</h3></div>
+<div><h3>Offers cannot reach the right customers</h3></div>
 </div>'''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
@@ -620,29 +608,29 @@ CUSTOMERS = f"""{hero("Customers", 'Banks and fintechs that <span class="serif">
 """
 
 # ------------------------------------------------------------------ CONTACT
-PRODUCTS = ["Enrich", "Analytics", "Expenses", "Cashflow", "Pulse", "Not sure yet"]
+PRODUCTS = ["Enrich", "Analytics", "Expenses", "Cashflow", "Pulse", "AI assistant", "Not sure yet"]
 COUNTRIES = ["United Arab Emirates", "Saudi Arabia", "Bahrain", "Qatar", "Kuwait", "Oman", "Egypt", "Jordan", "Other"]
 CONTACT = f"""{hero("Contact sales", 'Talk to our sales team about <span class="serif">a live demo.</span>',
  "Tell us about your bank and what you want to see. We show Lune on sample data, then on a sample of your own transactions.", "")}
 {sec(f'''<div class="split split--top">
 <form class="form card" id="contact-form" novalidate>
 <div class="form__row">
-<div class="field" data-field="first"><label for="f-first">First name</label><input id="f-first" name="first" enterkeyhint="next" autocomplete="given-name" required><span class="err">Enter your first name.</span></div>
-<div class="field" data-field="last"><label for="f-last">Last name</label><input id="f-last" name="last" enterkeyhint="next" autocomplete="family-name" required><span class="err">Enter your last name.</span></div>
+<div class="field" data-field="first"><label for="f-first">First name</label><input id="f-first" name="first" maxlength="80" aria-describedby="e-first" enterkeyhint="next" autocomplete="given-name" required><span class="err" id="e-first">Enter your first name.</span></div>
+<div class="field" data-field="last"><label for="f-last">Last name</label><input id="f-last" name="last" maxlength="80" aria-describedby="e-last" enterkeyhint="next" autocomplete="family-name" required><span class="err" id="e-last">Enter your last name.</span></div>
 </div>
 <div class="form__row">
-<div class="field" data-field="email"><label for="f-email">Work email</label><input id="f-email" name="email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" required><span class="err">Enter a work email, for example name@bank.com.</span></div>
-<div class="field" data-field="company"><label for="f-company">Company</label><input id="f-company" name="company" enterkeyhint="next" autocomplete="organization" required><span class="err">Enter your company name.</span></div>
+<div class="field" data-field="email"><label for="f-email">Work email</label><input id="f-email" name="email" maxlength="120" aria-describedby="e-email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" required><span class="err" id="e-email">Enter a work email, for example name@bank.com.</span></div>
+<div class="field" data-field="company"><label for="f-company">Company</label><input id="f-company" name="company" maxlength="80" aria-describedby="e-company" enterkeyhint="next" autocomplete="organization" required><span class="err" id="e-company">Enter your company name.</span></div>
 </div>
 <div class="form__row">
-<div class="field"><label for="f-title">Job title (optional)</label><input id="f-title" name="title" enterkeyhint="next" autocomplete="organization-title"></div>
+<div class="field"><label for="f-title">Job title (optional)</label><input id="f-title" name="title" maxlength="80" enterkeyhint="next" autocomplete="organization-title"></div>
 <div class="field"><label for="f-country">Country</label><select id="f-country" name="country" autocomplete="country-name">{"".join(f"<option>{c}</option>" for c in COUNTRIES)}</select></div>
 </div>
-<fieldset class="field" data-field="product"><legend>What do you want to see?</legend><div class="checks">{"".join(f'<label><input type="checkbox" name="product" value="{p}">{p}</label>' for p in PRODUCTS)}</div><span class="err">Select at least one product.</span></fieldset>
-<div class="field"><label for="f-notes">Other information for our sales team (optional)</label><textarea id="f-notes" name="notes"></textarea></div>
-<p class="small">We use your details only to reply to this request. See our <a href="{LIVE}/lune-privacy">privacy policy</a>.</p>
+<fieldset class="field" data-field="product" aria-describedby="e-product"><legend>What do you want to see?</legend><div class="checks">{"".join(f'<label><input type="checkbox" name="product" value="{p}">{p}</label>' for p in PRODUCTS)}</div><span class="err" id="e-product">Select at least one product.</span></fieldset>
+<div class="field"><label for="f-notes">Other information for our sales team (optional)</label><textarea id="f-notes" name="notes" maxlength="2000"></textarea></div>
+<p class="small">We use your details only to reply to this request. See our <a href="lune-privacy/">privacy policy</a>.</p>
 <div><button class="btn btn--primary" type="submit">Send request</button></div>
-<p id="form-done" hidden><b>Your email app opens with the request.</b> Send the email to complete the request.</p>
+<p id="form-done" role="status" hidden><b>Your email app opens with the request.</b> Send the email to complete the request. If no email app opens, write to <a href="mailto:hello@lunedata.io">hello@lunedata.io</a>.</p>
 </form>
 <div class="stack" style="gap:24px">
 <div class="card card--muted"><h2 class="h3">What happens next</h2>{facts([("", "Our sales team replies to your request."), ("", "We agree a time for a live demo."), ("", "We show the products you selected on sample data.")])}</div>

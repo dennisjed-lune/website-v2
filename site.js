@@ -1,4 +1,5 @@
 (() => {
+  document.documentElement.classList.add('js');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasIO = 'IntersectionObserver' in window;
   const store = {
@@ -313,7 +314,14 @@
   const form = document.getElementById('contact-form');
   if (form) {
     const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    const bad = (name, isBad) => { form.querySelector(`[data-field="${name}"]`).classList.toggle('is-bad', isBad); return isBad; };
+    const bad = (name, isBad) => {
+      const f = form.querySelector(`[data-field="${name}"]`);
+      f.classList.toggle('is-bad', isBad);
+      f.querySelectorAll('input').forEach(i => isBad ? i.setAttribute('aria-invalid', 'true') : i.removeAttribute('aria-invalid'));
+      return isBad;
+    };
+    // An error clears as soon as the visitor corrects the field.
+    form.addEventListener('input', e => { const f = e.target.closest('.is-bad'); if (f) bad(f.dataset.field, false); });
     form.addEventListener('submit', e => {
       e.preventDefault();
       const v = n => form.elements[n].value.trim();
@@ -328,7 +336,7 @@
         `Job title: ${v('title')}`, `Country: ${v('country')}`, `Products: ${products.join(', ')}`, '', v('notes')
       ].join('\n');
       window.location.href = 'mailto:hello@lunedata.io?subject=' + encodeURIComponent('Demo request: ' + v('company')) + '&body=' + encodeURIComponent(body);
-      document.getElementById('form-done').hidden = false;
+      const done = document.getElementById('form-done'); done.hidden = false; done.focus && done.setAttribute('tabindex', '-1'); done.focus();
     });
   }
 })();
