@@ -113,7 +113,7 @@ EXP_REAL_POPS = [pop("l1", 1, "line", "Day by day", "This month against last mon
 # Expenses, option 2: a drawn screen. The chart draws, the split grows, a tap opens one payment.
 EXP_APP = f"""<div class="app">{TIME}
 <div class="app__top"><b>Expenses</b><span class="app__pill">November</span></div>
-<span class="app__k">Spent so far</span><b class="app__big" data-count="6808" data-pre="AED " data-at="1">AED 6,808</b>
+<span class="app__k">Spent so far</span><b class="app__big" data-count="6808" data-from="5900" data-pre="AED " data-at="1">AED 6,808</b>
 <span class="app__good">AED 187 less than last month</span>
 <div class="app__card ex__card"><svg class="ex__chart" viewBox="0 0 240 86" preserveAspectRatio="none" aria-hidden="true">
 <path class="ex__last" d="M0 80 C40 70,80 52,120 40 S200 18,240 10"/><path class="ex__area" d="M0 80 C30 74,50 60,80 56 S120 40,150 34 L150 86 L0 86Z"/>
@@ -133,7 +133,7 @@ EXP_DRAWN_POPS = [pop("l2", 2, "target", "Groceries budget", "AED 1,640 of AED 2
 CF_HOME = f"""<div class="app">{TIME}
 <div class="app__top"><b>Cashflow</b><span class="app__pill">25 Oct to 24 Nov</span></div>
 <span class="app__chip">Your month starts on the 25th</span>
-<span class="app__k">Total cashflow</span><b class="app__big" data-count="6600" data-pre="+AED " data-at="1">+AED 6,600</b>
+<span class="app__k">Total cashflow</span><b class="app__big" data-count="6600" data-from="5400" data-pre="+AED " data-at="1">+AED 6,600</b>
 <span class="app__good">AED 420 better than last month</span>
 <div class="app__card">{bar_row("Money in", "AED 18,500", 100, 1)}{bar_row("Money out", "AED 11,900", 64, 1, "out")}</div>
 <span class="app__h fx at2">Money in</span>
@@ -152,7 +152,7 @@ CF_TREND = f"""<div class="app">{TIME}
 <div class="app__tabs"><i class="is-on">Total</i><i>Money in</i><i>Money out</i></div>
 <div class="app__card"><div class="tb">{TREND_BARS}</div>
 <div class="tb__key"><span><i></i>Money in</span><span><i class="out"></i>Money out</span></div></div>
-<div class="app__card cf__month fx at2"><span class="app__k">November</span><b class="app__big" data-count="6600" data-pre="+AED " data-at="2">+AED 6,600</b>
+<div class="app__card cf__month fx at2"><span class="app__k">November</span><b class="app__big" data-count="6600" data-from="5400" data-pre="+AED " data-at="2">+AED 6,600</b>
 <div class="cf__pair"><span>Money in<b>AED 18,500</b></span><span>Money out<b>AED 11,900</b></span></div></div>
 <div class="app__card cf__note fx at3"><span class="app__k">Cashflow summary</span><p>You kept AED 6,600 this month. That is 36% of money in.</p></div>
 <span class="app__h fx at3">History</span>

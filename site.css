@@ -3,7 +3,7 @@
 :root {
   --bg: #F3F5F2; --paper: #fff; --line: rgba(0,46,42,0.14); --mut: var(--neutral-600); --soft: var(--neutral-500);
   --r: 10px; --r-lg: 14px; --pad: clamp(20px, 4vw, 56px);
-  --ease: cubic-bezier(.2,.7,.2,1); --spring: cubic-bezier(.22,1,.36,1);
+  --ease: cubic-bezier(.16,1,.3,1); --spring: cubic-bezier(.22,1,.36,1);
 }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 96px; }
@@ -12,7 +12,7 @@ a { color: var(--lune-teal-700); }
 a:hover { color: var(--lune-teal-700); text-decoration: underline; text-underline-offset: 3px; }
 @keyframes mq { to { transform: translateX(-50%); } }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
-@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes ring { from { opacity: .9; scale: 1; } to { opacity: 0; scale: 2.2; } }
 @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 @keyframes scan { from { translate: -110% 0; } to { translate: 330% 0; } }
@@ -106,7 +106,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
 @media (max-width: 980px) { .hero__grid { grid-template-columns: 1fr; } }
 .hero__copy { display: grid; gap: 26px; align-content: center; justify-items: start; }
-.hero__copy > *, .heroA__in > *, .heroC__in > * { animation: rise .8s var(--ease) both; }
+.hero__copy > *, .heroA__in > *, .heroC__in > * { animation: rise .6s var(--ease) both; }
 .hero :is(.hero__copy, .heroA__in, .heroC__in) > :nth-child(2) { animation-delay: .08s; }
 .hero :is(.hero__copy, .heroA__in, .heroC__in) > :nth-child(3) { animation-delay: .16s; }
 .hero :is(.hero__copy, .heroA__in, .heroC__in) > :nth-child(4) { animation-delay: .24s; }
@@ -162,7 +162,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .scene__rings i { grid-area: 1 / 1; border-radius: 50%; border: 1px solid var(--neutral-200); width: 54%; aspect-ratio: 1; }
 .scene__rings i:nth-child(2) { width: 80%; opacity: .6; }
 .scene__rings i:nth-child(3) { width: 108%; opacity: .35; }
-.scene__tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(calc(16deg + var(--rx, 0deg))) rotateY(calc(-20deg + var(--ry, 0deg))) rotateZ(4deg); transition: transform .35s ease-out; }
+.scene__tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(calc(8deg + var(--rx, 0deg))) rotateY(calc(-10deg + var(--ry, 0deg))) rotateZ(3deg); transition: transform .35s ease-out; }
 .bankcard { position: absolute; inset: 0; margin: auto; width: min(330px, 62%); aspect-ratio: 1.586; border-radius: 20px; background: linear-gradient(135deg, #002E2A 0%, #0A634D 55%, #10A37F 100%); color: #fff; box-shadow: 0 44px 60px -30px rgba(2,26,23,0.6), inset 0 0 0 1px rgba(255,255,255,0.14); display: grid; padding: 8%; align-content: space-between; transform: translateZ(30px); animation: float 7s ease-in-out infinite; }
 .bankcard--b { background: linear-gradient(135deg, #99F2AC, #D9F2E6); transform: translateZ(-20px) rotate(-9deg) translate(-6%, 4%); animation-delay: -2s; }
 .bankcard--c { background: linear-gradient(135deg, #070312, #2E3A36); transform: translateZ(-70px) rotate(8deg) translate(8%, 8%); animation-delay: -4s; }
@@ -504,9 +504,9 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 
 /* ================= Motion ================= */
 /* Reveal on scroll (site.js adds .rv, then .in) */
-.rv { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease) var(--d, 0ms), transform .8s var(--ease) var(--d, 0ms); }
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 .rv.in { opacity: 1; transform: none; filter: none; }
-.shot.rv, .map.rv, .flow.rv { transform: scale(.965); filter: blur(6px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); }
+.shot.rv { transform: translateY(16px); }
 .shot.rv.in, .map.rv.in, .flow.rv.in { transform: none; filter: none; }
 
 
@@ -626,7 +626,11 @@ html.paused *, html.paused *::before, html.paused *::after { animation-play-stat
 .draftbar button[aria-pressed="true"] { background: var(--lune-mint); color: var(--lune-ink); }
 body:has(.draftbar) .site-foot { padding-bottom: 96px; }
 
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } .rv { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  /* No movement. Colour and opacity changes stay, short, so hover and open states still read. */
+  *, *::before, *::after { animation: none !important; transition-property: opacity, color, background-color, border-color, outline-color !important; transition-duration: .15s !important; transition-delay: 0s !important; }
+  html { scroll-behavior: auto; } .rv { opacity: 1; transform: none; }
+}
 
 /* Next step link on product pages */
 .next { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; border-top: 1px solid var(--line); padding-top: 28px; }
@@ -1025,3 +1029,21 @@ h3 { text-wrap: balance; }
 .map { grid-template-columns: repeat(auto-fit, minmax(min(100%, 176px), 1fr)); }
 @media (max-width: 1000px) { .map { grid-template-columns: 1fr 1fr; } .map__step:last-child { grid-column: 1 / -1; } }
 @media (max-width: 600px) { .map { grid-template-columns: 1fr; } }
+
+/* ---- Motion pass 27 Nov: menus open with a short fade, close faster ---- */
+@media (min-width: 1021px) {
+  .nav-drop__panel { display: flex; visibility: hidden; opacity: 0; translate: 0 -4px; transition: opacity .12s ease-in, translate .12s ease-in, visibility 0s linear .12s; }
+  .nav-drop.is-open .nav-drop__panel { visibility: visible; opacity: 1; translate: 0 0; transition: opacity .18s var(--ease), translate .18s var(--ease), visibility 0s; }
+}
+@media (max-width: 1020px) {
+  .site-nav.is-open { animation: menu-in .2s var(--ease); }
+}
+@keyframes menu-in { from { opacity: 0; translate: 0 -6px; } to { opacity: 1; translate: 0 0; } }
+
+/* Enrich demo: the boxes wait faintly, the values appear only when Enrich fills them. */
+.dc__f b, .dc__f .ui__brand { opacity: 0; transition: opacity .2s ease-in; }
+.dv.s2 .dc__f--1 :is(b, .ui__brand), .dv.s3 .dc__f--2 b, .dv.s3 .dc__f--3 b { opacity: 1; transition: opacity .3s var(--ease) .1s; }
+
+/* Pulse demo: the faint boxes wait without their numbers; values appear at their own step. */
+.pc__win > :not(u), .pc__bal b { opacity: 0; transition: opacity .2s ease-in; }
+.dv.s3 .pc__win > :not(u), .dv.s4 .pc__bal b { opacity: 1; transition: opacity .3s var(--ease) .1s; }

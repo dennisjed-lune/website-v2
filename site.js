@@ -90,14 +90,18 @@
         if (!trail.children.length) [9, 7, 6, 4, 3, 2].forEach(i => trail.append(trailChip(TX[i])));
         if (loop > 0) { trail.prepend(trailChip(list[(loop - 1) % list.length])); if (trail.children.length > 9) trail.lastChild.remove(); }
       }
-      all('raw').forEach(r => (r.hasAttribute('data-type') && !reduce) ? typeText(r, t.raw, 800) : (r.textContent = t.raw));
-      all('logo').forEach(i => { i.src = 'img/logos/' + t.logo; });
-      all('merchant').forEach(m => { clearInterval(m._t); m.textContent = t.merchant; });
-      all('cat').forEach(c => { c.textContent = `${t.category} › ${t.sub}`; });
-      all('rec').forEach(c => { c.textContent = t.rec ? 'Yes' : 'No'; });
-      all('amt').forEach(c => { c.textContent = t.amount; });
-      all('offer').forEach(c => { c.textContent = t.offer || ''; });
-      el.classList.toggle('no-offer', !t.offer);
+      // The next payment is written only after the old chips have faded out, so it never shows early.
+      const write = () => {
+        all('raw').forEach(r => (r.hasAttribute('data-type') && !reduce) ? typeText(r, t.raw, 800) : (r.textContent = t.raw));
+        all('logo').forEach(i => { i.src = 'img/logos/' + t.logo; });
+        all('merchant').forEach(m => { clearInterval(m._t); m.textContent = t.merchant; });
+        all('cat').forEach(c => { c.textContent = `${t.category} › ${t.sub}`; });
+        all('rec').forEach(c => { c.textContent = t.rec ? 'Yes' : 'No'; });
+        all('amt').forEach(c => { c.textContent = t.amount; });
+        all('offer').forEach(c => { c.textContent = t.offer || ''; });
+        el.classList.toggle('no-offer', !t.offer);
+      };
+      if (loop > 0 && !reduce) setTimeout(write, 360); else write();
       const cnt = el.querySelector('[data-feedcount]');
       if (cnt) { feedCount += 37 + Math.floor(Math.random() * 60); cnt.textContent = feedCount.toLocaleString('en-US'); }
     }
@@ -150,6 +154,8 @@
     const hook = HOOKS[el.dataset.hook];
     const counts = [...el.querySelectorAll('[data-count]')];
     const d = { el, i: 0, loop: 0, timer: null, on: false };
+    // Counters show their start value from the first frame, not the final value from the markup.
+    if (!reduce && hasIO && !el.hasAttribute('data-static')) counts.forEach(c => setCount(c, +(c.dataset.from || 0)));
     const go = () => {
       if (d.i === 0) {
         steps.forEach((_, k) => el.classList.remove('s' + k));
@@ -174,7 +180,11 @@
   dvs.forEach(d => { if (d.still) d.final(); });
   if (reduce || !hasIO) dvs.forEach(d => { if (!d.still) d.final(); });
   else {
-    const io = new IntersectionObserver(es => { es.forEach(en => en.isIntersecting ? seen.add(en.target) : seen.delete(en.target)); sync(); }, { threshold: 0.2 });
+    // A demo starts when most of its frame is in view, about 300ms after its frame begins to enter.
+    const io = new IntersectionObserver(es => {
+      es.forEach(en => en.isIntersecting ? seen.add(en.target) : seen.delete(en.target));
+      setTimeout(sync, 300);
+    }, { threshold: 0.5 });
     dvs.forEach(d => { if (!d.still) io.observe(d.el); });
   }
 
@@ -189,7 +199,8 @@
   }
 
   // ---- Reveal on scroll ----
-  const RV = '.sec .head, .sec .card, .points > div, .party > div, .stats > div, .chapter__copy, .feature__copy, .phones .phone, .quote, .case, .cta, .rawrow, .map, .map__base, .band, .flow, .badges, .shot';
+  // Only product frames enter on scroll, so text is never hidden and the demos start as they arrive.
+  const RV = '.shot, .phones';
   if (hasIO && !reduce) {
     const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     document.querySelectorAll(RV).forEach(el => {
