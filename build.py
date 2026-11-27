@@ -20,8 +20,8 @@ REVIEW = True   # shows the hero selector for review. Set to False before the si
 # The navigation follows the product story: Enrich first, Pulse last.
 # Products sit in one menu. PFM groups the three in-app modules.
 MENU_PRODUCTS = [("enrich.html", "Enrich"), ("analytics.html", "Analytics"),
-            ("PFM", [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow"), ("ai.html", "AI assistant")]),
-            ("pulse.html", "Pulse")]
+            ("PFM", [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")]),
+            ("pulse.html", "Pulse"), ("ai.html", "AI assistant")]
 NAV = [("customers.html", "Customers"), ("blog/", "Blog")]
 DOCS = "https://docs.lunedata.io"
 
@@ -224,16 +224,17 @@ HEROES = HEROES.replace("</section>", "</section>" + logos() + "</div>").replace
 # Hero B (3D card) is the default. The other two stay behind the review bar.
 HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first" data-hero="a" hidden>').replace('<div class="first" data-hero="b" hidden>', '<div class="first" data-hero="b">')
 
-# The solution in one picture: four separate products on one data set. Each card links to its chapter.
+# The solution in one picture: five separate products on one data set. Each card links to its chapter.
 STEPS = [
     ("enrich", "01", "Name", "Enrich", "AI names every card payment.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "PFM", "AI-powered Expenses and Cashflow for your app.", "For your customers"),
     ("pulse", "04", "Earn", "Pulse", "AI matches merchant-funded cashback to each customer.", "For your card revenue"),
+    ("ai", "05", "Ask", "AI assistant", "Answers customers' money questions in your app.", "For your customers"),
 ]
 
 
-PACK = {'enrich': 'Includes LuneHub', 'analytics': 'With Enrich or on its own', 'in-app': 'Two SDK modules', 'pulse': 'A separate product with its own SDK'}
+PACK = {'enrich': 'Includes LuneHub', 'analytics': 'With Enrich or on its own', 'in-app': 'Two SDK modules', 'pulse': 'A separate product with its own SDK', 'ai': 'A separate product'}
 
 
 def map_step(i, st):
@@ -272,7 +273,7 @@ CHAPTERS = "\n".join([
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
             [("analytics.html", "Analytics")], ANALYTICS_DEMO, "chapter--flip"),
     chapter(2, "Your customers see where their money goes.",
-            "Expenses and Cashflow for iOS and Android, with an AI assistant.",
+            "Expenses and Cashflow for iOS and Android.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
@@ -301,7 +302,7 @@ PROBLEM = '''
 
 AI = f"""<section class="sec sec--white" id="ai"><div class="wrap chapter__grid">
 <div class="feature__copy chapter__copy"><h2 style="font-size:clamp(28px,3vw,44px)">Customers ask about their money. <span class="serif">The assistant answers.</span></h2>
-<p class="lead">Inside Expenses and Cashflow, with matching Pulse offers.</p>
+<p class="lead">Answers from enriched transactions, with matching Pulse offers.</p>
 <div class="chapter__links"><a class="more" href="ai.html">AI assistant →</a></div></div>
 {AI_DEMO}</div></section>"""
 
@@ -309,7 +310,7 @@ HOME = f"""{HEROES}
 
 {sec(head("", 'Most card data is <span class="serif">unreadable.</span>') + PROBLEM, "sec--teal")}
 
-{sec(head("", 'Four products. <span class="serif">One data set.</span>') + MAP, id_="how")}
+{sec(head("", 'Five products. <span class="serif">One data set.</span>') + MAP, id_="how")}
 
 <div class="story">
 {CHAPTERS}
@@ -826,7 +827,7 @@ def build_blog():
             f'<body><p><a href="{up}{to}">Continue to Lune</a></p></body></html>\n', encoding="utf-8")
     # 404 page. Hosts serve it at any depth, so a base tag keeps its links and styles working.
     cards = "".join(map_step(i, st) for i, st in enumerate(STEPS))
-    for a, b in [("#enrich", "enrich.html"), ("#analytics", "analytics.html"), ("#in-app", "expenses.html"), ("#pulse", "pulse.html")]:
+    for a, b in [("#enrich", "enrich.html"), ("#analytics", "analytics.html"), ("#in-app", "expenses.html"), ("#pulse", "pulse.html"), ("#ai", "ai.html")]:
         cards = cards.replace(f'href="{a}"', f'href="{b}"')
     nf = ('<section class="hero"><div class="wrap"><div class="hero__copy"><h1 class="h1--page">This page does not exist.</h1>'
           '<p class="lead">The address may be old or mistyped. These are the Lune products.</p>'
