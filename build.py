@@ -342,6 +342,10 @@ ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">mer
 {card("", "Recurring transactions", "Lune finds transactions that repeat. Examples are payments such as subscriptions and income such as a salary.")}
 </div>''')}
 
+{sec(feature("Overview", "See your card base and enriched volume at a glance.", "The first screen in LuneHub.",
+ [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
+ shot("lunehub-overview.jpg", "LuneHub · Overview", "", "LuneHub overview with cardholders with transactions, enriched transactions against the plan, and transactions by date")), "")}
+
 {sec(feature("In LuneHub", "Your team sees each enriched transaction.", "LuneHub is the Lune portal for bank teams. It lists each transaction with its raw description and its enriched result.",
  [("Search", "by raw description or transaction ID."), ("Compare", "the raw description with the brand and category."), ("Flag", "a result that looks wrong.")],
  shot("lunehub-transactions-list.jpg", "LuneHub · Transactions", "", "LuneHub transactions list with raw description, brand, category, date and amount")), "sec--white")}
@@ -396,10 +400,6 @@ CATEGORY_MORE = f'''
 
 ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class="serif">by merchant and category.</span>',
  "Your teams get the answer without a data request.", BTN_TALK, ANALYTICS_DEMO)}
-
-{sec(feature("Overview", "See your card base and enriched volume at a glance.", "The first screen in LuneHub.",
- [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
- shot("lunehub-overview.jpg", "LuneHub · Overview", "", "LuneHub overview with cardholders with transactions, enriched transactions against the plan, and transactions by date")), "sec--white")}
 
 {sec(feature("Spend dashboard", "One view of customers, transactions and spend.", "Totals and the split, for any period, currency and country.",
  [("Total customers", "and total transactions."), ("Total spend", "and spend per customer."), ("Spend by category and brand", "in one chart.")],
@@ -461,7 +461,7 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 """
 
 CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">against money out.</span>',
- "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out, and an AI assistant explains the month.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
+ "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out, and an AI assistant explains their cashflow.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
 
 {sec(head("Cashflow screens", "Customers compare money in with money out.") + f'''
 <div class="phones">
