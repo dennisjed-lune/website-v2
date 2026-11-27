@@ -171,7 +171,7 @@ a.more:active, .site-nav a:active, .site-foot a:active, .case:active, .rail a:ac
 .bankcard__chip { width: 15%; aspect-ratio: 1.3; border-radius: 6px; background: linear-gradient(135deg, #F3E3A1, #C9A84A); }
 .bankcard__no { font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #BFDBD3; }
 .bankcard__tap { position: absolute; right: 10%; top: 14%; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--lune-mint); opacity: 0; }
-.dv.s1 .bankcard__tap { animation: ring 1s ease-out 2; }
+.dv.s1 .bankcard__tap { animation: ring .6s ease-out 1; }
 .fl { position: absolute; background: rgba(255,255,255,0.97); border: 1px solid var(--neutral-100); border-radius: 16px; padding: 12px 16px; box-shadow: 0 26px 40px -22px rgba(2,26,23,0.45); display: grid; gap: 6px; text-align: left; max-width: 64%; opacity: 0; scale: .8; transition: opacity .45s, scale .5s var(--spring); animation: float 6s ease-in-out infinite; }
 .fl b { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .fl--raw { left: 0; top: 4%; transform: translateZ(90px); background: var(--lune-ink); border-color: transparent; }
@@ -1047,3 +1047,26 @@ h3 { text-wrap: balance; }
 /* Pulse demo: the faint boxes wait without their numbers; values appear at their own step. */
 .pc__win > :not(u), .pc__bal b { opacity: 0; transition: opacity .2s ease-in; }
 .dv.s3 .pc__win > :not(u), .dv.s4 .pc__bal b { opacity: 1; transition: opacity .3s var(--ease) .1s; }
+
+/* ---- Hero B motion: one payment flows out of the card ----
+   s1: the card is tapped (small press, contactless ring) and the raw card line types in.
+   s2: a light sweep crosses the card while Enrich reads it; the merchant chip leaves the card.
+   s3: amount and spend by category follow; the bars grow.
+   s4: the cashback chip arrives and the card edge lights mint.
+   Reset: the chips fade and drift back into the card. */
+.scene .fl { --ex: 0px; --ey: 0px; transform: translateZ(var(--z)) translate(var(--ex), var(--ey)); transition: opacity .3s ease-in, transform .35s ease-in, scale .35s ease-in; }
+.scene .fl--raw { --z: 90px; --ex: 46px; --ey: 34px; }
+.scene .fl--who { --z: 150px; --ex: -52px; --ey: 30px; }
+.scene .fl--amt { --z: 120px; --ex: 44px; --ey: -22px; }
+.scene .fl--bars { --z: 70px; --ex: -40px; --ey: -30px; }
+.scene .fl--offer { --z: 170px; --ex: 0px; --ey: -46px; }
+.scene.dv.s1 .fl--raw, .scene.dv.s2 .fl--who, .scene.dv.s3 .fl--amt, .scene.dv.s3 .fl--bars, .scene.dv.s4 .fl--offer { --ex: 0px; --ey: 0px; transition: opacity .45s var(--ease), transform .7s var(--ease), scale .6s var(--ease); }
+.scene.dv.s3 .fl--bars { transition-delay: .12s; }
+.bankcard { overflow: hidden; transition: box-shadow .35s ease-in; }
+.scene .bankcard:not(.bankcard--b):not(.bankcard--c) { box-shadow: 0 44px 60px -30px rgba(2,26,23,0.6), inset 0 0 0 1px rgba(255,255,255,0.14), 0 0 0 3px rgba(153,242,172,0); }
+.scene.dv.s1 .bankcard:not(.bankcard--b):not(.bankcard--c) { animation: float 7s ease-in-out infinite, card-press .45s var(--ease); }
+@keyframes card-press { 40% { scale: .975; } }
+.bankcard__sheen { position: absolute; inset: -20% auto -20% 0; width: 38%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent); translate: -120% 0; pointer-events: none; }
+.scene.dv.s2 .bankcard__sheen { animation: sheen .9s var(--ease); }
+@keyframes sheen { to { translate: 330% 0; } }
+.scene.dv.s4:not(.no-offer) .bankcard:not(.bankcard--b):not(.bankcard--c) { transition: box-shadow .5s var(--ease); box-shadow: 0 44px 60px -30px rgba(2,26,23,0.6), inset 0 0 0 1px rgba(255,255,255,0.14), 0 0 0 3px rgba(153,242,172,0.85); }

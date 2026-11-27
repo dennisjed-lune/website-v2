@@ -139,7 +139,7 @@ def phone(img, title, text):
 
 
 def card(tag, h3, body, ticks=(), who="", link=None):
-    t = f'<span class="tag">{tag}</span>' if tag else ""
+    t = ""   # no small labels above card headings
     ul = '<ul class="ticks">' + "".join(f"<li>{x}</li>" for x in ticks) + "</ul>" if ticks else ""
     w = f'<span class="for">For: <b>{who}</b></span>' if who else ""
     ln = f'<a class="more" href="{link[0]}">{link[1]} →</a>' if link else ""
@@ -199,7 +199,7 @@ FLOW = """<div class="flow dv" data-steps="700,1100,1100,1100,3400">
 </div>"""
 
 HERO_COPY = f"""<h1>More card revenue.<br><span class="serif">From every transaction.</span></h1>
-    <p class="lead">Lune uses AI to name every card payment. Merchants pay to reach your customers.</p>
+    <p class="lead">Lune names every card payment. Merchants pay to reach your customers.</p>
     <div class="btns">{BTN_TALK}<a class="btn btn--ghost" href="#how">See how it works</a></div>"""
 FEED_NOTE = "Lune turns each card description into a merchant, a logo and a category."
 
@@ -226,7 +226,7 @@ HEROES = HEROES.replace('<div class="first" data-hero="a">', '<div class="first"
 
 # The solution in one picture: five separate products on one data set. Each card links to its chapter.
 STEPS = [
-    ("enrich", "01", "Name", "Enrich", "AI names every card payment.", "The foundation for each product"),
+    ("enrich", "01", "Name", "Enrich", "Names every card payment.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "PFM", "AI-powered Expenses and Cashflow for your app.", "For your customers"),
     ("pulse", "04", "Earn", "Pulse", "AI matches merchant-funded cashback to each customer.", "For your card revenue"),
@@ -263,7 +263,7 @@ def chapter(i, h2, lead, kv, buy, links, fig, cls=""):
 
 CHAPTERS = "\n".join([
     chapter(0, "Each card description gets a merchant name.",
-            "A raw card description in. An AI-assisted merchant, logo and category out.",
+            "Your customers see Level Shoes, not “POS PUR 448812 LVL SHS”.",
             [("Merchant and logo", "The name your customer knows"), ("Category", "19 categories with subcategories"), ("Real time", "As each payment happens")],
             "<b>Enrich</b> is the foundation. It includes LuneHub, the portal for your teams.",
             [("enrich.html", "Enrich")], ENRICH_DEMO, "sec--white"),
@@ -338,7 +338,7 @@ rawrows = "".join(f"""<div class="rawrow"><span class="rawrow__raw" data-ux-igno
 <span class="rawrow__out"><img src="img/logos/{lg}" alt=""><span><b>{e(m)}{f' · {loc}' if loc else ''}</b><span><em>{cat}</em>{' · ' + city if city else ''} · {amt}</span></span></span></div>""" for r, lg, m, loc, cat, city, amt in RAW)
 
 ENRICH = f"""{hero("Enrich", 'Every card payment, named: <span class="serif">merchant, logo and category.</span>',
- "Your core banking system sends a raw card description. Enrich uses AI to return the merchant, logo and category as the payment happens.",
+ "Your core banking system sends a raw card description. Enrich returns the merchant, logo and category as the payment happens. AI supports the matching.",
  BTN_TALK + BTN_LIVE + f'<a class="btn btn--ghost" href="{DOCS_API}" target="_blank" rel="noopener">Read the API docs ↗</a>', ENRICH_DEMO)}
 
 {sec(head("Sample transactions", "Enrich reads the card descriptions that customers cannot read.", "Seven card transactions from seven markets. Each result comes from one real-time API call.") + f'''
@@ -407,29 +407,29 @@ CATEGORY_MORE = f'''
 
 
 ANALYTICS = f"""{hero("Analytics", 'See where your customers spend, <span class="serif">by merchant and category.</span>',
- "Analytics shows spend by merchant, category and customer from your enriched transactions. Your teams get answers without a data request.", BTN_TALK, ANALYTICS_DEMO)}
+ "Spend by merchant, category and customer. No data request needed.", BTN_TALK, ANALYTICS_DEMO)}
 
-{sec(feature("Overview", "See your card base and enriched volume at a glance.", "The Overview is the first screen in LuneHub. It shows how many cardholders transact and how many transactions Lune enriched.",
+{sec(feature("Overview", "See your card base and enriched volume at a glance.", "The first screen in LuneHub.",
  [("Cardholders with transactions", "for the period you select."), ("Enriched transactions", "against the volume in your plan."), ("Transactions by date", "day by day, for the last month.")],
  shot("lunehub-overview.jpg", "LuneHub · Overview", "", "LuneHub overview with cardholders with transactions, enriched transactions against the plan, and transactions by date")), "sec--white")}
 
-{sec(feature("Spend dashboard", "One view of customers, transactions and spend.", "Select a date range, a currency and a country. The dashboard shows the totals and the split.",
+{sec(feature("Spend dashboard", "One view of customers, transactions and spend.", "Totals and the split, for any period, currency and country.",
  [("Total customers", "and total transactions."), ("Total spend", "and spend per customer."), ("Spend by category and brand", "in one chart.")],
  shot("lunehub-dashboard.jpg", "LuneHub · Analytics · Dashboard", "", "LuneHub analytics dashboard with total customers, transactions, spend and spend per customer")), "sec--white")}
 
-{sec(feature("Brand explorer", "Find the merchants where your customers spend most.", "The Brand explorer lists each enriched merchant with six columns. Your team filters and sorts the list to find the brands that matter.",
+{sec(feature("Brand explorer", "Find the merchants where your customers spend most.", "Filter and sort every enriched merchant.",
  [("Brand and category", "for each enriched merchant."), ("Total spend and transactions", "for the period you select."), ("Customers", "who paid that brand with your cards."), ("Spend per customer", "to compare brands of different size.")],
- shot("lunehub-analytics-brands.jpg", "LuneHub · Analytics · Brands", "The Brand explorer in LuneHub. " + TEST, "LuneHub brand explorer with spend, transactions, customers and spend per customer for each brand")) + BRAND_MORE)}
+ shot("lunehub-analytics-brands.jpg", "LuneHub · Analytics · Brands", "The Brand explorer in LuneHub. " + TEST, "LuneHub brand explorer with spend, transactions, customers and spend per customer for each brand")) )}
 
-{sec(feature("Category explorer", "See spend for each category.", "The Category explorer lists all 19 Lune categories with their totals. Your team sees where card spend goes and how many customers are behind it.",
+{sec(feature("Category explorer", "See spend for each category.", "All 19 Lune categories, with their totals.",
  [("Total spend and transactions", "for each category."), ("Customers", "who spend in each category."), ("The number of subcategories", "below each category.")],
- shot("lunehub-analytics-categories.jpg", "LuneHub · Analytics · Categories", "The Category explorer in LuneHub, with the first eight of 19 categories. " + TEST, "LuneHub category explorer with spend, transactions, customers and subcategories")) + CATEGORY_MORE, "sec--white")}
+ shot("lunehub-analytics-categories.jpg", "LuneHub · Analytics · Categories", "The Category explorer in LuneHub, with the first eight of 19 categories. " + TEST, "LuneHub category explorer with spend, transactions, customers and subcategories")) , "sec--white")}
 
 {sec('''<div class="split"><div class="head"><h2>Spend data shows which merchants can <span class="serif">fund your rewards.</span></h2></div>
 <div class="feature__copy"><p class="lead">The Brand explorer shows the merchants where your customers spend most. Through Pulse, those merchants fund cashback for your customers.</p>''' + facts([("One portal.", "Analytics and Pulse share one LuneHub sign-in."), ("One data set.", "Pulse audiences come from the same enriched transactions."), ("Your data only.", "Each bank sees its own customers and transactions.")]) + '''<a class="more" href="pulse.html">See Pulse →</a></div></div>''', "sec--teal")}
 {NEXT["analytics"]}
 
-{cta("See your own spend data in LuneHub.", "We show Analytics with sample data, or with a sample of your own enriched transactions.")}
+{cta("See your own spend data in LuneHub.", "A live demo on a sample of your own transactions.")}
 """
 
 # ------------------------------------------------------------------ EXPENSES / CASHFLOW
@@ -500,16 +500,9 @@ CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">ag
 PULSE_H1 = "Rewards under your bank's name. " + '<span class="serif">Merchants pay.</span>'
 BTN_HOW = '<a class="btn btn--ghost" href="#how">See how it works</a>'
 PULSE = f"""{hero("Pulse", PULSE_H1,
- "Pulse is a rewards programme for your customers: cashback or points, with tiers and missions. Merchants fund the offers. An AI recommendation engine ranks them for each customer. Your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
+ "Cashback or points, with tiers and missions. Merchants fund the offers, AI ranks them for each customer, and your bank approves them.", BTN_TALK + BTN_HOW, PULSE_DEMO)}
 
-{sec(head("Why card managers use Pulse", "Customers earn with your card. Merchants pay for the rewards.") + f'''
-<div class="cols">
-{card("Card spend", "Customers earn only with your card", "A customer activates an offer in your app. The customer then earns on purchases with your card.")}
-{card("Cost", "Merchants fund each reward", "The merchant sets the budget, the cashback rate and the cap. Your bank needs no rewards budget.")}
-{card("Control", "Your bank approves each offer", "Your team sees the terms, the stores and the audience. Your team chooses the cards that can earn.")}
-</div>''', "sec--white")}
-
-{sec(head("How Pulse works", "Four parties. One offer.", "Each offer moves from the merchant to Lune, to your bank, then to your customer.") + '''
+{sec(head("How Pulse works", "Four parties. One offer.") + '''
 <div class="party">
 <div><b>Merchant creates</b><span>Sets the budget, cashback rate, cap and stores.</span></div>
 <div><b>Lune targets</b><span>Builds the offer and selects eligible customers from enriched spend.</span></div>
@@ -517,24 +510,19 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 <div><b>Customer earns</b><span>Joins, activates the offer in the app and pays by card.</span></div>
 </div>''', id_="how")}
 
-{sec(feature("01 · Merchant creates", "Merchants create campaigns in their own portal.", "A merchant sets up a campaign and sends it for review. The merchant pays cashback only on purchases that meet the terms.",
+{sec(feature("01 · Merchant creates", "Merchants create campaigns in their own portal.", "The merchant pays cashback only on purchases that meet the terms.",
  [("Goal and budget.", "A goal, a total budget, the cashback rate, a cap and a minimum spend."), ("Two budget modes.", "Run until the budget is spent, or run for fixed dates."), ("Each brand and store.", "Several brands, with merchant IDs and terminal IDs.")],
  shot("merchant-create-campaign-step1.jpg", "Pulse merchant portal · Create campaign", "Step 1 of the campaign form in the merchant portal. " + TEST, "Merchant portal create campaign form with goal, budget, cashback percentage, cap and dates")), "sec--white", "merchant")}
 
-{sec(head("02 · Lune targets", 'Each offer reaches the customers who <span class="serif">match the goal.</span>', "The merchant selects a goal for the campaign. Lune builds the audience for that goal from your enriched transactions.") + f'''
+{sec(head("02 · Lune targets", 'Each offer reaches the customers who <span class="serif">match the goal.</span>', "Lune builds the audience from your enriched transactions.") + f'''
 <div class="cols cols--4">
-{card("Goal: acquire customers", "New to the brand", "Customers who spend in the category but not at this brand. Example: they buy coffee each week, but not at this café.")}
-{card("Goal: win back customers", "Stopped buying", "Customers who bought from the brand before and then stopped. Example: no purchase in the last 90 days.")}
-{card("Goal: increase frequency", "Buy now and then", "Customers who buy from the brand, but not often. Example: one purchase a month or less.")}
-{card("Goal: grow average spend", "Small baskets", "Customers who buy from the brand with a low amount for each purchase. A minimum spend on the offer moves them up.")}
-</div>
-<div class="cols">
-{card("More ways to target", "By category or subcategory", "Customers who spend in one category, such as Dining, or one subcategory, such as Food Delivery.")}
-{card("More ways to target", "By spend level", "Customers above or below a spend amount in a period. Example: more than AED 2,000 on Travel in six months.")}
-{card("More ways to target", "By card programme", "Your team selects the card programmes that can earn. Example: Platinum credit only.")}
-</div>''' + '<div class="split split--top"><div class="feature__copy">' + facts([("Audience size first.", "Your team sees how many customers can earn before the offer goes live."), ("Your data stays yours.", "Each bank's audience comes from its own customers and transactions.")]) + '</div><div class="feature__copy">' + facts([("Terms written for you.", "Lune writes the offer terms from the campaign settings."), ("No work for your data team.", "Lune builds each audience. Your team approves the offer.")]) + '</div></div>', "sec--teal", "targeting")}
+{card("Goal: acquire customers", "New to the brand", "They spend in the category, not at this brand.")}
+{card("Goal: win back customers", "Stopped buying", "No purchase in the last 90 days.")}
+{card("Goal: increase frequency", "Buy now and then", "One purchase a month or less.")}
+{card("Goal: grow average spend", "Small baskets", "Low amount for each purchase.")}
+</div></div>''' , id_="targeting")}
 
-{sec(feature("03 · Bank approves", "No offer goes live without your approval.", "The offer arrives in the Campaign Manager in LuneHub. Your team sees the terms, the stores and the audience.",
+{sec(feature("03 · Bank approves", "No offer goes live without your approval.", "Offers arrive in the LuneHub Campaign Manager.",
  [("One inbox.", "Pending, accepted, completed and rejected offers, with search."), ("Accept or reject.", "One decision for each offer."), ("Clear terms.", "Cashback rate, budget, cap, dates and refund window.")],
  shot("lunehub-campaign-details-review-pending.jpg", "LuneHub · Campaign Manager · Campaign details", "An offer that waits for the bank's decision in LuneHub. " + TEST, "LuneHub campaign details with Reject and Accept buttons")) + f'''
 <div class="cols cols--2">
@@ -542,7 +530,7 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 {shot("lunehub-campaign-details-review-pending-tab-cardholder-preview.jpg", "Customer app · Offer", "See the offer and its terms as your customers see them. " + TEST, "LuneHub cardholder preview of an offer on a phone")}
 </div>''', "sec--white", "bank")}
 
-{sec(head("04 · Customer journey", "Customers join once, activate offers with one tap and track their rewards.", "Pulse runs in your mobile app through the Lune SDK for iOS and Android. It uses your bank's name and colour.") + f'''
+{sec(head("04 · Customer journey", "Join once. Activate with one tap. Track rewards.", "In your app, in your bank's colours.") + f'''
 <div class="phones">
 {phone("cust-01-join.png", "Join", "The customer reads the terms and joins.")}
 {phone("cust-02-home.png", "Offers", "The offers for the customer's card.")}
@@ -552,12 +540,12 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 {phone("cust-06-tiers.png", "Tiers", "The customer earns more at each tier.")}
 </div>''', id_="customer")}
 
-{sec(head("Offer types", "Card-linked, affiliate and promo-code offers in one programme.", "Your customers see each offer type in the same place in your app.") + f'''
+{sec(head("Offer types", "Card-linked, affiliate and promo-code offers in one programme.") + f'''
 <div class="cols">
 {card("", "Card-linked offers", "Merchant-funded cashback. The customer activates the offer, then pays by card in store or online.")}
 {card("", "Affiliate offers", "Cashback from online brands through affiliate networks. The customer shops through the offer link.")}
 {card("", "Promo codes", "Discount codes from online brands. The customer copies the code and uses it at checkout.")}
-</div>''' + head("Reward types", "Cashback or points, with tiers and missions.", "You choose how your customers earn.") + f'''
+</div>''' + head("Reward types", "Cashback or points, with tiers and missions.") + f'''
 <div class="cols cols--4">
 {card("", "Cashback", "Customers earn money back on each eligible purchase.")}
 {card("", "Points", "Customers earn points and redeem them for cash value. You set the expiry dates.")}
@@ -565,11 +553,11 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 {card("", "Missions and badges", "Bonus rewards for repeat spend, such as five purchases in a month.")}
 </div><div class="solo">{TIER_DEMO}</div>''', "sec--white")}
 
-{sec(head("Results", "Your bank and the merchant each see the result of each offer.", "The bank view is in LuneHub. The merchant view is in the merchant portal.") + f'''
+{sec(head("Results", "Your bank and the merchant each see the result.") + f'''
 <div class="cols cols--2">
 {shot("lunehub-campaign-details-accepted.jpg", "LuneHub · Live offer", "Bank view: audience, activations, activation rate and offer views. " + TEST, "LuneHub live offer with total audience, offer activations, activation rate and offer views")}
 {shot("merchant-analytics.jpg", "Pulse merchant portal · Analytics", "Merchant view: sales, return on cashback and net cashback cost. " + TEST, "Merchant portal analytics with sales, return on cashback and cashback cost")}
-</div>''' + '<div class="split split--top"><div class="feature__copy"><h3>For your bank</h3>' + facts([("Reach and activation.", "Audience, activations, activation rate and offer views for each offer."), ("Reach by card programme.", "Cardholders, active users and live offers for each BIN."), ("Clear record.", "Who accepted each offer and when.")]) + '</div><div class="feature__copy"><h3>For the merchant</h3>' + facts([("Sales after refunds.", "Sales that earned cashback for each campaign."), ("Return on cashback.", "Sales for each unit of cashback spent."), ("Net cashback cost.", "Cashback accrued minus cashback reversed by refunds.")]) + '</div></div>', id_="results")}
+</div>''' , id_="results")}
 
 {sec(head("Cashback you can trust", "Lune checks each purchase against the offer terms.") + f'''
 <div class="cols cols--4">
@@ -581,7 +569,7 @@ PULSE = f"""{hero("Pulse", PULSE_H1,
 
 {NEXT["pulse"]}
 
-{cta("See one offer go from merchant to customer.", "Contact sales for a live demo. It runs one campaign through the merchant portal, LuneHub and the customer app.", '<a class="btn btn--ghost" href="customers.html">See customers</a>')}
+{cta("See one offer go from merchant to customer.", "One campaign, from merchant portal to customer app.", '<a class="btn btn--ghost" href="customers.html">See customers</a>')}
 """
 
 # ------------------------------------------------------------------ CUSTOMERS

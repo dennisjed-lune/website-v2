@@ -180,7 +180,8 @@
         if (hook) hook(el, d.loop, d.i);
         counts.forEach(c => { if (+c.dataset.at === d.i) countUp(c); });
       }
-      d.timer = setTimeout(() => { d.i = (d.i + 1) % steps.length; if (d.i === 0) d.loop += 1; go(); }, steps[d.i]);
+      const wait = (d.i === 0 && d.loop === 0 && el.dataset.first) ? +el.dataset.first : steps[d.i];   // a shorter first pause where data-first is set
+      d.timer = setTimeout(() => { d.i = (d.i + 1) % steps.length; if (d.i === 0) d.loop += 1; go(); }, wait);
     };
     d.start = () => { if (d.on) return; d.on = true; d.i = 0; go(); };
     d.stop = () => { d.on = false; clearTimeout(d.timer); };
