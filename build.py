@@ -217,7 +217,7 @@ STEPS = [
     ("enrich", "01", "Name", "Enrich", "Names every card payment.", "The foundation for each product"),
     ("analytics", "02", "See", "Analytics", "Shows where your customers spend.", "For your card and data teams"),
     ("in-app", "03", "Show", "PFM", "AI-powered Expenses and Cashflow for your app.", "For your customers"),
-    ("pulse", "04", "Earn", "Pulse", "AI matches merchant-funded cashback to each customer.", "For your card revenue"),
+    ("pulse", "04", "Earn", "Pulse", "Lune AI targets merchant-funded cashback to each customer.", "For your card revenue"),
     ("ai", "05", "Ask", "AI assistant", "Answers customers' money questions in your app.", "For your customers"),
 ]
 
@@ -260,13 +260,13 @@ CHAPTERS = "\n".join([
             [("Transactions", "Each payment with its merchant"), ("Brand explorer", "Spend and customers for each brand"), ("Category explorer", "All 19 Lune categories")],
             "<b>Analytics</b> runs in LuneHub. Buy it with Enrich or as a separate product.",
             [("analytics.html", "Analytics")], ANALYTICS_DEMO, "chapter--flip"),
-    chapter(2, "Your customers understand their money.",
+    chapter(2, "Your customers see where their money goes.",
             "Expenses and Cashflow for iOS and Android.",
             [("Expenses", "Spend by category and merchant"), ("Cashflow", "Money in against money out"), ("Your look", "Your colours, light and dark mode")],
             "<b>Expenses</b> and <b>Cashflow</b> are two separate SDK modules.",
             [("expenses.html", "Expenses"), ("cashflow.html", "Cashflow")], phones_demo("both"), "sec--white"),
     chapter(3, "Customers earn with your card. Merchants pay for the rewards.",
-            "AI picks the best offer for each customer. Your bank approves every offer.",
+            "Lune AI targets the best offer to each customer. Your bank approves every offer.",
             [("Your card", "Customers earn only with your card"), ("No rewards budget", "Merchants fund each reward"), ("Your control", "Your bank approves each offer")],
             "<b>Pulse</b> is a separate product. It includes the Pulse SDK for your app.",
             [("pulse.html", "Pulse")], PULSE_DEMO, "chapter--peak"),
@@ -463,7 +463,7 @@ EXPENSES = f"""{hero("Expenses", 'Show customers where <span class="serif">their
 CASHFLOW = f"""{hero("Cashflow", 'Show customers money in <span class="serif">against money out.</span>',
  "Cashflow adds ready screens to your iOS and Android app. Customers compare money in with money out, and an AI assistant explains the month.", BTN_TALK + BTN_SDK, phones_demo("cf"))}
 
-{sec(head("Cashflow screens", "Three screens: the month, money in and the trend.") + f'''
+{sec(head("Cashflow screens", "Customers compare money in with money out.") + f'''
 <div class="phones">
 {phone_drawn(CF_HOME, "Total cashflow", "Money in against money out for one salary month.")}
 {phone_drawn(CF_IN, "Money in", "Sources by type: income, transfers in and government services.")}
